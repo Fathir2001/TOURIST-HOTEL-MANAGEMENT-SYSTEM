@@ -1,0 +1,103 @@
+/* ABOUTUS.HTML Styles */
+
+body {
+    background-image: url("https://www.google.com/imgres?q=bandarawela%20tourist%20places&imgurl=https%3A%2F%2Fstoryofsrilanka.com%2Fimages%2Fslider%2Fbandarawela%2F01.jpg&imgrefurl=https%3A%2F%2Fstoryofsrilanka.com%2Fbandarawela.php&docid=4RJqxdETNSRu4M&tbnid=pPGKymW7x6KNIM&vet=12ahUKEwiC4piN2c2KAxUw4jgGHVleLh8QM3oECEIQAA..i&w=1150&h=670&hcb=2&ved=2ahUKEwiC4piN2c2KAxUw4jgGHVleLh8QM3oECEIQAA");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.footer {
+    background-color: #111;
+}
+
+.footercontainer {
+    width: 100%;
+    padding: 10px 50px 20px;
+}
+
+.socialicons {
+    display: flex;
+    justify-content: center;
+}
+
+.socialicons a {
+    text-decoration: none;
+    padding: 10px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.socialicons a i {
+    font-size: 2em;
+    color: black;
+    opacity: 0.9;
+}
+
+/* Hover Effects on social media items */
+.socialicons a:hover {
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.socialicons a:hover i {
+    color: white;
+    transition: 0.5s;
+}
+
+.footerNav {
+    margin: 10px 0;
+}
+
+.footerNav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.footerNav ul li a {
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footerNav ul li a:hover {
+    opacity: 1;
+}
+
+.footerbottom {
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+}
+
+.footerbottom p {
+    color: white;
+}
+
+.designer {
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    margin: 0px 5px;
+}
+
+@media (max-width: 700px) {
+    footer ul {
+        flex-direction: column;
+    }
+    
+    .footerNav ul li {
+        width: 100%;
+        text-align: center;
+        margin: 10px;
+    }
+}
