@@ -1,13 +1,14 @@
 /* GALLARY.HTML Styles */
 
-div {
+.gallery-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    padding: 20px;
 }
 
-div img {
+.gallery-container img {
     width: 400px;
     height: 300px;
     border: 2px solid #ff3d0036;
@@ -18,7 +19,7 @@ div img {
     transition: 400ms;
 }
 
-div img:hover {
+.gallery-container img:hover {
     filter: grayscale(1);
     transform: scale(1.03);
 }

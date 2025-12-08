@@ -1,23 +1,86 @@
-*{
-margin:1;
-padding:1;
-font-family: sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
 }
-.banner{
-width; 100%;
-height:100vh;
-background-image; linear-
-gradient(rgba(0,0,0,0,75)rgba(0,0,0,0,75));url(backround.jpg);
-background-size; cover;
-background-position;center;
+
+body {
+    background-color: #f9f9f9;
 }
-.navbar{
-width; 75%;
-margin; auto;
-padding:35px 0;
-display:flex;
-align-items; center;
-justify-content; space-between;
+
+.banner {
+    width: 100%;
+    min-height: 300px;
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75));
+    background-size: cover;
+    background-position: center;
+}
+
+.navbar {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: white;
+}
+
+table th {
+    padding: 10px 15px;
+    background-color: lightgray;
+}
+
+table th a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+table th a:hover {
+    color: green;
+}
+
+p {
+    line-height: 1.6;
+    margin: 15px 0;
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
+ul, ol {
+    margin: 15px 0;
+    padding: 0 40px;
+}
+
+.center {
+    text-align: center;
+}
+
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+.gallery-container img {
+    max-width: 250px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 
