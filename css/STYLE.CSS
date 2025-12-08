@@ -10,8 +10,6 @@ body {
 
 .banner {
     width: 100%;
-    min-height: 300px;
-    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75));
     background-size: cover;
     background-position: center;
 }
