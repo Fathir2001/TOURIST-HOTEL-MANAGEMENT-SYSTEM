@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head>
+
+<style>
+
+
+ 
+margin: 0;
+padding: 0;
+box-sizeimg: border-box;
+margin: auto;
+max-width: 1000px;
+}
+.container{
+background-image: linear-gradient;
+backgroun
+backgroun
+height; 700px;
+width: 100%;
+}
+.box{
+backround-colour:rgba(0'0'0'0,726);;
+height: 70px;
+
+}
+
+menu{
+width:70%;
+}
+img{
+float: left;
+}
+menu ul li{
+display: inline;
+padding- top:30px;
+}
+menu ul li a{
+text-decoration: none;
+}padding: 0 10px;
+font-size: 20px;
+font-familly:'Gill sans','Gill sans MT',calibri,'Trabuchet MS',sans-serif;
+color; white;
+}
+ul{
+float:right;
+
+
+ body {background-image:{;}
+ h1{color: blue;}
+ }
+ menu ul li a:hover{
+ colour: green;
+ boader-bottom: solid 1px green;
+ padding-top:15px;
+ 
+ }
+.main{
+text-align:center;
+width: 70%;
+colour:white;
+margin-top 10%;
+backround clour: rgba(9,0,0,0.596);
+border-redius:15px;
+height:400px;
+width: 800;
+padding-top:5%;
+font-family:Arial,Heivetica,sans-serif;
+}
+.main a{
+line-height;23px;
+width;50px;
+|
+font-size:17px;
+padding-top:
+
+}
+
+}
+button {
+margin-top: 25px;
+padding:10px 20px;
+border-redius:25px;
+backround.colour:dodgerblue;
+colour: white;
+font-size:17px;
+boarder:none;
+outline:none;
+}
+
+button:hover{
+background-colour; green;
+
+}nav . menu{
+max-width: 1250px;
+margin: auto;
+display: flex;
+align-:center;
+justify-content:space-between;
+padding: 0 20px;
+}
+}
+.center  .btns{
+margin-top: 20px;
+width:170px;
+border-redius:5px;
+border: none;
+margin: 0 10px;
+border:2px solid white;
+font-size:20px;
+padding: 0 10px;
+font-weight: none;
+cursor; pointer;
+outline: none;
+}
+
+
+</style>
+
+
+<title> TOURIST HOTEL MANAGEMENT SYSTEM </title>
+
+
+
+    </head>
+	
+	<body background=" " >
+	
+    <body>
+	
+	<!--navigation-->
+	
+	<div class="container">
+	<div class=" box">
+	<menu>
+	 
+	<div class="col s7">
+	<div class="box-navigation">
+	<div class="box'>
+	
+	<header>
+	
+	<div class="main">
+	<div/
+	
+<img src="https://www.google.com/imgres?q=bandarawela%20tourist%20places&imgurl=https%3A%2F%2Fstoryofsrilanka.com%2Fimages%2Fslider%2Fbandarawela%2F01.jpg&imgrefurl=https%3A%2F%2Fstoryofsrilanka.com%2Fbandarawela.php&docid=4RJqxdETNSRu4M&tbnid=pPGKymW7x6KNIM&vet=12ahUKEwiC4piN2c2KAxUw4jgGHVleLh8QM3oECEIQAA..i&w=1150&h=670&hcb=2&ved=2ahUKEwiC4piN2c2KAxUw4jgGHVleLh8QM3oECEIQAA" width=750 height=1000>
+
+<body background="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.urlaub-sr-lanka.info%2Fwhat-are-the-10-best-places-to-visit-on-kandy-tea-plantation-tour%2F&psig=AOvVaw0Bu_C8NT8fePpGDnUSVPZ2&ust=1735151886551000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPj9w4eHwYoDFQAAAAAdAAAAABAE">
+ <body background=" https://www.google.com/imgres?imgurl=https%3A%2F%2Fresources.thomascook.in%2Fimages%2Fholidays%2FPKG012487%2Ftea-plantation-in-nuwara.jpg&tbnid=fqJtVgv0gc6YzM&vet=10CBkQxiAoBGoXChMIyLuO567FigMVAAAAAB0AAAAAEAc..i&imgrefurl=https%3A%2F%2Fwww.thomascook.in%2Finternational-tourism%2Fplaces-to-visit-in-sri-lanka&docid=UrT5ot0gN0RAcM&w=267&h=215&itg=1&q=bandarawela%20tourist%20places&ved=0CBkQxiAoBGoXChMIyLuO567FigMVAAAAAB0AAAAAEAc">   
+
+
+	<h1
+style=" background colour=green; text-align: CENTER;"	
+		
+<hi>TOURIST HOTEL MANAGEMENT SYSTEM  </h1>
+
+<br>
+<br>
+
+	<div class="banner">
+	<div class="navbar">
+    </div>
+</div>
+  <nav>
+  <div class="menu">
+  </div>
+  <center>
+  <table border=5 bg colour=lightgray width=50%>
+
+   <th> <a href="HOME.html">HOME</a></th>
+   <th> <a href="ABOUTUS.html">ABOUTUS </a></th>
+   <th><a href ="contactus.html">CONTACTUS</a></th>
+    <th><a href ="SERVICES.html">SERVICES</a></th>
+  <th><a href ="REGISTRATION.html">REGISTRATION</a> </th>  
+   <th> <a href ="THINGS TO DO.html">THINGS TO DO</a>  </th> 
+ <th> <a href ="GALLARY,html">GALLARY</a> </th> 
+ <th> <a href ="ACCOMMODATION.html">ACCOMMODATION</a> </th> 
+ <th> <a href ="ADMIN.html">ADMIN</a> </th> 
+  </nav>
+    </table>
+  </center>
+<button type=submit">SHOW ROOMS </button>
+
+<div class="center">
+
+    <input type="text" name="search" id="search">
+    <button class="btn btn-sm">Search</button>
+</div>
+
+
+    <iMG SRC="   C:\Users\user\Desktop\TOURIST HOTEL MANAGEMENT SYSTEM\img2.jpg "WIDTH=1500 HEIGHT=555>
+ <div class= ="singlecol social-media-icons-white d-flex justify- content-evenly">
+ 
+  <a href="https://telegram.com">
+telegram'
+</a>
+
+  twitter
+  youtube
+  facebook
+ 
+  <div class="btn">
+   <button>Learn More</button>
+   <button>Subscribe</button>
+   </div>
+  <img src>
+    <!--slide show-->
+    <section>
+	
+<img class="myslide"
+img src ="https://cf.bstatic.com/xdata/images/hotel/max1024x768/628241348.jpg?k=a206d3f6a1afa814310cc9eba62b00591b91292710f8b24881cd96fccf65146e&o=&hp=1"WIDTH=395PX HEIGHT=500PX>
+
+
+<img class="myslide"
+
+<img src= "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQSo4WqS8h21r-KEZcEmPhvsfwiPDfUotrKyPorYLVZipBJo14UedA1kdnxuNEv8xYRBHQ8UeRhIN_wVCaC359cS-zAEajcsv16H2Axag"WIDTH=395PX HEiGHT=500PX>
+    
+
+
+<img class="myslide"
+img src ="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/8f/41/98/after-recent-refurbishment.jpg?w=1200&h=-1&s=1"WIDTH=395PX  HEIGHT=500PX>
+ <IMG SRC="C:\Users\user\Desktop\TOURIST HOTEL MANAGEMENT SYSTEM\IMG9.jpg"WIDTH=395PX HEIGHT=500PX>
+
+    </section>
+	
+	<h2> Welcome to Bandarawela Beautiful Tourist Hotel</h2>
+	
+	
+	<p> Escape to Sri Lanka’s hill country and immerse yourself in the breathtaking beauty of Bandarawela. Imagine vast, emerald tea plantations stretching across majestic mountains. Breathe in the crisp, mountain air and feel the cool mist kiss your skin. Bandarawela, a haven of tranquility, beckons you to rejuvenate your soul amidst stunning scenery.
+
+Make your Bandarawela escape unforgettable with a stay at the historic Bandarawela Hotel. Steeped in colonial charm, this classic hotel offers a unique opportunity to experience a bygone era. Indulge in the region’s bounty with fresh strawberries, pears, and of course, the finest Ceylon tea.</p>
+
+<p>Unveil a Century of Comfort at Bandarawela Hotels
+
+Immerse yourself in the timeless charm of Bandarawela’s historic hotels. Step back in time and experience the warmth of rooms that have endured for over a century. These abodes, though whispering tales of the past, still offer a touch of modern comfort to ensure a truly unforgettable stay.  </p>
+
+
+ <img src="C:\Users\user\Desktop\TOURIST HOTEL MANAGEMENT SYSTEM\img.jpg">
+<img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/8f/41/98/after-recent-refurbishment.jpg?w=1200&h=-1&s=1" width=250px  height=200px>
+<IMG SRC="  C:\Users\user\Desktop\TOURIST HOTEL MANAGEMENT SYSTEM\img7.jpeg    " WIDTH=250  HEIGHT=200>
+<IMG SRC="C:\Users\user\Desktop\TOURIST HOTEL MANAGEMENT SYSTEM\IMG6.jpg" WIDTH=250 HEIGHT=200>
+<IMG SRC="   C:\Users\user\Desktop\TOURIST HOTEL MANAGEMENT SYSTEM\IMG7.jpg "WIDTH=250PX HEIGHT=200PX>
+<IMG SRC="   " WIDTH=250PX HEIGHT=200PX>
+
+
+<h3>Thinks To Do </h3>
+
+<img src="https://www.google.com/imgres?q=bandarawela%20tourist%20hotel%20website&imgurl=https%3A%2F%2Fwww.orienthotelsl.com%2Fwp-content%2Fuploads%2F2023%2F01%2FElla-Treks6-700x600-1-1.webp&imgrefurl=https%3A%2F%2Fwww.orienthotelsl.com%2Fgallery%2F&docid=wu74HsnVUjOgFM&tbnid=fZE0k8It9b1_kM&vet=12ahUKEwi8uojpj8aKAxXzTGwGHW8APPY4ChAzegQIZBAA..i&w=700&h=600&hcb=2&ved=2ahUKEwi8uojpj8aKAxXzTGwGHW8APPY4ChAzegQIZBAA" >  <img src=" https://www.tripadvisor.com/AttractionProductReview-g616035-d23913233-Udawalawe_National_Park_Jeep_Safari_From_Ella_Bandarawela-Ella_Uva_Province.html " > <img src=" https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.agoda.com%2Fbandarawela-hotel%2Fhotel%2Fbandarawela-lk.html&psig=AOvVaw2OqUq5w4yRTLe8MDXolxqx&ust=1735326136383000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJisy7KSxooDFQAAAAAdAAAAABAE " > <img src="  " > <img src="  " >
+
+<h4>Accomodation</h3>
+
+<img src="  " > <img src="  " > <img src="  " > <img src="  " >  <img src="  " >
+
+<h5> Dining </h5> 
+
+<img src="  " >  <img src="  " > <img src="  " > <img src="  " >  <img src="  " >
+
+</header>
+    <script>
+function myFunction() {
+    var person = prompt("Please enter your valuable feedback", "......");
+    if (person != null) {
+        alert("Thank you for your response! Have a nice day");
+        
+        function myFunction1() {
+    var person = prompt("Please give your review", "......");
+    if (person != null) {
+        alert("Thank you for reviewing us!!!");
+
+    }
+}
+</script
+ <section class="rooms">
+  <div class="container">
+  <h3 class ="section head">
+  <span class="heading">Luxurious</span>
+  
+  
+  <div class="graid rooms-graid>
+  <div class="graid featured-roos">
+  <div class="image-wrap>
+  img class="room-image" src="">
+ <h5 class="room-name">BANDARAWELA HOTEL<h3>
+ </div>
+ <div class= "oom details-wrap">
+ <a href="class="btn rooms-btn"> Book &rarr;</>
+ 
+</div>
+</div>
+</section>
+<script src="main.js"></script>
+
+ <section class ="contect">
+ <div class="container">
+ <h6 class="heading">Contact</span>
+ <span class="heading">contact</span>
+ </h6>
+ 
+<div class="contact-contact">
+<div class='traveler-wrap">
+img src"   " alt=**>
+</div>
+form action="" class="form contact-form'>
+<div class="input-group'>
+<input type="text" class="input" placeholder="subject"Name" required>
+<span class="bar"></span>
+</div>
+<div class=""input" cols="32" rows=6"6" placeholder="E-mail"
+required></textarea>
+<span class="bar"></span>
+</div>
+
+</form>
+</div>
+
+ <!---start-content----->
+ <div class="content">
+ <div class="quit">
+ <p>apan class="start">live</span>life<span class >king size</span></p>
+ </div>
+ <div class="'content-graid">
+ <div class="wrap">
+ <div class="content- grid-pic">
+ <a href="#"><img src='images.png' title="image-name"/></a>
+ </div>
+ <div>
+ <div class="content-grid-pic">
+ <<h3>best foodEver</h3>
+ 
+ <a  href='https:swiggy.com">Reeed mor</a>
+ <div>
+ <div class='clear"> </div>
+ </div>
+ <dic class="content-graid'>
+ <div class="#"><img src="images/icon2.png' title="image-name" /></a>
+ </div>
+ <div class="content-graid-pic">
+ <a href="#"><img src="images/icon2.png" title="image-name" /></a>
+ </div>
+ <div clas='content-graid-details>  
+ 
+ <!--body content-->
+  <section class="SERVICES SEC-WIDTH" ID="SEVICES">
+  <DIV CLASS="TITLE">
+  <h6>SERVICES</h6>
+  </div>
+  <div class="services concontainer".
+  <!--services-->
+  <artical class="service"
+  <div class ="services-icon">
+ </div>
+ 
+ <div class "services-content">
+ <h7>FOOD SERVICES<h7>
+ <p>    </p>
+ <button type=button" class"  class="stn" room price</button>
+
+<div class" services-content">
+<h8> room secuity<h8>
+<p>   </p>
+<button type=button" class"  class="stn" room price</button>
+
+</div>
+</artical>
+<!--end of services-->
+</div>
+</section>
+<div class="book";
+<form class="boook-form";
+div class="form-item";
+<label for="chack in date">check in date:</label>
+<input type="date" id="chekin-date";
+</div>
+<div class="form-item">
+<label for="chack in date">check out date:</label>
+<input type="date" id="chek out-date";
+</div>
+<div class="form item">
+<label for-"adult">adults:</label>
+<input type="number" ain="1" value="1" id="abult">
+</div
+<div class="form item">
+<label for-"room">room:</label>
+<input type="number" ain="1" value="1" id="room">
+</div>
+<div class="form item">
+<label for-"submit">submit:</label
+<label type="submit" class="btn" value="Book now">
+</div>
+
+</div>
+
+</form>
+
+<section class="rooms sec-width' id="room">
+<div class="title">
+<h9>rooms</h9>
+</div>
+<div class="roomscontainer"></div>
+<!!--rooms--!>
+<artical class="room">
+<div class="roooms- image">
+<img src="  ">
+</div>
+<div class="room text">
+<h10> Lexury rooms  </h10>
+</section>
+<!--end of body content--!>
+<script src="script.js"</script>
+<SECTION CLASS="CUSTOMER"id="customer">
+<div class="sec-width">
+<div class="title">
+<h11>customers</h11>
+</div>
+<div class="customers-container">
+<!--customer-->
+<div class="customer".
+<div class="rating">
+<span><i class="fas fa star"></i></span>
+<span><i class="fas fa star"></i></span>
+<span><i class="fas fa star"></i></span>
+<span><i class="fas fa star"></i></span>
+<span><i class="fas fa star"></i></span>
+
+</div
+<h11>We Love It</11h>
+<p>   </p>
+
+
+img src=" " alt== "customer image">
+<span:Customer Name,Country</span>
+</div>
+
+<!--end of customer-->
+</div>
+</div>
+</section>
+
+
+<!-- body content-->
+
+
+<!--footer--!>
+<footer class="footer">
+<div class="footer.container">
+<div>
+<<ul class="footer">
+<div class="footer.container">
+<div>
+
+<ul class= "social.icons">
+<ul class="flex">
+<i  class="fa fa-twiter fa 2x"></i>
+<li>
+<li class="flex">
+<i class="fa fa-facebook fa-2x"></li>
+<li class='flex">
+<i class='flex">
+<i class="flex">
+<i class="fa fa-instagram fa-2x"></li>
+</li>
+</ul>
+</div>
+
+<div>
+<h2>useful links</h2>
+<a href ="#">alog</a>
+ <a href="a">Rooms</a>
+ <a href = "#">contact us</a>
+ <a href ="#"Gift Card</a>
+ 
+</div>
+
+<div>
+<h2>Privacy</h2>
+<a href = "#">HOME</a>
+<a href = "#">ABOUTUS</a>
+<a href = "#">CONTACTUS</a>
+<a href = "#">SERVICES</a>
+<a href = "#">REGISTRATION</a>
+<a href = "#">THINGHS TO DO</a>
+<a href = "#">GALLARY</a>
+<a href ="#" ACCOMMODATION</a>
+<a href = "#"ADMIN</a>
+</div>
+
+<div>
+<h2>Have A question</h2>
+<div class="contact-item>
+<span>
+<i class = "fas fa-map-marker alt"></i>
+</span>
+<span>
+ </span>
+ </div>
+ <div class="Contact Item">
+ <span>
+ <i class ="fas fa.phone.alt"></l>
+ <span>
+ 
+ </span>
+ 
+ </div>
+ <div class ="contact.item">
+ </span>
+ <i class= "fas fa.coveloge"></li>
+ <span>
+ 
+ </span>
+ </div>
+ 
+ </div>
+ </div>
+ </div>
+ 
+<!--footer--!>
+
+
+ 
+ 
+
+</body>
+
+</html>

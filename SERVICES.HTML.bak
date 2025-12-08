@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+<title> TOURIST HOTEL MANAGEMENT SYSTEM </title>
+
+<style>
+
+
+
+/*---services----*/
+.service-content h3{
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 30px;
+	font-weight: 400;
+	line-height: 2em;
+	margin: 0;
+	text-transform: uppercase;
+	color: #454545;
+}
+.service-content ul li{
+	display: block;
+}
+.service-content ul li span{
+	width: 5%;
+	float: left;
+	font-size: 3em;
+	color: #454545;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+.service-content ul li p{
+	font-family: Arial, Helvetica, sans-serif;
+	color: #6a6a6a;
+	font-size: 0.875em;
+	padding: 5px 0 10px 0;
+	line-height: 1.8em;
+}
+.service-content ul li p a{
+	font-size: 1.2em;
+	color: #454545;
+	font-family: 'PT Sans Narrow', sans-serif;
+	display: block;
+}
+.service-content{
+	float:left;
+	width: 74.5%;
+}
+.service-content ul{
+	padding-bottom:5px;
+}
+.services-sidebar{
+	float:right;
+	width:23%;
+}
+.services-sidebar h3{
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 30px;
+	font-weight: 400;
+	line-height: 2em;
+	margin: 0;
+	text-transform: uppercase;
+	color: #454545;
+}
+.services-sidebar ul li a{
+	display: block;
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 1em;
+	color: #454545;
+	padding: 2px 0px 5px 0px;
+	transition: 0.5s ease;
+	-o-transition: 0.5s ease;
+	-webkit-transition: 0.5s ease;
+}
+.services-sidebar ul li a:hover{
+	color: #71D6EA;
+}
+.services-sidebar ul li {
+	border-bottom: 1px dashed rgba(192, 192, 192, 0.33);
+	background: url(../images/marker.png) 0 15px no-repeat;
+	padding: 9px 13px 8px 23px;
+}
+.services {
+	padding-top: 10px;
+}
+
+
+</style>
+
+
+    </head>
+	
+<img src="https://www.google.com/imgres?q=bandarawela%20tourist%20places&imgurl=https%3A%2F%2Fstoryofsrilanka.com%2Fimages%2Fslider%2Fbandarawela%2F01.jpg&imgrefurl=https%3A%2F%2Fstoryofsrilanka.com%2Fbandarawela.php&docid=4RJqxdETNSRu4M&tbnid=pPGKymW7x6KNIM&vet=12ahUKEwiC4piN2c2KAxUw4jgGHVleLh8QM3oECEIQAA..i&w=1150&h=670&hcb=2&ved=2ahUKEwiC4piN2c2KAxUw4jgGHVleLh8QM3oECEIQAA  " >	
+	     
+	<h1
+style="colour:green; text-align: CENTER;"	<body
+	
+	
+	
+	<h1>SERVICES</h1>
+	
+	<br>
+	<br>
+	
+	
+		<div class="banner">
+	<div class="navbar">
+    </div>
+</div>
+
+  
+   <center>
+  <table border=5 bg colour=lightgray width=50%>
+
+   <th> <a href="HOME.html">HOME</a> </th>
+   <th> <a href="ABOUTUS.html">ABOUTUS </a></th>
+   <<th><a href ="contactus.html">CONTACTUS</a></th>
+   <th> <a href ="SERVICES.html">SERVICES</a></th>
+ <th> <a href ="REGISTRATION.html">REGISTRATION</a> </th>  
+  <th> <a href ="THINGS TO DO.html">THINGS TO DO</a>  </th> 
+ <th> <a href ="GALLARY,html">GALLARY</a> </th> 
+ <th> <a href ="ACCOMMODATION.html">ACCOMMODATION</a> </th> 
+ <th> <a href ="ADMIN.html">ADMIN</a> </th> 
+ </table>
+  </center>
+  
+  <img src=" file:///C:/Users/user/Desktop/TOURIST%20HOTEL%20MANAGEMENT%20SYSTEM/img3.webp   " width=1500px height=570px >
+  
+  <!---start-Wrap--->
+			<!---start-header--->
+			<div class="header">
+				<div class="wrap">
+					<div class="header-top">
+						
+                        <img src="images/marriott_logo.jpg" align="center" width=700px height=150 px>
+						<div class="contact-info">
+							<a href = "contact.html" target = "_self"> 
+								<img src = "/images/contact-us.png" alt = "contact-us" width=300px height=50px border = "0"/> 
+							<p class="phone">Call us : <a href="#"></a></p>
+							<p class="gps">Gps : <a href="#top123">View map</a></p>
+							<p class="code">BROUGHT TO YOU :<a href="https:zeeshanovic.blogspot.com">Syed Ibrahim</a></p>
+						</div>
+						<div class="clear"> </div>
+					</div>
+				</div>
+				<div class="header-top-nav">
+					<div class="wrap">
+
+<!---End-header--->
+			<div class="clear"> </div>
+			<!---start-content----->
+			<div class="content">
+				<div class="wrap">
+					<!-----start--services------>
+					<div class="services">
+						<div class="service-content">
+							<h3>Our Hotel Services</h3>
+							<ul>
+								<li><span>1.</span></li>
+								<li><p><a href="#">CULTURE SHOW</a> We have one of the most sophisticated shows. Come join us....</p></li>
+								<div class="clear"> </div>
+							</ul>
+							<ul>
+								<li><span>2.</span></li>
+								<li><p><a href="#">SWIMMING POOL</a> You can enjoy Swimming in the pool and relax with a drink. . .. . .  </p></li>
+								<div class="clear"> </div>
+							</ul>
+							<ul>
+								<li><span>3.</span></li>
+								<li><p><a href="#">RESTAURANT</a> You can have a booze or order at swiggy all at one place.... </p></li>
+								<div class="clear"> </div>
+							</ul>
+							<ul>
+								<li><span>4.</span></li>
+								<li><p><a href="#">CONFERENCE HALL</a>Here You can do your buisness and relax, all at one go. . . .</p></li>
+								<div class="clear"> </div>
+							</ul>
+							<ul>
+								<li><span>5.</span></li>
+								<li><p><a href="#">SPA</a>Here you are for surprises. . . .</p></li>
+								<div class="clear"> </div>
+							</ul>
+							<ul>
+								<li><span>6.</span></li>
+								<li><p><a href="#">POOLSIDE BAR</a> To chill, booze and fun. . .. . </p></li>
+								<div class="clear"> </div>
+							</ul>
+						</div>
+						<div class="services-sidebar">
+							<h3>WE PROVIDE</h3>
+							 <ul>
+							  	<li><a href="https:www.swiggy.com">Swiggy</a></li>
+							  	<li><a href="https:www.trivago.com">Trivago</a></li>
+							  	<li><a href="https:www.foodpanda.com">foodpanda</a></li>
+							  	<li><a href="https:www.bookmytrip.com">book my trip</a></li>
+							  	<li><a href="https:www.zomato.com">zomato</a></li>
+								
+								
+	                            
+							  	<li><a href="#">other facility</a></li>
+					 		 </ul>
+					 		 
+						</div>
+						<div class="clear"> </div>
+					</div>
+					<!-----End--services------>
+				</div>
+				<div class="clear"> </div>
+				<div class="boxs">
+				<div class="wrap">
+				<div class="box">
+					 
+				</div>
+				<div class="box center-box">
+					<ul>
+					<li><a href="#" onclick="myFunction()"> a Feedback</a></li>
+						<li><a href="#" onclick="myFunction1()"> Ratings</a></li>
+			            <li><a href="services.html">Services</a></li>
+						<li><a href="https:www.quora.com/What-is-trekking">Know about Moutaineering and trekking here</a></li>
+						
+					</ul>
+				</div>
+                     <div id="top123"> 
+                          <img src="https://www.google.com/imgres?q=bandarawela%20tourist%20places&imgurl=https%3A%2F%2Fthumbs.dreamstime.com%2Fb%2Fwaterfalls-ella-bandarawela-sri-lanka-view-158846758.jpg&imgrefurl=https%3A%2F%2Fwww.dreamstime.com%2Fphotos-images%2Fella-bandarawela.html&docid=CSwrtobC25N-yM&tbnid=0ycSszx4JP7YEM&vet=12ahUKEwij_t6Y2c2KAxXjzDgGHXTSJQk4ChAzegQIbxAA..i&w=800&h=600&hcb=2&ved=2ahUKEwij_t6Y2c2KAxXjzDgGHXTSJQk4ChAzegQIbxAA" height=200px width=500px height=125px width=500px align= rights>
+                    </div>
+				<div class="box">
+					
+				</div>
+				<div class="clear"> </div>
+			</div>
+			<!---start-box---->
+		</div>
+		<!---start-copy-Right----->
+		<div class="copy-tight">
+			
+		</div>
+		<!---End-copy-Right----->
+			</div>
+			<!---End-content----->
+		</div>
+		<!---End-Wrap--->
+		
+		<!--footer--!>
+<footer class="footer">
+<div class="footer.container">
+<div>
+<<ul class="footer">
+<div class="footer.container">
+<div>
+
+<ul class= "social.icons">
+<ul class="flex">
+<i  class="fa fa-twiter fa 2x"></i>
+<li>
+<li class="flex">
+<i class="fa fa-facebook fa-2x"></li>
+<li class='flex">
+<i class='flex">
+<i class="flex">
+<i class="fa fa-instagram fa-2x"></li>
+</li>
+</ul>
+</div>
+
+<div>
+<h2>useful links</h2>
+<a href ="#">alog</a>
+ <a href="a">Rooms</a>
+ <a href = "#">contact us</a>
+ <a href ="#"Gift Card</a>
+ 
+</div>
+
+<div>
+<h2>Privacy</h2>
+<a href = "#">HOME</a>
+<a href = "#">ABOUTUS</a>
+<a href = "#">CONTACTUS</a>
+<a href = "#">SERVICES</a>
+<a href = "#">REGISTRATION</a>
+<a href = "#">THINGHS TO DO</a>
+<a href = "#">GALLARY</a>
+<a href ="#" ACCOMMODATION</a>
+<a href = "#"ADMIN</a>
+</div>
+
+<div>
+<h2>Have A question</h2>
+<div class="contact-item>
+<span>
+<i class = "fas fa-map-marker alt"></i>
+</span>
+<span>
+ </span>
+ </div>
+ <div class="Contact Item">
+ <span>
+ <i class ="fas fa.phone.alt"></l>
+ <span>
+ 
+ </span>
+ 
+ </div>
+ <div class ="contact.item">
+ </span>
+ <i class= "fas fa.coveloge"></li>
+ <span>
+ 
+ </span>
+ </div>
+ 
+ </div>
+ </div>
+ </div>
+ 
+<!--footer--!>
+
+
+		
+	</body>
+</html>
+</body>
+
+
+
+
+
+
+
+
+
+</html>

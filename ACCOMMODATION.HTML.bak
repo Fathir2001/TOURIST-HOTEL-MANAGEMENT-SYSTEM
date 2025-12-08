@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+<title> TOURIST HOTEL MANAGEMENT SYSTEM </title>
+
+<style>
+
+body{
+background-image:('');
+|
+</style>
+
+    </head>
+	
+	
+	<body>
+	
+	     
+	<h1
+style="colour:green; text-align: CENTER;"	
+	
+	<h1>REGISTRATION</H1>
+<h>Accomodation</h>
+
+
+
+
+	<br>
+	<br>
+	
+		<div class="banner">
+	<div class="navbar">
+    </div>
+</div>
+  
+  <center>
+  <table border=5 bg colour=lightgray width=50%>
+
+
+   <th> <a href="HOME.html">HOME</a></th> 
+   <th> <a href="ABOUTUS.html">ABOUTUS </a></th>
+   <th><a href ="contactus.html">CONTACTUS</a></th>
+    <th><a href ="SERVICES.html">SERVICES</a></th>
+ <th> <a href ="REGISTRATION.html">REGISTRATION</a>  </th> 
+  <th> <a href ="THINGS TO DO.html">THINGS TO DO</a>  </th> 
+ <th> <a href ="GALLARY,html">GALLARY</a> </th> 
+ <th> <a href ="ACCOMMODATION.html">ACCOMMODATION</a> </th> 
+ <th> <a href ="ADMIN.html">ADMIN</a> </th> 
+ </table>
+  </center>
+  
+<br>
+
+<img src="  C:\Users\user\Desktop\TOURIST HOTEL MANAGEMENT SYSTEM\IMG11.jpg "  width=1500 height=1100 >
+
+  <img src=" ">
+<h2>Our Deluxe Rooms</h2>
+Unwind in Style
+Hotel Rooms with all you need for a Sublime Stay.</h>
+
+<br>
+<img src=" ">
+<h2>Premium Garden Wing</h2>
+Serenity in Nature
+Our Larger Rooms with easy access to our Garden and Spa.</h>
+<br>
+<img src=" ">
+<h2>The Heritage Suite</h2>
+Vintage Luxury
+Luxury Suites highlighting Ceylon’s Cultural Heritage</h>
+  <br>
+  <!--footer--!>
+<footer class="footer">
+<div class="footer.container">
+<div>
+<<ul class="footer">
+<div class="footer.container">
+<div>
+
+<ul class= "social.icons">
+<ul class="flex">
+<i  class="fa fa-twiter fa 2x"></i>
+<li>
+<li class="flex">
+<i class="fa fa-facebook fa-2x"></li>
+<li class='flex">
+<i class='flex">
+<i class="flex">
+<i class="fa fa-instagram fa-2x"></li>
+</li>
+</ul>
+</div>
+
+<div>
+<h2>useful links</h2>
+<a href ="#">alog</a>
+ <a href="a">Rooms</a>
+ <a href = "#">Subscription</a>
+ <a href ="#">Gift Card</a>
+ 
+</div>
+
+<div>
+<h2>Privacy</h2>
+<a href = "#">HOME</a>
+<a href = "#">ABOUTUS</a>
+<a href = "#">CONTACTUS</a>
+<a href = "#">SERVICES</a>
+<a href = "#">REGISTRATION</a>
+<a href = "#">THINGHS TO DO</a>
+<a href = "#">GALLARY</a>
+<a href ="#" >ACCOMMODATION</a>
+<a href = "#"ADMIN</a>
+</div>
+
+<div>
+<h2>Have A question</h2>
+<div class="contact-item>
+<span>
+<i class = "fas fa-map-marker alt"></i>
+</span>
+<span>
+ </span>
+ </div>
+ <div class="Contact Item">
+ <span>
+ <i class ="fas fa.phone.alt"></l>
+ <span>
+ 
+ </span>
+ 
+ </div>
+ <div class ="contact.item">
+ </span>
+ <i class= "fas fa.coveloge"></li>
+ <span>
+ 
+ </span>
+ </div>
+ 
+ </div>
+ </div>
+ </div>
+ 
+<!--footer--!>
+
+
+</body>
+  
+  
+  </html>
