@@ -10,44 +10,39 @@
 </head>
 
 <body>
-    <!-- Header Section -->
-    <header>
-        <h1 style="background-color:green; text-align: center;">
-            TOURIST HOTEL MANAGEMENT SYSTEM
-        </h1>
-    </header>
-
-    <!-- Navigation Section -->
-    <nav>
-        <center>
-            <table border="5" width="90%">
-                <tr>
-                    <th><a href="HOME.html">HOME</a></th>
-                    <th><a href="ABOUTUS.html">ABOUT US</a></th>
-                    <th><a href="CONTACTUS.html">CONTACT US</a></th>
-                    <th><a href="SERVICES.html">SERVICES</a></th>
-                    <th><a href="REGISTRATION.html">REGISTRATION</a></th>
-                    <th><a href="THINGS TO DO.html">THINGS TO DO</a></th>
-                    <th><a href="GALLARY.html">GALLERY</a></th>
-                    <th><a href="ACCOMMODATION.html">ACCOMMODATION</a></th>
-                    <th><a href="ADMIN.html">ADMIN</a></th>
-                </tr>
-            </table>
-        </center>
-    </nav>
-
-    <!-- Search and Actions Section -->
-    <section class="search-section">
-        <div class="center">
-            <input type="text" name="search" id="search" placeholder="Search...">
-            <button class="btn btn-sm">Search</button>
-            <button type="button" class="btn">SHOW ROOMS</button>
+    <!-- Hero Section with Navigation -->
+    <section class="hero-section">
+        <!-- Navigation Section -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-brand">
+                    <img src="../images/logo.png" alt="Orient Hotel" class="logo" onerror="this.style.display='none'">
+                    <span>Orient Hotel</span>
+                </div>
+                <ul class="navbar-menu">
+                    <li><a href="HOME.html" class="active">Home</a></li>
+                    <li><a href="ABOUTUS.html">About Us</a></li>
+                    <li><a href="CONTACTUS.html">Contact Us</a></li>
+                    <li><a href="SERVICES.html">Services</a></li>
+                    <li><a href="REGISTRATION.html">Registration</a></li>
+                    <li><a href="THINGS TO DO.html">Things To Do</a></li>
+                    <li><a href="GALLARY.html">Gallery</a></li>
+                    <li><a href="ACCOMMODATION.html">Accommodation</a></li>
+                    <li><a href="ADMIN.html">Admin</a></li>
+                </ul>
+                <div class="navbar-actions">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                    <button class="book-btn">Book Now</button>
+                </div>
+                <button class="navbar-toggle" id="navbar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="hero-content">
+            <img src="../images/img 1.jpg" alt="Bandarawela Hotel" class="hero-image">
         </div>
-    </section>
-
-    <!-- Hero Image Section -->
-    <section class="hero">
-        <img src="../images/img 1.jpg" alt="Bandarawela Hotel" style="width:100%; max-width:1500px; height:auto; display:block; margin:20px auto;">
     </section>
 
     <!-- Welcome Section -->
@@ -344,6 +339,18 @@
             <p>&copy; 2025 Bandarawela Hotel. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const navbarToggle = document.getElementById('navbar-toggle');
+        const navbarMenu = document.querySelector('.navbar-menu');
+        
+        if (navbarToggle) {
+            navbarToggle.addEventListener('click', function() {
+                navbarMenu.classList.toggle('active');
+            });
+        }
+    </script>
 
 </body>
 </html>
