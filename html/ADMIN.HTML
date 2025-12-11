@@ -1,84 +1,77 @@
 <!DOCTYPE html>
-<html>
-    <head>
-<link rel="stylesheet" href="../css/STYLE.CSS">
-<link rel="stylesheet" href="../css/admin.css">
-<title> TOURIST HOTEL MANAGEMENT SYSTEM </title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN - TOURIST HOTEL MANAGEMENT SYSTEM</title>
+    <link rel="stylesheet" href="../css/STYLE.CSS">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
 
-    </head>
-	
-	
-	<body>
-	
-	     
-	<h1 style="color:green; text-align: CENTER;">ADMIN</h1>
-	<br>
-	<br>
-	
-  <center>
-  <table border=5 bg colour=lightgray width=50%>
+<!-- Header -->
+<header>
+    <h1 style="color:green; text-align: CENTER;">ADMIN</h1>
+</header>
+
+<!-- Navigation -->
+<center>
+  <table border="5" bgcolor="lightgray" width="90%">
 
 
-   <th> <a href="HOME.html">HOME</a></th> 
-   <th> <a href="ABOUTUS.html">ABOUTUS </a></th>
-   <th><a href ="contactus.html">CONTACTUS</a></th>
-    <th><a href ="SERVICES.html">SERVICES</a></th>
- <th> <a href ="REGISTRATION.html">REGISTRATION</a>  </th> 
-  <th> <a href ="THINGS TO DO.html">THINGS TO DO</a>  </th> 
- <th> <a href ="GALLARY.html">GALLARY</a> </th> 
- <th> <a href ="ACCOMMODATION.html">ACCOMMODATION</a> </th> 
- <th> <a href ="ADMIN.html">ADMIN</a> </th> 
- </table>
-  </center>
-  
- <img src="../images/IMG19.jpg" width=1500px height=555px>
- 
-  <!--body content-->
-  <section class="SERVICES SEC-WIDTH" ID="SEVICES">
-  <DIV CLASS="TITLE">
-  
-  
- <form method="post" action="../php/Connect.php">
- <label for="username">Username:</label>
- <input type="text" name="username" id="username">
- <br> <br>
- 
- <label for="password">Password:</label>
- <input type="password" name="password" id="password">
- <br><br>
+    <th><a href="HOME.html">HOME</a></th>
+    <th><a href="ABOUTUS.html">ABOUT US</a></th>
+    <th><a href="CONTACTUS.html">CONTACT US</a></th>
+    <th><a href="SERVICES.html">SERVICES</a></th>
+    <th><a href="REGISTRATION.html">REGISTRATION</a></th>
+    <th><a href="THINGS TO DO.html">THINGS TO DO</a></th>
+    <th><a href="GALLARY.html">GALLERY</a></th>
+    <th><a href="ACCOMMODATION.html">ACCOMMODATION</a></th>
+    <th><a href="ADMIN.html">ADMIN</a></th> 
+  </table>
+</center>
 
- <input type="submit" value="Submit">
- </form> 
+<!-- Hero Image -->
+<section class="hero">
+    <img src="../images/IMG19.jpg" alt="Admin Panel" style="width:100%; max-height:555px; object-fit:cover;">
+</section>
 
-  <div class="footer-container">
-					<div class="socialicons">
-					<a href=""><i class="fa-brands fa.Facebook"></i></a>
-					<a href=""><i class="fa-brands fa.Instagram"></i></a>
-					<a href=""><i class="fa-brands fa.Twitter"></i></a>
-					<a href=""><i class="fa-brands fa.Google-plus"></i></a>
-					<a href=""><i class="fa-brands fa.Youtube"></i></a>
-					</div>
-					</div>
-					<div class"footerNav">
-					<ul>
-					<li><a href="">HOME</a></li>
-					<li><a href="">ABOUTUS</a></li>
-					<li><a href="">CONTACTUS</a></li>
-					<li><a href="">SERVICES</a></li>
-					<li><a href="">REGISTRATION</a></li>
-					<li><a href="">THINGS TO DO</a></li>
-					<li><a href="">GALLARY</a></li>
-					<li><a href="">ACCOMMODATION</a></li>
-					<li><a href="">ADMIN</a></li>
-					</ul>
-					</div>
-					
-					<div class"footerbottom">
-					<p>copyright &coppy;  ;Designed by <span class"designer"> </p>
-					</div>
-					
-    
+<!-- Admin Login Form -->
+<section class="admin-section">
+    <div class="login-container">
+        <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+        <form method="post" action="../php/Connect.php">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-content">
+            <h3>Tourist Hotel Management System</h3>
+            <p>&copy; 2024 Hotel Management System. All rights reserved.</p>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</footer>
+
 </body>
-  
-  
-  </html>
+</html>
