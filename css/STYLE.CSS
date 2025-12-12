@@ -81,4 +81,311 @@ ul, ol {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+/* Hero Section Enhancements */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ken Burns Effect - Zoom Animation */
+.hero-image {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    animation: kenBurns 6s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.15);
+    }
+}
+
+/* Enhanced Gradient Overlay with Smoky Effect */
+.hero-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* Smoky effect from right */
+        radial-gradient(ellipse at 80% 50%, rgba(0, 0, 0, 0.8) 0%, transparent 60%),
+        /* Main gradient overlay */
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.5) 0%,
+            rgba(0, 0, 0, 0.3) 50%,
+            rgba(0, 0, 0, 0.7) 100%
+        ),
+        /* Additional smoky layer */
+        radial-gradient(ellipse at 90% 30%, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
+    z-index: 1;
+    animation: smokyFlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes smokyFlow {
+    0% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.95;
+    }
+}
+
+/* Animated Text Overlay with Enhanced Visibility */
+.hero-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 3;
+    width: 90%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 50px 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    animation: floatIn 1.2s ease-out;
+    overflow: hidden;
+}
+
+.hero-text-overlay::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.05),
+        transparent
+    );
+    animation: shine 3s infinite;
+}
+
+@keyframes floatIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    text-shadow: 
+        4px 4px 8px rgba(0, 0, 0, 1),
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(0, 0, 0, 0.7),
+        0 0 60px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1.5s ease-out, textGlow 3s ease-in-out infinite alternate;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 
+            4px 4px 8px rgba(0, 0, 0, 1),
+            2px 2px 4px rgba(0, 0, 0, 0.9),
+            0 0 30px rgba(0, 0, 0, 0.7),
+            0 0 60px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+        text-shadow: 
+            4px 4px 8px rgba(0, 0, 0, 1),
+            2px 2px 4px rgba(0, 0, 0, 0.9),
+            0 0 30px rgba(0, 0, 0, 0.7),
+            0 0 60px rgba(0, 0, 0, 0.5),
+            0 0 80px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.hero-tagline {
+    font-size: 1.8rem;
+    margin: 25px 0 0 0;
+    padding: 0;
+    color: #ffffff;
+    text-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 1),
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 20px rgba(0, 0, 0, 0.6);
+    animation: fadeInUp 1.8s ease-out;
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1.6;
+    position: relative;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    text-align: center;
+    animation: fadeIn 2s ease-out, bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+.scroll-indicator p {
+    color: white;
+    font-size: 0.9rem;
+    margin: 10px 0 0 0;
+    padding: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    font-weight: 600;
+}
+
+.mouse {
+    width: 30px;
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.wheel {
+    width: 4px;
+    height: 10px;
+    background-color: white;
+    border-radius: 2px;
+    margin-top: 8px;
+    animation: scroll 2s infinite;
+}
+
+@keyframes scroll {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Parallax Scrolling Effect - Applied via JavaScript or CSS */
+.hero-section.parallax .hero-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+}
+
+/* Responsive Design for Hero Elements */
+@media (max-width: 768px) {
+    .hero-text-overlay {
+        padding: 30px 20px;
+        width: 95%;
+    }
+    
+    .hero-title {
+        font-size: 2.8rem;
+        letter-spacing: 2px;
+    }
+    
+    .hero-tagline {
+        font-size: 1.2rem;
+        margin-top: 15px;
+        letter-spacing: 1px;
+    }
+    
+    .scroll-indicator {
+        bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text-overlay {
+        padding: 25px 15px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+    
+    .hero-tagline {
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+}
+
 
