@@ -10,30 +10,40 @@
 </head>
 <body>
 
-<!-- Header Section -->
-<header>
-    <h1 style="color:green; text-align: CENTER;">CONTACT US</h1>
-</header>
-
-<!-- Navigation -->
-<center>
-  <table border="5" bgcolor="lightgray" width="90%">
-    <th><a href="HOME.html">HOME</a></th>
-    <th><a href="ABOUTUS.html">ABOUT US</a></th>
-    <th><a href="CONTACTUS.html">CONTACT US</a></th>
-    <th><a href="SERVICES.html">SERVICES</a></th>
-    <th><a href="REGISTRATION.html">REGISTRATION</a></th>
-    <th><a href="THINGS TO DO.html">THINGS TO DO</a></th>
-    <th><a href="GALLARY.html">GALLERY</a></th>
-    <th><a href="ACCOMMODATION.html">ACCOMMODATION</a></th>
-    <th><a href="ADMIN.html">ADMIN</a></th>
-  </table>
-</center>
-
-<!-- Hero Image -->
-<section class="hero">
-    <img src="../images/img 1.jpg" alt="Contact Us" style="width:100%; max-height:570px; object-fit:cover;">
-</section>
+    <!-- Hero Section with Navigation -->
+    <section class="hero-section">
+        <!-- Navigation Section -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-brand">
+                    <img src="../images/logo.png" alt="Orient Hotel" class="logo" onerror="this.style.display='none'">
+                    <span>Orient Hotel</span>
+                </div>
+                <ul class="navbar-menu">
+                    <li><a href="HOME.html">Home</a></li>
+                    <li><a href="ABOUTUS.html">About Us</a></li>
+                    <li><a href="CONTACTUS.html" class="active">Contact Us</a></li>
+                    <li><a href="SERVICES.html">Services</a></li>
+                    <li><a href="REGISTRATION.html">Registration</a></li>
+                    <li><a href="THINGS TO DO.html">Things To Do</a></li>
+                    <li><a href="GALLARY.html">Gallery</a></li>
+                    <li><a href="ACCOMMODATION.html">Accommodation</a></li>
+                    <li><a href="ADMIN.html">Admin</a></li>
+                </ul>
+                <div class="navbar-actions">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                    <button class="book-btn">Book Now</button>
+                </div>
+                <button class="navbar-toggle" id="navbar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="hero-content">
+            <img src="../images/img74.webp" alt="Contact Us" class="hero-image">
+        </div>
+    </section>
 
 <!-- Contact Information Section -->
 <section class="contact-section">
@@ -91,22 +101,76 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer>
+<!-- Footer Section -->
+<footer class="footer">
     <div class="footer-container">
-        <div class="footer-content">
-            <h3>Tourist Hotel Management System</h3>
-            <p>&copy; 2024 Hotel Management System. All rights reserved.</p>
-            <p>Phone: 057 22 22 501 / 057 22 31 190</p>
+        <div class="footer-col">
+            <h3>Follow Us</h3>
+            <ul class="social-icons">
+                <li><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
+                <li><a href="#"><i class="fab fa-facebook fa-2x"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
+            </ul>
         </div>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+
+        <div class="footer-col">
+            <h3>Useful Links</h3>
+            <ul>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#rooms">Rooms</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#">Gift Card</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h3>Navigation</h3>
+            <ul>
+                <li><a href="HOME.html">Home</a></li>
+                <li><a href="ABOUTUS.html">About Us</a></li>
+                <li><a href="CONTACTUS.html">Contact Us</a></li>
+                <li><a href="SERVICES.html">Services</a></li>
+                <li><a href="REGISTRATION.html">Registration</a></li>
+                <li><a href="THINGS TO DO.html">Things To Do</a></li>
+                <li><a href="GALLARY.html">Gallery</a></li>
+                <li><a href="ACCOMMODATION.html">Accommodation</a></li>
+                <li><a href="ADMIN.html">Admin</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h3>Contact Information</h3>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Bandarawela, Sri Lanka</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>+94 XX XXX XXXX</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>info@bandarawelahotel.com</span>
+            </div>
         </div>
     </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 Bandarawela Hotel. All rights reserved.</p>
+    </div>
 </footer>
+
+<script>
+    // Mobile menu toggle
+    const navbarToggle = document.getElementById('navbar-toggle');
+    const navbarMenu = document.querySelector('.navbar-menu');
+    
+    if (navbarToggle) {
+        navbarToggle.addEventListener('click', function() {
+            navbarMenu.classList.toggle('active');
+        });
+    }
+</script>
 
 </body>
 </html>
