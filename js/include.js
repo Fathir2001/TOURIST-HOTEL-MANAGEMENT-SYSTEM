@@ -122,6 +122,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (navbarPlaceholder) {
         navbarPlaceholder.innerHTML = navbarHTML;
+        
+        // Highlight active page in navbar
+        const currentPage = decodeURIComponent(window.location.pathname.split('/').pop());
+        const navLinks = document.querySelectorAll('.navbar-menu a');
+        
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute('href');
+            if (linkPage === currentPage) {
+                link.classList.add('active');
+            }
+        });
     }
     
     if (footerPlaceholder) {
