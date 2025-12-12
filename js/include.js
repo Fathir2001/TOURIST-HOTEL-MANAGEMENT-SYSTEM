@@ -1,4 +1,16 @@
-// Navbar and Footer HTML stored directly in JavaScript
+// Function to load CSS file into head
+function loadCSS(href) {
+    // Check if CSS is already loaded
+    const existingLink = document.querySelector(`link[href="${href}"]`);
+    if (!existingLink) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+    }
+}
+
+// Navbar HTML
 const navbarHTML = `<!-- Navigation Section -->
 <nav class="navbar">
     <div class="navbar-container">
@@ -27,6 +39,7 @@ const navbarHTML = `<!-- Navigation Section -->
     </div>
 </nav>`;
 
+// Footer HTML
 const footerHTML = `<!-- Footer Section -->
 <footer class="footer">
     <div class="footer-container">
@@ -99,6 +112,11 @@ const footerHTML = `<!-- Footer Section -->
 
 // Load navbar and footer when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    // Load CSS files into head
+    loadCSS('../css/navbar.css');
+    loadCSS('../css/footer.css');
+    
+    // Insert HTML into placeholders
     const navbarPlaceholder = document.getElementById('navbar-placeholder');
     const footerPlaceholder = document.getElementById('footer-placeholder');
     
