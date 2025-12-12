@@ -12,33 +12,7 @@
 <body>
     <!-- Hero Section with Navigation -->
     <section class="hero-section">
-        <!-- Navigation Section -->
-        <nav class="navbar">
-            <div class="navbar-container">
-                <div class="navbar-brand">
-                    <img src="../images/logo.png" alt="Silverleaf" class="logo" onerror="this.style.display='none'">
-                    <span>Silverleaf</span>
-                </div>
-                <ul class="navbar-menu">
-                    <li><a href="HOME.html">Home</a></li>
-                    <li><a href="ABOUTUS.html">About Us</a></li>
-                    <li><a href="CONTACTUS.html">Contact Us</a></li>
-                    <li><a href="SERVICES.html">Services</a></li>
-                    <li><a href="THINGS TO DO.html">Things To Do</a></li>
-                    <li><a href="GALLARY.html">Gallery</a></li>
-                    <li><a href="ACCOMMODATION.html">Accommodation</a></li>
-                    <li><a href="FAQ.html" class="active">FAQ</a></li>
-                    <li><a href="ADMIN.html">Admin</a></li>
-                </ul>
-                <div class="navbar-actions">
-                    <button class="search-btn"><i class="fas fa-search"></i></button>
-                    <button class="book-btn">Book Now</button>
-                </div>
-                <button class="navbar-toggle" id="navbar-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </nav>
+        <div id="navbar-placeholder"></div>
         
         <div class="hero-content">
             <div class="hero-gradient-overlay"></div>
@@ -289,70 +263,10 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>About Silverleaf</h3>
-                <p>Experience luxury and comfort in the heart of Bandarawela. Your perfect getaway awaits at our historic hotel with modern amenities.</p>
-            </div>
+    <div id="footer-placeholder"></div>
 
-            <div class="footer-col">
-                <h3>Follow Us</h3>
-                <ul class="social-icons">
-                    <li><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
-                    <li><a href="#"><i class="fab fa-facebook fa-2x"></i></a></li>
-                    <li><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h3>Navigation</h3>
-                <ul>
-                    <li><a href="HOME.html">Home</a></li>
-                    <li><a href="ABOUTUS.html">About Us</a></li>
-                    <li><a href="CONTACTUS.html">Contact Us</a></li>
-                    <li><a href="SERVICES.html">Services</a></li>
-                    <li><a href="THINGS TO DO.html">Things To Do</a></li>
-                    <li><a href="GALLARY.html">Gallery</a></li>
-                    <li><a href="ACCOMMODATION.html">Accommodation</a></li>
-                    <li><a href="FAQ.html">FAQ</a></li>
-                    <li><a href="ADMIN.html">Admin</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h3>Contact Information</h3>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Bandarawela, Sri Lanka</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <span>+94 57 222 3456</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>info@orienthotel.lk</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 Silverleaf. All rights reserved.</p>
-        </div>
-    </footer>
-
+    <script src="../js/include.js"></script>
     <script>
-        const navbarToggle = document.getElementById('navbar-toggle');
-        const navbarMenu = document.querySelector('.navbar-menu');
-        
-        if (navbarToggle) {
-            navbarToggle.addEventListener('click', function() {
-                navbarMenu.classList.toggle('active');
-            });
-        }
-
         // FAQ Accordion
         const faqQuestions = document.querySelectorAll('.faq-question');
         
