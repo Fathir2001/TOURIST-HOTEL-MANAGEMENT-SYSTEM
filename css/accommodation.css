@@ -373,7 +373,10 @@ section {
 
 .navbar-brand .logo {
     height: 50px;
-    width: auto;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: transparent;
 }
 
 .navbar-brand span {
