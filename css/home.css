@@ -114,7 +114,10 @@ section {
 
 .navbar-brand .logo {
     height: 50px;
-    width: auto;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: transparent;
 }
 
 .navbar-brand span {
@@ -358,9 +361,10 @@ button:hover, .btn:hover {
 /* Welcome Section */
 .welcome {
     background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-    padding: 80px 20px;
+    padding: 60px 20px 40px 20px;
     position: relative;
     overflow: hidden;
+    border-bottom: 3px solid #e0e0e0;
 }
 
 .welcome::before {
@@ -568,6 +572,9 @@ button:hover, .btn:hover {
 /* Gallery */
 .gallery {
     background-color: #fff;
+    padding: 40px 20px;
+    border-top: 3px solid #e0e0e0;
+    border-bottom: 3px solid #e0e0e0;
 }
 
 .gallery h2 {
@@ -598,7 +605,9 @@ button:hover, .btn:hover {
 /* Rooms Section */
 .rooms {
     background-color: #fff;
-    padding: 80px 20px;
+    padding: 40px 20px;
+    border-top: 3px solid #e0e0e0;
+    border-bottom: 3px solid #e0e0e0;
 }
 
 .rooms h2 {
@@ -800,6 +809,9 @@ button:hover, .btn:hover {
 /* Services */
 .services {
     background-color: #fff;
+    padding: 40px 20px;
+    border-top: 3px solid #e0e0e0;
+    border-bottom: 3px solid #e0e0e0;
 }
 
 .services h2 {

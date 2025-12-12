@@ -3,72 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADMIN - TOURIST HOTEL MANAGEMENT SYSTEM</title>
+    <title>Admin Portal - TOURIST HOTEL MANAGEMENT SYSTEM</title>
     <link rel="stylesheet" href="../css/STYLE.CSS">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Hero Section with Navigation -->
-    <section class="hero-section">
-        <!-- Navigation Section -->
-        <nav class="navbar">
-            <div class="navbar-container">
-                <div class="navbar-brand">
-                    <img src="../images/logo.png" alt="Orient Hotel" class="logo" onerror="this.style.display='none'">
-                    <span>Orient Hotel</span>
-                </div>
-                <ul class="navbar-menu">
-                    <li><a href="HOME.html">Home</a></li>
-                    <li><a href="ABOUTUS.html">About Us</a></li>
-                    <li><a href="CONTACTUS.html">Contact Us</a></li>
-                    <li><a href="SERVICES.html">Services</a></li>
-                    <li><a href="REGISTRATION.html">Registration</a></li>
-                    <li><a href="THINGS TO DO.html">Things To Do</a></li>
-                    <li><a href="GALLARY.html">Gallery</a></li>
-                    <li><a href="ACCOMMODATION.html">Accommodation</a></li>
-                    <li><a href="ADMIN.html" class="active">Admin</a></li>
-                </ul>
-                <div class="navbar-actions">
-                    <button class="search-btn"><i class="fas fa-search"></i></button>
-                    <button class="book-btn">Book Now</button>
-                </div>
-                <button class="navbar-toggle" id="navbar-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
+    <!-- Navigation Section -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../images/logo.png" alt="Silverleaf" class="logo" onerror="this.style.display='none'">
+                <span>Silverleaf</span>
             </div>
-        </nav>
-        
-        <div class="hero-content">
-            <img src="../images/IMG19.jpg" alt="Admin Panel" class="hero-image">
+            <ul class="navbar-menu">
+                <li><a href="HOME.html">Home</a></li>
+                <li><a href="ABOUTUS.html">About Us</a></li>
+                <li><a href="CONTACTUS.html">Contact Us</a></li>
+                <li><a href="SERVICES.html">Services</a></li>
+                <li><a href="THINGS TO DO.html">Things To Do</a></li>
+                <li><a href="GALLARY.html">Gallery</a></li>
+                <li><a href="ACCOMMODATION.html">Accommodation</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
+                <li><a href="ADMIN.html" class="active">Admin</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <button class="navbar-toggle" id="navbar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Admin Login Section -->
+    <section class="admin-login-section">
+        <div class="login-wrapper">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="admin-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h1>Admin Portal</h1>
+                    <p>Silverleaf Management System</p>
+                </div>
+
+                <form method="post" action="../php/Connect.php" class="login-form" id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i> Username
+                        </label>
+                        <input type="text" name="username" id="username" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p><i class="fas fa-shield-alt"></i> Secure Admin Access Only</p>
+                    <a href="HOME.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Back to Website
+                    </a>
+                </div>
+            </div>
+
+            <div class="admin-features">
+                <h3>Admin Dashboard Features</h3>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Manage Bookings</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <span>Guest Management</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-bed"></i>
+                        <span>Room Availability</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Reports & Analytics</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>Revenue Tracking</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-cog"></i>
+                        <span>System Settings</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-
-<!-- Header -->
-<header>
-    <h1 style="color:green; text-align: CENTER;">ADMIN</h1>
-</header>
-
-<!-- Admin Login Form -->
-<section class="admin-section">
-    <div class="login-container">
-        <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
-        <form method="post" action="../php/Connect.php">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            
-            <button type="submit" class="btn-login">Login</button>
-        </form>
-    </div>
-</section>
 
 <!-- Footer Section -->
 <footer class="footer">
@@ -99,7 +152,6 @@
                 <li><a href="ABOUTUS.html">About Us</a></li>
                 <li><a href="CONTACTUS.html">Contact Us</a></li>
                 <li><a href="SERVICES.html">Services</a></li>
-                <li><a href="REGISTRATION.html">Registration</a></li>
                 <li><a href="THINGS TO DO.html">Things To Do</a></li>
                 <li><a href="GALLARY.html">Gallery</a></li>
                 <li><a href="ACCOMMODATION.html">Accommodation</a></li>
@@ -130,7 +182,41 @@
 </footer>
 
 <script>
-    // Mobile menu toggle
+    // Password visibility toggle
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+
+    // Form validation
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        if (username.length < 3) {
+            e.preventDefault();
+            alert('Username must be at least 3 characters long');
+            return false;
+        }
+        
+        if (password.length < 6) {
+            e.preventDefault();
+            alert('Password must be at least 6 characters long');
+            return false;
+        }
+    });
+
+    // Navbar toggle functionality
     const navbarToggle = document.getElementById('navbar-toggle');
     const navbarMenu = document.querySelector('.navbar-menu');
     
