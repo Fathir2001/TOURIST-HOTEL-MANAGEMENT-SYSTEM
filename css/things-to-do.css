@@ -38,9 +38,165 @@ section {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
+}
+
+/* Introduction Section */
+.intro-section {
+    padding: 60px 20px;
+    background: #fff;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-header h2 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.section-header .subtitle {
+    font-size: 20px;
+    color: #2e7d32;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.intro-text {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    text-align: center;
+}
+
+/* Category Header */
+.category-header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #2e7d32;
+}
+
+.category-header h2 {
+    font-size: 32px;
+    color: #2e7d32;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.category-header i {
+    font-size: 36px;
+}
+
+/* Excursions Section */
+.excursions-section {
+    padding: 80px 20px;
+    background: #f9f9f9;
+}
+
+/* Experiences Section */
+.experiences-section {
+    padding: 80px 20px;
+    background: #fff;
+}
+
+/* Activities Grid */
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.activity-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #2e7d32;
+    padding: 30px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.activity-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    border-left-color: #1b5e20;
+}
+
+.activity-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.activity-card:hover .activity-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.activity-icon i {
+    font-size: 32px;
+    color: #fff;
+}
+
+.activity-card h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.activity-subtitle {
+    font-size: 14px;
+    color: #2e7d32;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.activity-card > p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.activity-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.activity-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #777;
+}
+
+.activity-meta i {
+    color: #2e7d32;
+    font-size: 16px;
 }
 
 /* Hero Section with Overlay Navigation */
