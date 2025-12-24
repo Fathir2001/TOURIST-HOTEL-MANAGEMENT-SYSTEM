@@ -96,19 +96,7 @@ const footerHTML = `<!-- Footer Section -->
     <div class="footer-bottom">
         <p>&copy; 2025 Bandarawela Hotel. All rights reserved.</p>
     </div>
-</footer>
-
-<script>
-    // Mobile menu toggle
-    const navbarToggle = document.getElementById('navbar-toggle');
-    const navbarMenu = document.querySelector('.navbar-menu');
-    
-    if (navbarToggle) {
-        navbarToggle.addEventListener('click', function() {
-            navbarMenu.classList.toggle('active');
-        });
-    }
-</script>`;
+</footer>`;
 
 // Load navbar and footer when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
@@ -123,16 +111,26 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navbarPlaceholder) {
         navbarPlaceholder.innerHTML = navbarHTML;
         
-        // Highlight active page in navbar
-        const currentPage = decodeURIComponent(window.location.pathname.split('/').pop());
+        // Highlight active page in navbar (case-insensitive comparison)
+        const currentPage = decodeURIComponent(window.location.pathname.split('/').pop()).toLowerCase();
         const navLinks = document.querySelectorAll('.navbar-menu a');
         
         navLinks.forEach(link => {
-            const linkPage = link.getAttribute('href');
+            const linkPage = link.getAttribute('href').toLowerCase();
             if (linkPage === currentPage) {
                 link.classList.add('active');
             }
         });
+        
+        // Initialize mobile menu toggle (moved from footer script)
+        const navbarToggle = document.getElementById('navbar-toggle');
+        const navbarMenu = document.querySelector('.navbar-menu');
+        
+        if (navbarToggle && navbarMenu) {
+            navbarToggle.addEventListener('click', function() {
+                navbarMenu.classList.toggle('active');
+            });
+        }
     }
     
     if (footerPlaceholder) {
