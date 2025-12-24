@@ -181,6 +181,36 @@ section {
     color: #666;
 }
 
+/* Map Section */
+.map-section {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.map-section h2 {
+    text-align: center;
+    color: green;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+.map-section h2 i {
+    margin-right: 10px;
+}
+
+.map-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.map-container iframe {
+    display: block;
+    width: 100%;
+}
+
 .form-section {
     padding: 60px 20px;
     background-color: #f9f9f9;
