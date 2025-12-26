@@ -171,6 +171,54 @@ section {
     font-size: 16px;
 }
 
+/* System Title - Animated Heading */
+.system-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    margin: 0 0 20px 0;
+    text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9), 0 0 30px rgba(220, 38, 38, 0.6);
+    letter-spacing: 4px;
+    line-height: 1.3;
+    text-transform: uppercase;
+    animation: slideInFromTop 1s ease-out, colorPulse 4s ease-in-out infinite;
+    background: linear-gradient(45deg, #ff6b6b, #feca57, #ff6b6b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: slideInFromTop 1s ease-out, gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes colorPulse {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.3);
+    }
+}
+
 .hero-title {
     font-size: 64px;
     font-weight: 900;
