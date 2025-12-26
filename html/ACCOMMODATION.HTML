@@ -229,6 +229,34 @@
         </div>
     </section>
 
+    <!-- Booking Section -->
+    <section class="booking" id="booking">
+        <div class="container">
+            <h2>Book Your Stay</h2>
+            <form class="booking-form">
+                <div class="form-item">
+                    <label for="checkin-date">Check In Date:</label>
+                    <input type="date" id="checkin-date" required>
+                </div>
+                <div class="form-item">
+                    <label for="checkout-date">Check Out Date:</label>
+                    <input type="date" id="checkout-date" required>
+                </div>
+                <div class="form-item">
+                    <label for="adults">Adults:</label>
+                    <input type="number" min="1" value="1" id="adults" required>
+                </div>
+                <div class="form-item">
+                    <label for="rooms-input">Rooms:</label>
+                    <input type="number" min="1" value="1" id="rooms-input" required>
+                </div>
+                <div class="form-item">
+                    <button type="submit" class="btn">Book Now</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
     <div id="footer-placeholder"></div>
 
     <script src="../js/include.js"></script>
