@@ -129,9 +129,10 @@ section {
 
 .contact-section h2 {
     text-align: center;
-    color: green;
+    color: #dc2626;
     margin-bottom: 20px;
     font-size: 32px;
+    text-shadow: 2px 2px 4px rgba(220, 38, 38, 0.2);
 }
 
 .contact-section h2 i {
@@ -168,8 +169,9 @@ section {
 
 .info-item i {
     font-size: 40px;
-    color: green;
+    color: #dc2626;
     margin-bottom: 15px;
+    filter: drop-shadow(0 4px 8px rgba(220, 38, 38, 0.4));
 }
 
 .info-item h3 {
@@ -189,9 +191,10 @@ section {
 
 .map-section h2 {
     text-align: center;
-    color: green;
+    color: #dc2626;
     margin-bottom: 30px;
     font-size: 32px;
+    text-shadow: 2px 2px 4px rgba(220, 38, 38, 0.2);
 }
 
 .map-section h2 i {
@@ -227,8 +230,9 @@ section {
 
 .form-container h2 {
     text-align: center;
-    color: green;
+    color: #dc2626;
     margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(220, 38, 38, 0.2);
 }
 
 .form-group {
@@ -255,23 +259,27 @@ section {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: green;
+    border-color: #dc2626;
+    box-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
 }
 
 .btn-submit {
     width: 100%;
     padding: 12px;
-    background-color: green;
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #7f1d1d 100%);
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 .btn-submit:hover {
-    background-color: darkgreen;
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 50%, #dc2626 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
 }
 
 footer {
@@ -301,6 +309,8 @@ footer {
 }
 
 .social-icons a:hover {
-    color: green;
+    color: #ef4444;
+    filter: drop-shadow(0 2px 8px rgba(239, 68, 68, 0.5));
+    transform: translateY(-2px);
 }
 

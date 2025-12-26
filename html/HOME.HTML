@@ -10,22 +10,68 @@
 </head>
 
 <body>
-    <!-- Hero Section with Navigation -->
-    <section class="hero-section">
+    <!-- Full-Screen Hero Section - Home Page Only -->
+    <section class="hero-section home-hero">
         <div id="navbar-placeholder"></div>
         
         <div class="hero-content">
-            <div class="hero-gradient-overlay"></div>
-            <img src="../images/img 1.jpg" alt="Bandarawela Hotel" class="hero-image">
-            <div class="hero-text-overlay">
-                <h1 class="hero-title">Silverleaf</h1>
-                <p class="hero-tagline">Experience Luxury in the Heart of Bandarawela</p>
+            <!-- Animated Background Slideshow -->
+            <div class="hero-slideshow">
+                <div class="hero-slide active" style="background-image: url('../images/img 1.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('../images/img72.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('../images/img73.webp');"></div>
             </div>
+            
+            <!-- Gradient Overlay -->
+            <div class="hero-gradient-overlay"></div>
+            
+            <!-- Hero Content -->
+            <div class="hero-text-content">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i>
+                    <span>5-Star Luxury Experience</span>
+                </div>
+                <h1 class="hero-title">Welcome to Titania</h1>
+                <p class="hero-subtitle">Where Elegance Meets Serenity</p>
+                <p class="hero-description">Experience the finest hospitality in the heart of Bandarawela's breathtaking hill country</p>
+                <div class="hero-buttons">
+                    <a href="#rooms" class="btn-primary">
+                        <span>Explore Rooms</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#booking" class="btn-secondary">
+                        <span>Book Now</span>
+                        <i class="fas fa-calendar-check"></i>
+                    </a>
+                </div>
+                
+                <!-- Feature Highlights -->
+                <div class="hero-features">
+                    <div class="hero-feature-item">
+                        <i class="fas fa-wifi"></i>
+                        <span>Free WiFi</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>24/7 Service</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="fas fa-spa"></i>
+                        <span>Luxury Spa</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="fas fa-utensils"></i>
+                        <span>Fine Dining</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
             <div class="scroll-indicator">
                 <div class="mouse">
                     <div class="wheel"></div>
                 </div>
-                <p>Scroll Down</p>
+                <p>Scroll to Explore</p>
             </div>
         </div>
     </section>
@@ -63,6 +109,12 @@
                 <img src="../images/img7.jpeg" alt="Hotel interior">
                 <img src="../images/IMG6.jpg" alt="Hotel room">
                 <img src="../images/IMG7.jpg" alt="Hotel view">
+            </div>
+            <div class="section-more-btn">
+                <a href="GALLARY.HTML" class="btn-more">
+                    <span>View More</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -118,9 +170,15 @@
                             <span class="price-label">Starting from</span>
                             <span class="price-amount">$150<small>/night</small></span>
                         </div>
-                        <button type="button" class="btn btn-book">Book Now</button>
+                        
                     </div>
                 </div>
+            </div>
+            <div class="section-more-btn">
+                <a href="ACCOMMODATION.HTML" class="btn-more">
+                    <span>View All Rooms</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -160,34 +218,56 @@
                     </div>
                 </article>
             </div>
+            <div class="section-more-btn">
+                <a href="SERVICES.HTML" class="btn-more">
+                    <span>View All Services</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
     </section>
 
-    <!-- Booking Section -->
-    <section class="booking" id="booking">
+    <!-- Things To Do Section -->
+    <section class="things-to-do" id="things-to-do">
         <div class="container">
-            <h2>Book Your Stay</h2>
-            <form class="booking-form">
-                <div class="form-item">
-                    <label for="checkin-date">Check In Date:</label>
-                    <input type="date" id="checkin-date" required>
-                </div>
-                <div class="form-item">
-                    <label for="checkout-date">Check Out Date:</label>
-                    <input type="date" id="checkout-date" required>
-                </div>
-                <div class="form-item">
-                    <label for="adults">Adults:</label>
-                    <input type="number" min="1" value="1" id="adults" required>
-                </div>
-                <div class="form-item">
-                    <label for="rooms-input">Rooms:</label>
-                    <input type="number" min="1" value="1" id="rooms-input" required>
-                </div>
-                <div class="form-item">
-                    <button type="submit" class="btn">Book Now</button>
-                </div>
-            </form>
+            <h2>Things To Do</h2>
+            <div class="services-container">
+                <article class="service">
+                    <div class="services-icon">
+                        <i class="fas fa-hiking fa-3x"></i>
+                    </div>
+                    <div class="services-content">
+                        <h3>Hiking & Trekking</h3>
+                        <p>Explore scenic trails and mountain peaks including Ella Rock and Little Adam's Peak.</p>
+                    </div>
+                </article>
+
+                <article class="service">
+                    <div class="services-icon">
+                        <i class="fas fa-mountain fa-3x"></i>
+                    </div>
+                    <div class="services-content">
+                        <h3>Lipton's Seat</h3>
+                        <p>Visit the famous viewpoint with panoramic views of the surrounding tea estates.</p>
+                    </div>
+                </article>
+
+                <article class="service">
+                    <div class="services-icon">
+                        <i class="fas fa-water fa-3x"></i>
+                    </div>
+                    <div class="services-content">
+                        <h3>Waterfalls</h3>
+                        <p>Discover hidden mountain waterfalls like Diyaluma and Ravana Falls.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="section-more-btn">
+                <a href="THINGS TO DO.HTML" class="btn-more">
+                    <span>Explore Activities</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -229,30 +309,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <div class="contact-container">
-                <form action="" class="contact-form">
-                    <div class="input-group">
-                        <input type="text" class="input" name="name" placeholder="Your Name" required>
-                        <span class="bar"></span>
-                    </div>
-                    <div class="input-group">
-                        <input type="email" class="input" name="email" placeholder="Your Email" required>
-                        <span class="bar"></span>
-                    </div>
-                    <div class="input-group">
-                        <textarea class="input" name="message" cols="32" rows="6" placeholder="Your Message" required></textarea>
-                        <span class="bar"></span>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
     <!-- Social Media Section -->
     <section class="social-media">
         <div class="container">
@@ -270,6 +326,7 @@
 
     <script src="../js/include.js"></script>
     <script src="../js/hero-effects.js"></script>
+    <script src="../js/hero-slideshow.js"></script>
 
 </body>
 </html>

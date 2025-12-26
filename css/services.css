@@ -78,7 +78,7 @@ section {
 .service-card {
     background: #fff;
     border: 1px solid #e0e0e0;
-    border-left: 4px solid #2e7d32;
+    border-left: 4px solid #dc2626;
     padding: 30px;
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -87,19 +87,20 @@ section {
 
 .service-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    border-left-color: #1b5e20;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.2);
+    border-left-color: #991b1b;
 }
 
 .service-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #7f1d1d 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
 }
 
 .service-icon i {
@@ -154,16 +155,17 @@ section {
 
 .partner-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    background: #2e7d32;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
     color: #fff;
 }
 
 .partner-card i {
     font-size: 40px;
     margin-bottom: 15px;
-    color: #2e7d32;
+    color: #dc2626;
     transition: color 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
 }
 
 .partner-card:hover i {
