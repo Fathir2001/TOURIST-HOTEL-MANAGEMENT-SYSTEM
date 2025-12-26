@@ -860,7 +860,8 @@ footer {
 }
 
 .footer-col ul li a:hover {
-    color: green;
+    color: #ef4444;
+    filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.4));
 }
 
 .social-icons {
@@ -874,7 +875,8 @@ footer {
 }
 
 .social-icons li a:hover {
-    color: green;
+    color: #ef4444;
+    filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.4));
 }
 
 .contact-item {
@@ -885,7 +887,8 @@ footer {
 }
 
 .contact-item i {
-    color: green;
+    color: #dc2626;
+    filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
 }
 
 .footer-bottom {

@@ -42,7 +42,8 @@ table th a {
 }
 
 table th a:hover {
-    color: green;
+    color: #dc2626;
+    filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
 }
 
 p {

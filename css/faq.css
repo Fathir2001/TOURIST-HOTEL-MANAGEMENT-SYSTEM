@@ -73,8 +73,9 @@
 
 .section-header h2 {
     font-size: 2.5rem;
-    color: green;
+    color: #dc2626;
     margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(220, 38, 38, 0.2);
 }
 
 .section-header p {
@@ -95,11 +96,12 @@
 
 .faq-category h3 {
     font-size: 2rem;
-    color: green;
+    color: #dc2626;
     margin-bottom: 30px;
     display: flex;
     align-items: center;
     gap: 15px;
+    text-shadow: 2px 2px 4px rgba(220, 38, 38, 0.2);
 }
 
 .faq-category h3 i {
@@ -121,8 +123,8 @@
 }
 
 .faq-item:hover {
-    border-color: green;
-    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1);
+    border-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 .faq-question {
@@ -136,13 +138,14 @@
 }
 
 .faq-question:hover {
-    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f4 100%);
+    background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
 }
 
 .faq-question i {
-    color: green;
+    color: #dc2626;
     font-size: 1.2rem;
     transition: transform 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
 }
 
 .faq-item.active .faq-question i {
@@ -195,19 +198,20 @@
 
 .policy-card:hover {
     transform: translateY(-5px);
-    border-color: green;
-    box-shadow: 0 8px 20px rgba(0, 128, 0, 0.15);
+    border-color: #dc2626;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
 }
 
 .policy-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, green, darkgreen);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #7f1d1d 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
 }
 
 .policy-icon i {
@@ -216,10 +220,11 @@
 }
 
 .policy-card h4 {
-    color: green;
+    color: #dc2626;
     font-size: 1.3rem;
     margin-bottom: 15px;
     padding: 0;
+    text-shadow: 1px 1px 2px rgba(220, 38, 38, 0.2);
 }
 
 .policy-card ul {
@@ -262,19 +267,20 @@
 
 .contact-card:hover {
     transform: translateY(-5px);
-    border-color: green;
-    box-shadow: 0 8px 20px rgba(0, 128, 0, 0.15);
+    border-color: #dc2626;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
 }
 
 .contact-icon {
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, green, darkgreen);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #7f1d1d 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
 }
 
 .contact-icon i {
@@ -283,10 +289,11 @@
 }
 
 .contact-card h4 {
-    color: green;
+    color: #dc2626;
     font-size: 1.3rem;
     margin-bottom: 15px;
     padding: 0;
+    text-shadow: 1px 1px 2px rgba(220, 38, 38, 0.2);
 }
 
 .contact-card p {
@@ -311,7 +318,7 @@
 .social-links a {
     width: 45px;
     height: 45px;
-    background: linear-gradient(135deg, green, darkgreen);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #7f1d1d 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -319,11 +326,12 @@
     color: white;
     font-size: 1.3rem;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 .social-links a:hover {
     transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 5px 15px rgba(0, 128, 0, 0.4);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
 }
 
 /* CTA Section */
@@ -331,10 +339,11 @@
     max-width: 800px;
     margin: 60px auto 0;
     text-align: center;
-    background: linear-gradient(135deg, green, darkgreen);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 50%, #7f1d1d 100%);
     padding: 50px 30px;
     border-radius: 15px;
     color: white;
+    box-shadow: 0 8px 30px rgba(220, 38, 38, 0.4);
 }
 
 .cta-section h3 {
@@ -370,7 +379,7 @@
 
 .btn-primary {
     background: white;
-    color: green;
+    color: #dc2626;
 }
 
 .btn-primary:hover {
@@ -387,12 +396,13 @@
 
 .btn-secondary:hover {
     background: white;
-    color: green;
+    color: #dc2626;
     transform: translateY(-3px);
 }
 
 .contact-item i {
-    color: green;
+    color: #dc2626;
+    filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
 }
 
 .footer-bottom {
