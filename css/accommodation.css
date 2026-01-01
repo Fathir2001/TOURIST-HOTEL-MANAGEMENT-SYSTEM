@@ -174,6 +174,70 @@ section {
     font-weight: 600;
 }
 
+/* Price Tag with Animation */
+.price-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 15px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border-left: 4px solid #dc2626;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+    animation: priceSlideIn 0.6s ease-out;
+    transition: all 0.3s ease;
+}
+
+.price-tag:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+    background: linear-gradient(135deg, #fecaca 0%, #fee2e2 100%);
+}
+
+.price-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.price-amount {
+    font-size: 28px;
+    font-weight: 700;
+    color: #dc2626;
+    animation: priceCount 1s ease-out;
+}
+
+.price-period {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+@keyframes priceSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes priceCount {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .room-info {
     display: flex;
     gap: 20px;
