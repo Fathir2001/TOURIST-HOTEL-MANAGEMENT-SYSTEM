@@ -48,6 +48,8 @@
                 </div>
 
                 <form method="post" action="../php/Connect.php" class="login-form" id="adminLoginForm">
+                    <input type="hidden" name="action" value="admin_login">
+                    
                     <div class="form-group">
                         <label for="username">
                             <i class="fas fa-user"></i> Username
@@ -75,7 +77,7 @@
                         <a href="#" class="forgot-password">Forgot Password?</a>
                     </div>
                     
-                    <button type="submit" class="btn-login">
+                    <button type="submit" class="btn-login" name="admin_login">
                         <i class="fas fa-sign-in-alt"></i> Login to Dashboard
                     </button>
                 </form>

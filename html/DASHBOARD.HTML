@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TOURIST HOTEL MANAGEMENT SYSTEM</title>
+    <link rel="stylesheet" href="../css/STYLE.CSS">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/logo.png" alt="Titania" class="sidebar-logo" onerror="this.style.display='none'">
+            <h2>Titania Admin</h2>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#bookings" class="nav-item">
+                <i class="fas fa-calendar-check"></i>
+                <span>Bookings</span>
+            </a>
+            <a href="#guests" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Guests</span>
+            </a>
+            <a href="#rooms" class="nav-item">
+                <i class="fas fa-bed"></i>
+                <span>Rooms</span>
+            </a>
+            <a href="#revenue" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Revenue</span>
+            </a>
+            <a href="#messages" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+            <a href="#testimonials" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Testimonials</span>
+            </a>
+            <a href="#settings" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="../html/HOME.HTML" class="nav-item">
+                <i class="fas fa-globe"></i>
+                <span>View Website</span>
+            </a>
+            <a href="#" onclick="confirmLogout(event)" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Dashboard</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">5</span>
+                </button>
+                <div class="admin-profile">
+                    <img src="../images/admin-avatar.jpg" alt="Admin" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23dc2626%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3EA%3C/text%3E%3C/svg%3E'">
+                    <div class="admin-info">
+                        <span class="admin-name" id="adminName">Admin User</span>
+                        <span class="admin-role" id="adminRole">Administrator</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-card">
+                    <div class="welcome-text">
+                        <h2>Welcome back, <span id="welcomeName">Admin</span>! 👋</h2>
+                        <p>Here's what's happening with your hotel today.</p>
+                    </div>
+                    <div class="quick-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="currentDate"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Today's Bookings</h3>
+                            <p class="stat-number">24</p>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 12% from yesterday
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Guests</h3>
+                            <p class="stat-number">156</p>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 8% from last week
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Available Rooms</h3>
+                            <p class="stat-number">18/45</p>
+                            <span class="stat-change">
+                                <i class="fas fa-minus"></i> 40% occupancy
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Revenue (Today)</h3>
+                            <p class="stat-number">$8,450</p>
+                            <span class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 15% from average
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions-section">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="quick-actions-grid">
+                    <button class="action-btn" onclick="alert('New Booking feature coming soon!')">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>New Booking</span>
+                    </button>
+                    <button class="action-btn" onclick="alert('Check-In feature coming soon!')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Check-In Guest</span>
+                    </button>
+                    <button class="action-btn" onclick="alert('Check-Out feature coming soon!')">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Check-Out Guest</span>
+                    </button>
+                    <button class="action-btn" onclick="alert('Room Status feature coming soon!')">
+                        <i class="fas fa-door-open"></i>
+                        <span>Update Room Status</span>
+                    </button>
+                    <button class="action-btn" onclick="alert('Reports feature coming soon!')">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>Generate Report</span>
+                    </button>
+                    <button class="action-btn" onclick="alert('Messages feature coming soon!')">
+                        <i class="fas fa-envelope-open"></i>
+                        <span>View Messages</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Recent Bookings & Activity -->
+            <section class="content-section">
+                <div class="content-grid">
+                    <!-- Recent Bookings -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>Recent Bookings</h3>
+                            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Guest Name</th>
+                                        <th>Room</th>
+                                        <th>Check-In</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="guest-cell">
+                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%234a90e2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EJD%3C/text%3E%3C/svg%3E" alt="Guest">
+                                                <span>John Doe</span>
+                                            </div>
+                                        </td>
+                                        <td>Presidential Suite</td>
+                                        <td>Jan 02, 2026</td>
+                                        <td><span class="status-badge confirmed">Confirmed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="guest-cell">
+                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%23e94b4b%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3ESJ%3C/text%3E%3C/svg%3E" alt="Guest">
+                                                <span>Sarah Johnson</span>
+                                            </div>
+                                        </td>
+                                        <td>Deluxe Double</td>
+                                        <td>Jan 03, 2026</td>
+                                        <td><span class="status-badge pending">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="guest-cell">
+                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%2350c878%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EMC%3C/text%3E%3C/svg%3E" alt="Guest">
+                                                <span>Michael Chen</span>
+                                            </div>
+                                        </td>
+                                        <td>Heritage Suite</td>
+                                        <td>Jan 01, 2026</td>
+                                        <td><span class="status-badge checked-in">Checked In</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="guest-cell">
+                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%23f39c12%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EER%3C/text%3E%3C/svg%3E" alt="Guest">
+                                                <span>Emma Rodriguez</span>
+                                            </div>
+                                        </td>
+                                        <td>Garden Wing</td>
+                                        <td>Jan 04, 2026</td>
+                                        <td><span class="status-badge confirmed">Confirmed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>Recent Activity</h3>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: #667eea;">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <p><strong>New booking</strong> from Sarah Johnson</p>
+                                    <span class="activity-time">5 minutes ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: #43e97b;">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <p><strong>Check-in</strong> completed for Room 205</p>
+                                    <span class="activity-time">15 minutes ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: #f093fb;">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <p><strong>Payment received</strong> - $450.00</p>
+                                    <span class="activity-time">30 minutes ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: #4facfe;">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <p><strong>New message</strong> from contact form</p>
+                                    <span class="activity-time">1 hour ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon" style="background: #fa709a;">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <p><strong>Check-out</strong> completed for Room 312</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Room Status Overview -->
+            <section class="room-status-section">
+                <h2 class="section-title">Room Status Overview</h2>
+                <div class="room-status-grid">
+                    <div class="room-status-card">
+                        <div class="room-status-header" style="background: #43e97b;">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>Available</h4>
+                        </div>
+                        <p class="room-count">18</p>
+                        <p class="room-label">Rooms</p>
+                    </div>
+                    <div class="room-status-card">
+                        <div class="room-status-header" style="background: #667eea;">
+                            <i class="fas fa-user-check"></i>
+                            <h4>Occupied</h4>
+                        </div>
+                        <p class="room-count">27</p>
+                        <p class="room-label">Rooms</p>
+                    </div>
+                    <div class="room-status-card">
+                        <div class="room-status-header" style="background: #f093fb;">
+                            <i class="fas fa-broom"></i>
+                            <h4>Cleaning</h4>
+                        </div>
+                        <p class="room-count">5</p>
+                        <p class="room-label">Rooms</p>
+                    </div>
+                    <div class="room-status-card">
+                        <div class="room-status-header" style="background: #dc2626;">
+                            <i class="fas fa-tools"></i>
+                            <h4>Maintenance</h4>
+                        </div>
+                        <p class="room-count">2</p>
+                        <p class="room-label">Rooms</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+        // Set current date
+        const dateElement = document.getElementById('currentDate');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = new Date().toLocaleDateString('en-US', options);
+
+        // Active navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (!this.classList.contains('logout')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Try to get admin info from session (would need PHP session handling)
+        // For now, using placeholder text
+        const adminName = "Admin User"; // This would come from PHP session
+        document.getElementById('adminName').textContent = adminName;
+        document.getElementById('welcomeName').textContent = adminName.split(' ')[0];
+
+        // Logout confirmation
+        function confirmLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '../php/logout.php';
+            }
+        }
+    </script>
+</body>
+</html>

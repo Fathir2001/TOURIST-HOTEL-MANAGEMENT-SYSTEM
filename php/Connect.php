@@ -155,9 +155,39 @@ function handleAdminLogin($conn) {
                 <div class='success'>✅</div>
                 <h2>Login Successful!</h2>
                 <p class='info'><strong>Welcome back, " . htmlspecialchars($admin['full_name']) . "!</strong></p>
-                <p class='info'>Backend is working correctly.<br>Session ID: " . session_id() . "</p>
+                <p class='info'>Redirecting to Admin Dashboard...</p>
                 <p class='info'>Role: " . htmlspecialchars($admin['role']) . "</p>
-                <a href='../html/HOME.HTML' class='btn'>Continue to Homepage</a>
+            </div>
+            <script>
+                setTimeout(function() {
+                    window.location.href = '../html/DASHBOARD.HTML';
+                }, 1500);
+            </script>
+        </body>
+        </html>";
+        exit;
+        
+    } catch (Exception $e) {
+        echo "<!DOCTYPE html>
+        <html>
+        <head>
+            <title>Login Failed</title>
+            <style>
+                body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }
+                .message { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+                .error { color: #dc3545; font-size: 50px; }
+                h2 { color: #333; }
+                .info { color: #666; margin: 20px 0; }
+                .btn { display: inline-block; padding: 12px 30px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+                .btn:hover { background: #c82333; }
+            </style>
+        </head>
+        <body>
+            <div class='message'>
+                <div class='error'>❌</div>
+                <h2>Login Failed</h2>
+                <p class='info'>" . htmlspecialchars($e->getMessage()) . "</p>
+                <a href='../html/ADMIN.HTML' class='btn'>Try Again</a>
             </div>
         </body>
         </html>";
