@@ -19,7 +19,7 @@ body {
 .hero-section {
     position: relative;
     width: 100vw;
-    height: 500px;
+    height: 600px;
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -133,7 +133,7 @@ body {
 
 /* Satisfaction Overview Section */
 .satisfaction-overview {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
     padding: 60px 20px;
     margin: 0;
 }
@@ -143,33 +143,6 @@ body {
     border-radius: 15px;
     padding: 40px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-}
-
-.overall-rating {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    margin-bottom: 40px;
-    padding-bottom: 30px;
-    border-bottom: 2px solid #f0f0f0;
-}
-
-.rating-number {
-    font-size: 5rem;
-    font-weight: 700;
-    color: #667eea;
-    line-height: 1;
-}
-
-.rating-text h3 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.rating-text p {
-    font-size: 1rem;
-    color: #666;
 }
 
 .rating-breakdown {
@@ -198,14 +171,14 @@ body {
 
 .rating-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
     border-radius: 4px;
     transition: width 0.3s ease;
 }
 
 .rating-score {
     font-weight: 700;
-    color: #667eea;
+    color: #dc2626;
     text-align: right;
 }
 
@@ -251,8 +224,8 @@ body {
 }
 
 .testimonial-card.featured {
-    border: 2px solid #667eea;
-    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+    border: 2px solid #dc2626;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
 }
 
 .testimonial-header {
@@ -273,7 +246,7 @@ body {
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #667eea;
+    border: 3px solid #dc2626;
 }
 
 .guest-details {
@@ -295,7 +268,7 @@ body {
 
 .stay-info {
     font-size: 0.85rem;
-    color: #667eea;
+    color: #dc2626;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -322,7 +295,7 @@ body {
 .rating-number {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #667eea;
+    color: #dc2626;
 }
 
 .testimonial-body {
@@ -354,8 +327,8 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: #e8f0fe;
-    color: #667eea;
+    background: #fee2e2;
+    color: #dc2626;
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -442,7 +415,7 @@ body {
 
 /* Testimonial CTA Section */
 .testimonial-cta {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
     padding: 80px 20px;
     text-align: center;
     color: white;
@@ -463,7 +436,7 @@ body {
 
 .cta-btn {
     background: white;
-    color: #667eea;
+    color: #dc2626;
     border: none;
     padding: 15px 40px;
     font-size: 1.1rem;
@@ -475,7 +448,7 @@ body {
 
 .cta-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
 }
 
 .cta-subtext {
