@@ -16,8 +16,11 @@ body {
 
 /* Navbar Overrides for Admin Page */
 .navbar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 !important;
@@ -39,7 +42,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #fff;
+    color: #333;
     font-size: 20px;
     font-weight: 700;
     padding: 20px 0;
@@ -57,9 +60,9 @@ body {
 }
 
 .navbar-brand span {
-    color: #fff;
+    color: #333;
     font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: none;
 }
 
 .navbar-menu {
@@ -80,62 +83,21 @@ body {
 .navbar-menu li a {
     display: block;
     padding: 20px 16px;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(51, 51, 51, 0.9);
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
     transition: all 0.3s ease;
     position: relative;
     white-space: nowrap;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow: none;
 }
 
 .navbar-menu li a:hover,
 .navbar-menu li a.active {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
+    color: #333;
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 5px;
-}
-
-.navbar-actions {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.navbar-actions .search-btn,
-.navbar-actions .book-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.navbar-actions .search-btn {
-    background: transparent;
-    color: #fff;
-    font-size: 18px;
-    padding: 10px 15px;
-}
-
-.navbar-actions .search-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.navbar-actions .book-btn {
-    color: #667eea;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-actions .book-btn:hover {
-    background: rgba(255, 255, 255, 0.9);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .navbar-toggle {
@@ -148,7 +110,7 @@ body {
 }
 
 .navbar-toggle i {
-    color: #fff;
+    color: #333;
     font-size: 24px;
 }
 
@@ -166,7 +128,9 @@ body {
         display: none;
         width: 100%;
         flex-direction: column;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         padding: 20px 0;
         gap: 0;
     }
@@ -178,10 +142,6 @@ body {
     .navbar-menu li a {
         padding: 15px 20px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .navbar-actions {
-        display: none;
     }
 }
 
@@ -206,9 +166,12 @@ body {
 
 /* Login Card */
 .login-card {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     overflow: hidden;
     animation: slideInLeft 0.6s ease-out;
 }
@@ -225,7 +188,7 @@ body {
 }
 
 .login-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
     color: #fff;
     padding: 40px 30px;
     text-align: center;
@@ -240,7 +203,6 @@ body {
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
-    backdrop-filter: blur(10px);
 }
 
 .admin-icon i {
@@ -264,6 +226,7 @@ body {
 /* Login Form */
 .login-form {
     padding: 40px 30px;
+    background: transparent;
 }
 
 .form-group {
@@ -280,25 +243,28 @@ body {
 
 .form-group label i {
     margin-right: 8px;
-    color: #667eea;
+    color: #dc2626;
 }
 
 .form-group input[type="text"],
 .form-group input[type="password"] {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #e0e0e0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     font-size: 15px;
     transition: all 0.3s ease;
-    background: #f9f9f9;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #333;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #667eea;
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #dc2626;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 .password-input {
@@ -323,7 +289,7 @@ body {
 }
 
 .toggle-password:hover {
-    color: #667eea;
+    color: #dc2626;
 }
 
 .toggle-password i {
@@ -354,21 +320,21 @@ body {
 }
 
 .forgot-password {
-    color: #667eea;
+    color: #dc2626;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
-    color: #764ba2;
+    color: #991b1b;
     text-decoration: underline;
 }
 
 /* Login Button */
 .btn-login {
     width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
     color: #fff;
     border: none;
     padding: 16px;
@@ -384,9 +350,9 @@ body {
 }
 
 .btn-login:hover {
-    background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+    background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
 }
 
 .btn-login i {
@@ -396,8 +362,8 @@ body {
 /* Login Footer */
 .login-footer {
     padding: 25px 30px;
-    background: #f9f9f9;
-    border-top: 1px solid #e0e0e0;
+    background: rgba(0, 0, 0, 0.02);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
@@ -408,7 +374,7 @@ body {
 }
 
 .login-footer i {
-    color: #667eea;
+    color: #dc2626;
     margin-right: 5px;
 }
 
@@ -416,7 +382,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #667eea;
+    color: #dc2626;
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
@@ -424,16 +390,19 @@ body {
 }
 
 .back-link:hover {
-    color: #764ba2;
+    color: #991b1b;
     gap: 12px;
 }
 
 /* Admin Features */
 .admin-features {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 16px;
     padding: 40px 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
     animation: slideInRight 0.6s ease-out;
 }
 
@@ -449,7 +418,7 @@ body {
 }
 
 .admin-features h3 {
-    color: #667eea;
+    color: #333;
     font-size: 24px;
     margin-bottom: 30px;
     text-align: center;
@@ -467,27 +436,31 @@ body {
     align-items: center;
     gap: 15px;
     padding: 20px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 10px;
-    border-left: 4px solid #667eea;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-left: 4px solid #dc2626;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(31, 38, 135, 0.1);
 }
 
 .feature-item:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: rgba(220, 38, 38, 0.1);
     transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+    border-left-color: #991b1b;
 }
 
 .feature-item i {
     font-size: 28px;
-    color: #667eea;
+    color: #dc2626;
     transition: color 0.3s ease;
 }
 
 .feature-item:hover i {
-    color: #fff;
+    color: #991b1b;
 }
 
 .feature-item span {
@@ -498,7 +471,7 @@ body {
 }
 
 .feature-item:hover span {
-    color: #fff;
+    color: #dc2626;
 }
 
 /* Responsive Design */

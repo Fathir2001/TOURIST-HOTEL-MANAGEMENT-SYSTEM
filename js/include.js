@@ -24,15 +24,12 @@ const navbarHTML = `<!-- Navigation Section -->
             <li><a href="CONTACTUS.html">Contact Us</a></li>
             <li><a href="SERVICES.html">Services</a></li>
             <li><a href="THINGS TO DO.html">Things To Do</a></li>
+            <li><a href="TESTIMONIALS.html">Testimonials</a></li>
             <li><a href="GALLARY.html">Gallery</a></li>
             <li><a href="ACCOMMODATION.html">Accommodation</a></li>
             <li><a href="FAQ.html">FAQ</a></li>
             <li><a href="ADMIN.html">Admin</a></li>
         </ul>
-        <div class="navbar-actions">
-            <button class="search-btn"><i class="fas fa-search"></i></button>
-            <button class="book-btn">Book Now</button>
-        </div>
         <button class="navbar-toggle" id="navbar-toggle">
             <i class="fas fa-bars"></i>
         </button>
@@ -53,16 +50,6 @@ const footerHTML = `<!-- Footer Section -->
         </div>
 
         <div class="footer-col">
-            <h3>Useful Links</h3>
-            <ul>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#rooms">Rooms</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-                <li><a href="#">Gift Card</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-col">
             <h3>Navigation</h3>
             <ul>
                 <li><a href="HOME.html">Home</a></li>
@@ -70,8 +57,10 @@ const footerHTML = `<!-- Footer Section -->
                 <li><a href="CONTACTUS.html">Contact Us</a></li>
                 <li><a href="SERVICES.html">Services</a></li>
                 <li><a href="THINGS TO DO.html">Things To Do</a></li>
+                <li><a href="TESTIMONIALS.html">Testimonials</a></li>
                 <li><a href="GALLARY.html">Gallery</a></li>
                 <li><a href="ACCOMMODATION.html">Accommodation</a></li>
+                <li><a href="FAQ.html">FAQ</a></li>
                 <li><a href="ADMIN.html">Admin</a></li>
             </ul>
         </div>
