@@ -33,19 +33,11 @@
                 <i class="fas fa-bed"></i>
                 <span>Rooms</span>
             </a>
-            <a href="#revenue" class="nav-item">
+            <a href="#revenue" class="nav-item" onclick="showSection('revenue'); return false;">
                 <i class="fas fa-chart-line"></i>
                 <span>Revenue</span>
             </a>
-            <a href="#messages" class="nav-item">
-                <i class="fas fa-envelope"></i>
-                <span>Messages</span>
-            </a>
-            <a href="#testimonials" class="nav-item">
-                <i class="fas fa-star"></i>
-                <span>Testimonials</span>
-            </a>
-            <a href="#settings" class="nav-item">
+            <a href="#settings" class="nav-item" onclick="showSection('settings'); return false;">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
             </a>
@@ -74,14 +66,6 @@
                 <h1>Dashboard</h1>
             </div>
             <div class="topbar-right">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search...">
-                </div>
-                <button class="notification-btn">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">5</span>
-                </button>
                 <div class="admin-profile">
                     <img src="../images/admin-avatar.jpg" alt="Admin" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23dc2626%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3EA%3C/text%3E%3C/svg%3E'">
                     <div class="admin-info">
@@ -119,9 +103,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Today's Bookings</h3>
-                            <p class="stat-number">24</p>
-                            <span class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i> 12% from yesterday
+                            <p class="stat-number" id="todayBookings">0</p>
+                            <span class="stat-change" id="todayBookingsChange">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -132,9 +116,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Total Guests</h3>
-                            <p class="stat-number">156</p>
-                            <span class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i> 8% from last week
+                            <p class="stat-number" id="totalGuests">0</p>
+                            <span class="stat-change" id="totalGuestsChange">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -145,9 +129,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Available Rooms</h3>
-                            <p class="stat-number">18/45</p>
-                            <span class="stat-change">
-                                <i class="fas fa-minus"></i> 40% occupancy
+                            <p class="stat-number" id="availableRooms">0/0</p>
+                            <span class="stat-change" id="occupancyRate">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -158,9 +142,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Revenue (Today)</h3>
-                            <p class="stat-number">$8,450</p>
-                            <span class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i> 15% from average
+                            <p class="stat-number" id="revenueToday">Rs. 0.00</p>
+                            <span class="stat-change" id="revenueTodayChange">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -171,17 +155,17 @@
             <section class="quick-actions-section">
                 <h2 class="section-title">Quick Actions</h2>
                 <div class="quick-actions-grid">
-                    <button class="action-btn" onclick="window.location.href='ADMIN_BOOKINGS.PHP'">
+                    <button class="action-btn" onclick="showSection('bookings')">
                         <i class="fas fa-calendar-check"></i>
                         <span>View Bookings</span>
                     </button>
-                    <button class="action-btn" onclick="alert('Room Status feature coming soon!')">
+                    <button class="action-btn" onclick="showSection('rooms')">
                         <i class="fas fa-door-open"></i>
-                        <span>Update Room Status</span>
+                        <span>Manage Rooms</span>
                     </button>
-                    <button class="action-btn" onclick="alert('Reports feature coming soon!')">
+                    <button class="action-btn" onclick="showSection('revenue')">
                         <i class="fas fa-file-invoice"></i>
-                        <span>Generate Report</span>
+                        <span>View Revenue</span>
                     </button>
                 </div>
             </section>
@@ -193,57 +177,23 @@
                     <div class="content-card">
                         <div class="card-header">
                             <h3>Recent Bookings</h3>
-                            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" onclick="showSection('bookings'); return false;" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
                         </div>
                         <div class="table-container">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>Guest Name</th>
-                                        <th>Room</th>
+                                        <th>Room Type</th>
                                         <th>Check-In</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="recentBookingsTable">
                                     <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%234a90e2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EJD%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>John Doe</span>
-                                            </div>
+                                        <td colspan="3" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #dc2626;"></i>
+                                            <p style="margin-top: 10px; color: #666;">Loading recent bookings...</p>
                                         </td>
-                                        <td>Presidential Suite</td>
-                                        <td>Jan 02, 2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%23e94b4b%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3ESJ%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>Sarah Johnson</span>
-                                            </div>
-                                        </td>
-                                        <td>Deluxe Double</td>
-                                        <td>Jan 03, 2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%2350c878%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EMC%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>Michael Chen</span>
-                                            </div>
-                                        </td>
-                                        <td>Heritage Suite</td>
-                                        <td>Jan 01, 2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%23f39c12%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EER%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>Emma Rodriguez</span>
-                                            </div>
-                                        </td>
-                                        <td>Garden Wing</td>
-                                        <td>Jan 04, 2026</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -255,51 +205,10 @@
                         <div class="card-header">
                             <h3>Recent Activity</h3>
                         </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #667eea;">
-                                    <i class="fas fa-calendar-check"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>New booking</strong> from Sarah Johnson</p>
-                                    <span class="activity-time">5 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #43e97b;">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>Check-in</strong> completed for Room 205</p>
-                                    <span class="activity-time">15 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #f093fb;">
-                                    <i class="fas fa-dollar-sign"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>Payment received</strong> - $450.00</p>
-                                    <span class="activity-time">30 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #4facfe;">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>New message</strong> from contact form</p>
-                                    <span class="activity-time">1 hour ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #fa709a;">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>Check-out</strong> completed for Room 312</p>
-                                    <span class="activity-time">2 hours ago</span>
-                                </div>
+                        <div class="activity-list" id="recentActivityList">
+                            <div class="activity-item" style="text-align: center; padding: 40px;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #dc2626;"></i>
+                                <p style="margin-top: 10px; color: #666;">Loading activities...</p>
                             </div>
                         </div>
                     </div>
@@ -315,7 +224,7 @@
                             <i class="fas fa-check-circle"></i>
                             <h4>Available</h4>
                         </div>
-                        <p class="room-count">18</p>
+                        <p class="room-count" id="availableRoomsCount">0</p>
                         <p class="room-label">Rooms</p>
                     </div>
                     <div class="room-status-card">
@@ -323,15 +232,7 @@
                             <i class="fas fa-user-check"></i>
                             <h4>Occupied</h4>
                         </div>
-                        <p class="room-count">27</p>
-                        <p class="room-label">Rooms</p>
-                    </div>
-                    <div class="room-status-card">
-                        <div class="room-status-header" style="background: #f093fb;">
-                            <i class="fas fa-broom"></i>
-                            <h4>Cleaning</h4>
-                        </div>
-                        <p class="room-count">5</p>
+                        <p class="room-count" id="occupiedRoomsCount">0</p>
                         <p class="room-label">Rooms</p>
                     </div>
                     <div class="room-status-card">
@@ -339,7 +240,7 @@
                             <i class="fas fa-tools"></i>
                             <h4>Maintenance</h4>
                         </div>
-                        <p class="room-count">2</p>
+                        <p class="room-count" id="maintenanceRoomsCount">0</p>
                         <p class="room-label">Rooms</p>
                     </div>
                 </div>
@@ -522,7 +423,7 @@
                         <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
                             <div class="stat-content">
                                 <p class="stat-label">Total Rooms</p>
-                                <h3 class="stat-value" id="totalRoomsCount">0</h3>
+                                <h3 class="stat-value" id="roomsPageTotalCount">0</h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-door-open"></i>
@@ -531,7 +432,7 @@
                         <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                             <div class="stat-content">
                                 <p class="stat-label">Available</p>
-                                <h3 class="stat-value" id="availableRoomsCount">0</h3>
+                                <h3 class="stat-value" id="roomsPageAvailableCount">0</h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-check-circle"></i>
@@ -540,7 +441,7 @@
                         <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                             <div class="stat-content">
                                 <p class="stat-label">Occupied</p>
-                                <h3 class="stat-value" id="occupiedRoomsCount">0</h3>
+                                <h3 class="stat-value" id="roomsPageOccupiedCount">0</h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-user-check"></i>
@@ -549,7 +450,7 @@
                         <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                             <div class="stat-content">
                                 <p class="stat-label">Maintenance</p>
-                                <h3 class="stat-value" id="maintenanceRoomsCount">0</h3>
+                                <h3 class="stat-value" id="roomsPageMaintenanceCount">0</h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-tools"></i>
@@ -584,6 +485,233 @@
                 </section>
             </div>
             <!-- End Rooms Section -->
+
+            <!-- Revenue Section -->
+            <div id="revenue-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-chart-line"></i> Revenue Management</h2>
+                            <p>Track your hotel's financial performance</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Revenue Summary Cards -->
+                <section class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalRevenue">Rs. 0.00</h3>
+                                <p>Total Revenue</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="confirmedBookingsCount">0</h3>
+                                <p>Confirmed Bookings</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="averageBookingValue">Rs. 0.00</h3>
+                                <p>Average Booking Value</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="todayRevenue">Rs. 0.00</h3>
+                                <p>Today's Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Revenue by Room Type -->
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>Revenue by Room Type</h3>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="revenueByRoomTypeTable">
+                                <thead>
+                                    <tr>
+                                        <th>Room Type</th>
+                                        <th>Bookings Count</th>
+                                        <th>Total Revenue</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="revenueByRoomTypeBody">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading revenue data...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Revenue Transactions -->
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>Recent Confirmed Bookings</h3>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" onclick="filterRevenueBookings('all')">All Time</button>
+                                <button class="filter-btn" onclick="filterRevenueBookings('today')">Today</button>
+                                <button class="filter-btn" onclick="filterRevenueBookings('week')">This Week</button>
+                                <button class="filter-btn" onclick="filterRevenueBookings('month')">This Month</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="revenueBookingsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Booking Ref</th>
+                                        <th>Guest Name</th>
+                                        <th>Room Type</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Nights</th>
+                                        <th>Amount</th>
+                                        <th>Confirmed Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="revenueBookingsBody">
+                                    <tr>
+                                        <td colspan="8" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading bookings...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Revenue Section -->
+
+            <!-- Settings Section -->
+            <div id="settings-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-cog"></i> Settings</h2>
+                            <p>Manage your admin account settings</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 25px;">
+                    <!-- Change Username Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user"></i> Change Username</h3>
+                        </div>
+                        <div style="padding: 25px;">
+                            <form id="changeUsernameForm" onsubmit="changeUsername(event)">
+                                <div class="form-group">
+                                    <label for="current_username">Current Username</label>
+                                    <input type="text" id="current_username" readonly style="background: #f9fafb; cursor: not-allowed; width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_username">New Username <span class="required">*</span></label>
+                                    <input type="text" id="new_username" name="new_username" required 
+                                           placeholder="Enter new username" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                    <small style="color: #666;">Minimum 4 characters</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username_password">Confirm with Password <span class="required">*</span></label>
+                                    <input type="password" id="username_password" name="password" required 
+                                           placeholder="Enter your current password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <button type="submit" class="btn" style="width: 100%; padding: 12px; background: #dc2626; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px;">
+                                    <i class="fas fa-save"></i> Update Username
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Change Password Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-lock"></i> Change Password</h3>
+                        </div>
+                        <div style="padding: 25px;">
+                            <form id="changePasswordForm" onsubmit="changePassword(event)">
+                                <div class="form-group">
+                                    <label for="current_password">Current Password <span class="required">*</span></label>
+                                    <input type="password" id="current_password" name="current_password" required 
+                                           placeholder="Enter current password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_password">New Password <span class="required">*</span></label>
+                                    <input type="password" id="new_password" name="new_password" required 
+                                           placeholder="Enter new password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                    <small style="color: #666;">Minimum 8 characters</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirm New Password <span class="required">*</span></label>
+                                    <input type="password" id="confirm_password" name="confirm_password" required 
+                                           placeholder="Confirm new password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <button type="submit" class="btn" style="width: 100%; padding: 12px; background: #dc2626; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px;">
+                                    <i class="fas fa-save"></i> Update Password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Account Information Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-info-circle"></i> Account Information</h3>
+                        </div>
+                        <div style="padding: 25px;">
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Full Name</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_full_name">Loading...</p>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Email</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_email">Loading...</p>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Role</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_role">Loading...</p>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Last Login</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_last_login">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Settings Section -->
         </div>
     </main>
 
@@ -804,6 +932,91 @@
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         dateElement.textContent = new Date().toLocaleDateString('en-US', options);
 
+        // Load dashboard statistics on page load
+        loadDashboardStats();
+
+        // Load recent bookings and activities
+        loadRecentBookings();
+        loadRecentActivities();
+
+        function loadDashboardStats() {
+            fetch('../php/get_dashboard_stats.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Today's Bookings
+                        document.getElementById('todayBookings').textContent = data.stats.today_bookings;
+                        const yesterdayChange = data.stats.yesterday_bookings > 0 
+                            ? (((data.stats.today_bookings - data.stats.yesterday_bookings) / data.stats.yesterday_bookings) * 100).toFixed(0)
+                            : (data.stats.today_bookings > 0 ? 100 : 0);
+                        const todayChangeEl = document.getElementById('todayBookingsChange');
+                        if (yesterdayChange > 0) {
+                            todayChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(yesterdayChange)}% from yesterday`;
+                            todayChangeEl.className = 'stat-change positive';
+                        } else if (yesterdayChange < 0) {
+                            todayChangeEl.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(yesterdayChange)}% from yesterday`;
+                            todayChangeEl.className = 'stat-change negative';
+                        } else {
+                            todayChangeEl.innerHTML = `<i class="fas fa-minus"></i> Same as yesterday`;
+                            todayChangeEl.className = 'stat-change';
+                        }
+
+                        // Total Guests
+                        document.getElementById('totalGuests').textContent = data.stats.total_guests;
+                        const lastWeekChange = data.stats.last_week_guests > 0 
+                            ? (((data.stats.total_guests - data.stats.last_week_guests) / data.stats.last_week_guests) * 100).toFixed(0)
+                            : (data.stats.total_guests > 0 ? 100 : 0);
+                        const guestsChangeEl = document.getElementById('totalGuestsChange');
+                        if (lastWeekChange > 0) {
+                            guestsChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(lastWeekChange)}% from last week`;
+                            guestsChangeEl.className = 'stat-change positive';
+                        } else if (lastWeekChange < 0) {
+                            guestsChangeEl.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(lastWeekChange)}% from last week`;
+                            guestsChangeEl.className = 'stat-change negative';
+                        } else {
+                            guestsChangeEl.innerHTML = `<i class="fas fa-minus"></i> Same as last week`;
+                            guestsChangeEl.className = 'stat-change';
+                        }
+
+                        // Available Rooms
+                        document.getElementById('availableRooms').textContent = `${data.stats.available_rooms}/${data.stats.total_rooms}`;
+                        const occupancyPercent = data.stats.total_rooms > 0 
+                            ? ((data.stats.occupied_rooms / data.stats.total_rooms) * 100).toFixed(0)
+                            : 0;
+                        document.getElementById('occupancyRate').innerHTML = `<i class="fas fa-bed"></i> ${occupancyPercent}% occupancy`;
+                        document.getElementById('occupancyRate').className = 'stat-change';
+
+                        // Revenue Today
+                        document.getElementById('revenueToday').textContent = `Rs. ${parseFloat(data.stats.today_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                        const avgRevenue = data.stats.average_daily_revenue;
+                        const revenueChange = avgRevenue > 0 
+                            ? (((data.stats.today_revenue - avgRevenue) / avgRevenue) * 100).toFixed(0)
+                            : (data.stats.today_revenue > 0 ? 100 : 0);
+                        const revenueChangeEl = document.getElementById('revenueTodayChange');
+                        if (revenueChange > 0) {
+                            revenueChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(revenueChange)}% from average`;
+                            revenueChangeEl.className = 'stat-change positive';
+                        } else if (revenueChange < 0) {
+                            revenueChangeEl.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(revenueChange)}% from average`;
+                            revenueChangeEl.className = 'stat-change negative';
+                        } else {
+                            revenueChangeEl.innerHTML = `<i class="fas fa-minus"></i> Average revenue`;
+                            revenueChangeEl.className = 'stat-change';
+                        }
+
+                        // Room Status Overview
+                        document.getElementById('availableRoomsCount').textContent = data.stats.available_rooms;
+                        document.getElementById('occupiedRoomsCount').textContent = data.stats.occupied_rooms;
+                        document.getElementById('maintenanceRoomsCount').textContent = data.stats.maintenance_rooms;
+                    } else {
+                        console.error('Error loading dashboard stats:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
         // Active navigation
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function(e) {
@@ -837,6 +1050,14 @@
                 // Load rooms data if rooms section
                 if (sectionName === 'rooms') {
                     loadRooms();
+                }
+                // Load revenue data if revenue section
+                if (sectionName === 'revenue') {
+                    loadRevenue();
+                }
+                // Load settings data if settings section
+                if (sectionName === 'settings') {
+                    loadSettings();
                 }
             }
         }
@@ -1307,12 +1528,12 @@
                         <td><strong>${guest.guest_name || 'N/A'}</strong></td>
                         <td>${guest.guest_email || 'N/A'}</td>
                         <td>${guest.guest_phone || 'N/A'}</td>
-                        <td><span class="badge" style="background: #3b82f6;">${guest.total_bookings}</span></td>
-                        <td><span class="badge" style="background: #10b981;">${guest.confirmed_bookings}</span></td>
-                        <td><span class="badge" style="background: #8b5cf6;">${guest.checked_in_bookings}</span></td>
-                        <td><span class="badge" style="background: #6b7280;">${guest.checked_out_bookings}</span></td>
-                        <td><span class="badge" style="background: #ef4444;">${guest.cancelled_bookings}</span></td>
-                        <td><strong style="color: #10b981;">$${parseFloat(guest.total_spent || 0).toFixed(2)}</strong></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #3b82f6; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.total_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #10b981; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.confirmed_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #8b5cf6; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.checked_in_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #6b7280; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.checked_out_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #ef4444; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.cancelled_bookings}</span></td>
+                        <td><strong style="color: #10b981; font-size: 15px;">$${parseFloat(guest.total_spent || 0).toFixed(2)}</strong></td>
                         <td>${guest.last_check_in ? formatDate(guest.last_check_in) : 'N/A'}</td>
                         <td>${formatDate(guest.first_booking_date)}</td>
                     </tr>
@@ -1363,10 +1584,10 @@
         }
 
         function updateRoomStats(stats) {
-            document.getElementById('totalRoomsCount').textContent = stats.total_rooms;
-            document.getElementById('availableRoomsCount').textContent = stats.available;
-            document.getElementById('occupiedRoomsCount').textContent = stats.occupied;
-            document.getElementById('maintenanceRoomsCount').textContent = stats.maintenance;
+            document.getElementById('roomsPageTotalCount').textContent = stats.total_rooms;
+            document.getElementById('roomsPageAvailableCount').textContent = stats.available;
+            document.getElementById('roomsPageOccupiedCount').textContent = stats.occupied;
+            document.getElementById('roomsPageMaintenanceCount').textContent = stats.maintenance;
         }
 
         function displayRooms(rooms) {
@@ -1449,10 +1670,10 @@
                                                 <span class="room-detail-item"><i class="fas fa-layer-group"></i> Floor ${room.floor_number || 'N/A'}</span>
                                                 <span class="room-detail-item"><i class="fas fa-eye"></i> ${room.view_type || 'N/A'} View</span>
                                                 ${room.current_bookings > 0 ? 
-                                                    '<span class="badge" style="background: #ef4444;"><i class="fas fa-calendar-check"></i> ' + room.current_bookings + ' active booking' + (room.current_bookings !== 1 ? 's' : '') + '</span>' : 
-                                                    '<span class="badge" style="background: #10b981;"><i class="fas fa-check-circle"></i> No bookings</span>'
+                                                    '<span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #ef4444; color: white; border-radius: 6px; font-weight: 600; font-size: 13px; border: 2px solid #dc2626;"><i class="fas fa-calendar-check"></i> ' + room.current_bookings + ' active booking' + (room.current_bookings !== 1 ? 's' : '') + '</span>' : 
+                                                    '<span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #10b981; color: white; border-radius: 6px; font-weight: 600; font-size: 13px; border: 2px solid #059669;"><i class="fas fa-check-circle"></i> No bookings</span>'
                                                 }
-                                                <span class="badge" style="background: ${statusColor};">${formatStatus(room.status)}</span>
+                                                <span style="display: inline-flex; align-items: center; padding: 6px 14px; background: ${statusColor}; color: white; border-radius: 6px; font-weight: 600; font-size: 13px; border: 2px solid ${statusColor === '#f59e0b' ? '#d97706' : statusColor === '#10b981' ? '#059669' : '#dc2626'};">${formatStatus(room.status)}</span>
                                             </div>
                                             <div style="display: flex; gap: 8px; margin-left: auto;">
                                                 <button class="change-status-btn" onclick="showRoomStatusModal(${room.room_id}, '${room.room_number}', '${room.status}')" title="Change room status">
@@ -1665,6 +1886,381 @@
             if (confirm('Are you sure you want to logout?')) {
                 window.location.href = '../php/logout.php';
             }
+        }
+
+        // ========================================
+        // REVENUE MANAGEMENT FUNCTIONS
+        // ========================================
+        
+        let allRevenueBookings = [];
+        let currentRevenueFilter = 'all';
+
+        function loadRevenue() {
+            fetch('../php/get_revenue.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update summary cards
+                        document.getElementById('totalRevenue').textContent = 'Rs. ' + parseFloat(data.summary.total_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        document.getElementById('confirmedBookingsCount').textContent = data.summary.confirmed_count;
+                        document.getElementById('averageBookingValue').textContent = 'Rs. ' + parseFloat(data.summary.average_booking_value).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        document.getElementById('todayRevenue').textContent = 'Rs. ' + parseFloat(data.summary.today_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        
+                        // Display revenue by room type
+                        displayRevenueByRoomType(data.by_room_type, data.summary.total_revenue);
+                        
+                        // Store and display bookings
+                        allRevenueBookings = data.bookings;
+                        displayRevenueBookings(allRevenueBookings);
+                    } else {
+                        console.error('Error loading revenue:', data.message);
+                        document.getElementById('revenueByRoomTypeBody').innerHTML = 
+                            '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Failed to load revenue data</td></tr>';
+                        document.getElementById('revenueBookingsBody').innerHTML = 
+                            '<tr><td colspan="8" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Failed to load bookings</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('revenueByRoomTypeBody').innerHTML = 
+                        '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading revenue data</td></tr>';
+                    document.getElementById('revenueBookingsBody').innerHTML = 
+                        '<tr><td colspan="8" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                });
+        }
+
+        function displayRevenueByRoomType(roomTypes, totalRevenue) {
+            const tbody = document.getElementById('revenueByRoomTypeBody');
+            
+            if (!roomTypes || roomTypes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-info-circle"></i> No revenue data available</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = roomTypes.map(rt => {
+                const percentage = totalRevenue > 0 ? ((rt.total_revenue / totalRevenue) * 100).toFixed(1) : 0;
+                return `
+                    <tr>
+                        <td><strong>${rt.type_name}</strong></td>
+                        <td>${rt.booking_count}</td>
+                        <td><strong style="color: #28a745;">Rs. ${parseFloat(rt.total_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="flex: 1; height: 8px; background: #e5e5e5; border-radius: 4px; overflow: hidden;">
+                                    <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, #667eea, #764ba2);"></div>
+                                </div>
+                                <span style="font-weight: bold; color: #667eea;">${percentage}%</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function displayRevenueBookings(bookings) {
+            const tbody = document.getElementById('revenueBookingsBody');
+            
+            if (!bookings || bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-info-circle"></i> No confirmed bookings found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = bookings.map(booking => `
+                <tr>
+                    <td><span style="font-family: monospace; font-weight: bold; color: #667eea;">${booking.booking_reference}</span></td>
+                    <td>${booking.guest_name}</td>
+                    <td>${booking.type_name}</td>
+                    <td>${formatDate(booking.check_in_date)}</td>
+                    <td>${formatDate(booking.check_out_date)}</td>
+                    <td><span class="badge" style="background: #4facfe; color: white; padding: 4px 12px; border-radius: 12px;">${booking.total_nights}</span></td>
+                    <td><strong style="color: #28a745;">Rs. ${parseFloat(booking.total_amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></td>
+                    <td>${formatDate(booking.confirmed_at)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterRevenueBookings(filter) {
+            currentRevenueFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('#revenue-section .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            let filteredBookings = allRevenueBookings;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (filter === 'today') {
+                filteredBookings = allRevenueBookings.filter(booking => {
+                    const confirmedDate = new Date(booking.confirmed_at);
+                    confirmedDate.setHours(0, 0, 0, 0);
+                    return confirmedDate.getTime() === today.getTime();
+                });
+            } else if (filter === 'week') {
+                const weekAgo = new Date(today);
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                filteredBookings = allRevenueBookings.filter(booking => {
+                    const confirmedDate = new Date(booking.confirmed_at);
+                    return confirmedDate >= weekAgo;
+                });
+            } else if (filter === 'month') {
+                const monthAgo = new Date(today);
+                monthAgo.setMonth(monthAgo.getMonth() - 1);
+                filteredBookings = allRevenueBookings.filter(booking => {
+                    const confirmedDate = new Date(booking.confirmed_at);
+                    return confirmedDate >= monthAgo;
+                });
+            }
+            
+            displayRevenueBookings(filteredBookings);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+        }
+
+        // ========================================
+        // SETTINGS FUNCTIONS
+        // ========================================
+        
+        function loadSettings() {
+            fetch('../php/get_admin_info.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Populate current username
+                        document.getElementById('current_username').value = data.admin.username;
+                        
+                        // Populate account information
+                        document.getElementById('settings_full_name').textContent = data.admin.full_name;
+                        document.getElementById('settings_email').textContent = data.admin.email;
+                        document.getElementById('settings_role').textContent = data.admin.role.charAt(0).toUpperCase() + data.admin.role.slice(1);
+                        document.getElementById('settings_last_login').textContent = data.admin.last_login ? formatDate(data.admin.last_login) : 'Never';
+                    } else {
+                        console.error('Error loading settings:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function changeUsername(event) {
+            event.preventDefault();
+            
+            const newUsername = document.getElementById('new_username').value.trim();
+            const password = document.getElementById('username_password').value;
+            
+            if (newUsername.length < 4) {
+                alert('Username must be at least 4 characters long');
+                return;
+            }
+            
+            if (!confirm('Are you sure you want to change your username?')) {
+                return;
+            }
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            submitBtn.disabled = true;
+            
+            fetch('../php/update_username.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    new_username: newUsername,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Username updated successfully! Please login again with your new username.');
+                    // Logout and redirect to login
+                    window.location.href = '../php/logout.php';
+                } else {
+                    alert('❌ Error: ' + (data.message || 'Failed to update username'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating username');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        function changePassword(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('current_password').value;
+            const newPassword = document.getElementById('new_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (newPassword.length < 8) {
+                alert('New password must be at least 8 characters long');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('New password and confirm password do not match');
+                return;
+            }
+            
+            if (!confirm('Are you sure you want to change your password?')) {
+                return;
+            }
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            submitBtn.disabled = true;
+            
+            fetch('../php/update_password.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    current_password: currentPassword,
+                    new_password: newPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Password updated successfully! Please login again with your new password.');
+                    // Clear form
+                    event.target.reset();
+                    // Logout and redirect to login
+                    window.location.href = '../php/logout.php';
+                } else {
+                    alert('❌ Error: ' + (data.message || 'Failed to update password'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating password');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        // ========================================
+        // RECENT BOOKINGS & ACTIVITIES
+        // ========================================
+
+        function loadRecentBookings() {
+            fetch('../php/get_recent_data.php?type=bookings')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayRecentBookings(data.bookings);
+                    } else {
+                        document.getElementById('recentBookingsTable').innerHTML = 
+                            '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('recentBookingsTable').innerHTML = 
+                        '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                });
+        }
+
+        function displayRecentBookings(bookings) {
+            const tbody = document.getElementById('recentBookingsTable');
+            
+            if (!bookings || bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-inbox"></i> No recent bookings</td></tr>';
+                return;
+            }
+
+            const statusColors = {
+                'pending': '#f59e0b',
+                'confirmed': '#3b82f6',
+                'checked_in': '#10b981',
+                'checked_out': '#6b7280',
+                'cancelled': '#ef4444'
+            };
+
+            tbody.innerHTML = bookings.map(booking => {
+                const statusColor = statusColors[booking.status] || '#6b7280';
+                
+                return `
+                    <tr>
+                        <td>${booking.type_name}</td>
+                        <td>${formatDate(booking.check_in_date)}</td>
+                        <td>
+                            <span style="padding: 4px 12px; border-radius: 12px; background: ${statusColor}; color: white; font-size: 12px; font-weight: 500;">
+                                ${booking.status.replace('_', ' ').toUpperCase()}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function loadRecentActivities() {
+            fetch('../php/get_recent_data.php?type=activities')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayRecentActivities(data.activities);
+                    } else {
+                        document.getElementById('recentActivityList').innerHTML = 
+                            '<div class="activity-item" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading activities</div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('recentActivityList').innerHTML = 
+                        '<div class="activity-item" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading activities</div>';
+                });
+        }
+
+        function displayRecentActivities(activities) {
+            const container = document.getElementById('recentActivityList');
+            
+            if (!activities || activities.length === 0) {
+                container.innerHTML = '<div class="activity-item" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-inbox"></i> No recent activities</div>';
+                return;
+            }
+
+            const activityIcons = {
+                'new_booking': { icon: 'fa-calendar-check', color: '#667eea' },
+                'confirmed': { icon: 'fa-check-circle', color: '#10b981' },
+                'checked_in': { icon: 'fa-sign-in-alt', color: '#43e97b' },
+                'checked_out': { icon: 'fa-sign-out-alt', color: '#fa709a' },
+                'cancelled': { icon: 'fa-times-circle', color: '#ef4444' },
+                'room_added': { icon: 'fa-bed', color: '#4facfe' }
+            };
+
+            container.innerHTML = activities.map(activity => {
+                const config = activityIcons[activity.type] || { icon: 'fa-info-circle', color: '#6b7280' };
+                return `
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: ${config.color};">
+                            <i class="fas ${config.icon}"></i>
+                        </div>
+                        <div class="activity-info">
+                            <p>${activity.description}</p>
+                            <span class="activity-time">${activity.time_ago}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
     </script>
 </body>
