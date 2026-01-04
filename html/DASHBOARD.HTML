@@ -17,35 +17,27 @@
         </div>
         
         <nav class="sidebar-nav">
-            <a href="#dashboard" class="nav-item active">
+            <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard'); return false;">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="#bookings" class="nav-item">
+            <a href="#bookings" class="nav-item" onclick="showSection('bookings'); return false;">
                 <i class="fas fa-calendar-check"></i>
                 <span>Bookings</span>
             </a>
-            <a href="#guests" class="nav-item">
+            <a href="#guests" class="nav-item" onclick="showSection('guests'); return false;">
                 <i class="fas fa-users"></i>
                 <span>Guests</span>
             </a>
-            <a href="#rooms" class="nav-item">
+            <a href="#rooms" class="nav-item" onclick="showSection('rooms'); return false;">
                 <i class="fas fa-bed"></i>
                 <span>Rooms</span>
             </a>
-            <a href="#revenue" class="nav-item">
+            <a href="#revenue" class="nav-item" onclick="showSection('revenue'); return false;">
                 <i class="fas fa-chart-line"></i>
                 <span>Revenue</span>
             </a>
-            <a href="#messages" class="nav-item">
-                <i class="fas fa-envelope"></i>
-                <span>Messages</span>
-            </a>
-            <a href="#testimonials" class="nav-item">
-                <i class="fas fa-star"></i>
-                <span>Testimonials</span>
-            </a>
-            <a href="#settings" class="nav-item">
+            <a href="#settings" class="nav-item" onclick="showSection('settings'); return false;">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
             </a>
@@ -74,14 +66,6 @@
                 <h1>Dashboard</h1>
             </div>
             <div class="topbar-right">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search...">
-                </div>
-                <button class="notification-btn">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge">5</span>
-                </button>
                 <div class="admin-profile">
                     <img src="../images/admin-avatar.jpg" alt="Admin" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23dc2626%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2240%22 font-family=%22Arial%22%3EA%3C/text%3E%3C/svg%3E'">
                     <div class="admin-info">
@@ -94,6 +78,8 @@
 
         <!-- Dashboard Content -->
         <div class="dashboard-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="content-section-container">
             <!-- Welcome Section -->
             <section class="welcome-section">
                 <div class="welcome-card">
@@ -117,9 +103,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Today's Bookings</h3>
-                            <p class="stat-number">24</p>
-                            <span class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i> 12% from yesterday
+                            <p class="stat-number" id="todayBookings">0</p>
+                            <span class="stat-change" id="todayBookingsChange">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -130,9 +116,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Total Guests</h3>
-                            <p class="stat-number">156</p>
-                            <span class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i> 8% from last week
+                            <p class="stat-number" id="totalGuests">0</p>
+                            <span class="stat-change" id="totalGuestsChange">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -143,9 +129,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Available Rooms</h3>
-                            <p class="stat-number">18/45</p>
-                            <span class="stat-change">
-                                <i class="fas fa-minus"></i> 40% occupancy
+                            <p class="stat-number" id="availableRooms">0/0</p>
+                            <span class="stat-change" id="occupancyRate">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -156,9 +142,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>Revenue (Today)</h3>
-                            <p class="stat-number">$8,450</p>
-                            <span class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i> 15% from average
+                            <p class="stat-number" id="revenueToday">Rs. 0.00</p>
+                            <span class="stat-change" id="revenueTodayChange">
+                                <i class="fas fa-spinner fa-spin"></i> Loading...
                             </span>
                         </div>
                     </div>
@@ -169,29 +155,17 @@
             <section class="quick-actions-section">
                 <h2 class="section-title">Quick Actions</h2>
                 <div class="quick-actions-grid">
-                    <button class="action-btn" onclick="alert('New Booking feature coming soon!')">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>New Booking</span>
+                    <button class="action-btn" onclick="showSection('bookings')">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>View Bookings</span>
                     </button>
-                    <button class="action-btn" onclick="alert('Check-In feature coming soon!')">
-                        <i class="fas fa-sign-in-alt"></i>
-                        <span>Check-In Guest</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Check-Out feature coming soon!')">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Check-Out Guest</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Room Status feature coming soon!')">
+                    <button class="action-btn" onclick="showSection('rooms')">
                         <i class="fas fa-door-open"></i>
-                        <span>Update Room Status</span>
+                        <span>Manage Rooms</span>
                     </button>
-                    <button class="action-btn" onclick="alert('Reports feature coming soon!')">
+                    <button class="action-btn" onclick="showSection('revenue')">
                         <i class="fas fa-file-invoice"></i>
-                        <span>Generate Report</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Messages feature coming soon!')">
-                        <i class="fas fa-envelope-open"></i>
-                        <span>View Messages</span>
+                        <span>View Revenue</span>
                     </button>
                 </div>
             </section>
@@ -203,62 +177,23 @@
                     <div class="content-card">
                         <div class="card-header">
                             <h3>Recent Bookings</h3>
-                            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" onclick="showSection('bookings'); return false;" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
                         </div>
                         <div class="table-container">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>Guest Name</th>
-                                        <th>Room</th>
+                                        <th>Room Type</th>
                                         <th>Check-In</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="recentBookingsTable">
                                     <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%234a90e2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EJD%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>John Doe</span>
-                                            </div>
+                                        <td colspan="3" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #dc2626;"></i>
+                                            <p style="margin-top: 10px; color: #666;">Loading recent bookings...</p>
                                         </td>
-                                        <td>Presidential Suite</td>
-                                        <td>Jan 02, 2026</td>
-                                        <td><span class="status-badge confirmed">Confirmed</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%23e94b4b%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3ESJ%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>Sarah Johnson</span>
-                                            </div>
-                                        </td>
-                                        <td>Deluxe Double</td>
-                                        <td>Jan 03, 2026</td>
-                                        <td><span class="status-badge pending">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%2350c878%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EMC%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>Michael Chen</span>
-                                            </div>
-                                        </td>
-                                        <td>Heritage Suite</td>
-                                        <td>Jan 01, 2026</td>
-                                        <td><span class="status-badge checked-in">Checked In</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="guest-cell">
-                                                <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22%23f39c12%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2220%22%3EER%3C/text%3E%3C/svg%3E" alt="Guest">
-                                                <span>Emma Rodriguez</span>
-                                            </div>
-                                        </td>
-                                        <td>Garden Wing</td>
-                                        <td>Jan 04, 2026</td>
-                                        <td><span class="status-badge confirmed">Confirmed</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -270,51 +205,10 @@
                         <div class="card-header">
                             <h3>Recent Activity</h3>
                         </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #667eea;">
-                                    <i class="fas fa-calendar-check"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>New booking</strong> from Sarah Johnson</p>
-                                    <span class="activity-time">5 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #43e97b;">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>Check-in</strong> completed for Room 205</p>
-                                    <span class="activity-time">15 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #f093fb;">
-                                    <i class="fas fa-dollar-sign"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>Payment received</strong> - $450.00</p>
-                                    <span class="activity-time">30 minutes ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #4facfe;">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>New message</strong> from contact form</p>
-                                    <span class="activity-time">1 hour ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: #fa709a;">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </div>
-                                <div class="activity-info">
-                                    <p><strong>Check-out</strong> completed for Room 312</p>
-                                    <span class="activity-time">2 hours ago</span>
-                                </div>
+                        <div class="activity-list" id="recentActivityList">
+                            <div class="activity-item" style="text-align: center; padding: 40px;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #dc2626;"></i>
+                                <p style="margin-top: 10px; color: #666;">Loading activities...</p>
                             </div>
                         </div>
                     </div>
@@ -330,7 +224,7 @@
                             <i class="fas fa-check-circle"></i>
                             <h4>Available</h4>
                         </div>
-                        <p class="room-count">18</p>
+                        <p class="room-count" id="availableRoomsCount">0</p>
                         <p class="room-label">Rooms</p>
                     </div>
                     <div class="room-status-card">
@@ -338,15 +232,7 @@
                             <i class="fas fa-user-check"></i>
                             <h4>Occupied</h4>
                         </div>
-                        <p class="room-count">27</p>
-                        <p class="room-label">Rooms</p>
-                    </div>
-                    <div class="room-status-card">
-                        <div class="room-status-header" style="background: #f093fb;">
-                            <i class="fas fa-broom"></i>
-                            <h4>Cleaning</h4>
-                        </div>
-                        <p class="room-count">5</p>
+                        <p class="room-count" id="occupiedRoomsCount">0</p>
                         <p class="room-label">Rooms</p>
                     </div>
                     <div class="room-status-card">
@@ -354,13 +240,702 @@
                             <i class="fas fa-tools"></i>
                             <h4>Maintenance</h4>
                         </div>
-                        <p class="room-count">2</p>
+                        <p class="room-count" id="maintenanceRoomsCount">0</p>
                         <p class="room-label">Rooms</p>
                     </div>
                 </div>
             </section>
+            </div>
+            <!-- End Dashboard Section -->
+
+            <!-- Bookings Section -->
+            <div id="bookings-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-calendar-check"></i> Bookings Management</h2>
+                            <p>View and manage all hotel bookings</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Bookings</h3>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" onclick="filterBookings('all')">All</button>
+                                <button class="filter-btn" onclick="filterBookings('pending')">Pending</button>
+                                <button class="filter-btn" onclick="filterBookings('confirmed')">Confirmed</button>
+                                <button class="filter-btn" onclick="filterBookings('checked_in')">Checked In</button>
+                                <button class="filter-btn" onclick="filterBookings('checked_out')">Checked Out</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="bookingsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Actions</th>
+                                        <th>Booking Ref</th>
+                                        <th>Guest Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Room Type</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Nights</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookingsTableBody">
+                                    <tr>
+                                        <td colspan="11" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading bookings...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Bookings Section -->
+
+            <!-- Guests Section -->
+            <div id="guests-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-users"></i> Guest Management</h2>
+                            <p>View and manage all hotel guests</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Guests</h3>
+                            <div class="search-box" style="max-width: 300px;">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="guestSearch" placeholder="Search guests..." onkeyup="filterGuests()">
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="guestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Guest Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Total Bookings</th>
+                                        <th>Confirmed</th>
+                                        <th>Checked In</th>
+                                        <th>Checked Out</th>
+                                        <th>Cancelled</th>
+                                        <th>Total Spent</th>
+                                        <th>Last Check-In</th>
+                                        <th>First Booking</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="guestsTableBody">
+                                    <tr>
+                                        <td colspan="11" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading guests...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Guests Section -->
+            <!-- Guests Section -->
+            <div id="guests-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-users"></i> Guest Management</h2>
+                            <p>View and manage all hotel guests</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Guests</h3>
+                            <div class="search-box" style="max-width: 300px;">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="guestSearch" placeholder="Search guests..." onkeyup="filterGuests()">
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="guestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Guest Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Total Bookings</th>
+                                        <th>Confirmed</th>
+                                        <th>Checked In</th>
+                                        <th>Checked Out</th>
+                                        <th>Cancelled</th>
+                                        <th>Total Spent</th>
+                                        <th>Last Check-In</th>
+                                        <th>First Booking</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="guestsTableBody">
+                                    <tr>
+                                        <td colspan="11" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading guests...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Guests Section -->
+
+            <!-- Rooms Section -->
+            <div id="rooms-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-bed"></i> Room Management</h2>
+                            <p>View and manage all hotel rooms and their availability</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Room Stats -->
+                <section class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Total Rooms</p>
+                                <h3 class="stat-value" id="roomsPageTotalCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-door-open"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Available</p>
+                                <h3 class="stat-value" id="roomsPageAvailableCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Occupied</p>
+                                <h3 class="stat-value" id="roomsPageOccupiedCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Maintenance</p>
+                                <h3 class="stat-value" id="roomsPageMaintenanceCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Rooms</h3>
+                            <div style="display: flex; gap: 15px; align-items: center;">
+                                <div class="filter-buttons">
+                                    <button class="filter-btn active" onclick="filterRooms('all')">All</button>
+                                    <button class="filter-btn" onclick="filterRooms('available')">Available</button>
+                                    <button class="filter-btn" onclick="filterRooms('occupied')">Occupied</button>
+                                    <button class="filter-btn" onclick="filterRooms('maintenance')">Maintenance</button>
+                                </div>
+                                <button class="btn-submit" onclick="showAddRoomModal()" style="padding: 10px 20px; font-size: 14px;">
+                                    <i class="fas fa-plus"></i> Add Room
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tree-view-container" id="roomsTreeView">
+                            <div style="text-align: center; padding: 40px;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                <p>Loading rooms...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Rooms Section -->
+
+            <!-- Revenue Section -->
+            <div id="revenue-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-chart-line"></i> Revenue Management</h2>
+                            <p>Track your hotel's financial performance</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Revenue Summary Cards -->
+                <section class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalRevenue">Rs. 0.00</h3>
+                                <p>Total Revenue</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="confirmedBookingsCount">0</h3>
+                                <p>Confirmed Bookings</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="averageBookingValue">Rs. 0.00</h3>
+                                <p>Average Booking Value</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="todayRevenue">Rs. 0.00</h3>
+                                <p>Today's Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Revenue by Room Type -->
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>Revenue by Room Type</h3>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="revenueByRoomTypeTable">
+                                <thead>
+                                    <tr>
+                                        <th>Room Type</th>
+                                        <th>Bookings Count</th>
+                                        <th>Total Revenue</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="revenueByRoomTypeBody">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading revenue data...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Revenue Transactions -->
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>Recent Confirmed Bookings</h3>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" onclick="filterRevenueBookings('all')">All Time</button>
+                                <button class="filter-btn" onclick="filterRevenueBookings('today')">Today</button>
+                                <button class="filter-btn" onclick="filterRevenueBookings('week')">This Week</button>
+                                <button class="filter-btn" onclick="filterRevenueBookings('month')">This Month</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="revenueBookingsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Booking Ref</th>
+                                        <th>Guest Name</th>
+                                        <th>Room Type</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Nights</th>
+                                        <th>Amount</th>
+                                        <th>Confirmed Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="revenueBookingsBody">
+                                    <tr>
+                                        <td colspan="8" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading bookings...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Revenue Section -->
+
+            <!-- Settings Section -->
+            <div id="settings-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-cog"></i> Settings</h2>
+                            <p>Manage your admin account settings</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 25px;">
+                    <!-- Change Username Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user"></i> Change Username</h3>
+                        </div>
+                        <div style="padding: 25px;">
+                            <form id="changeUsernameForm" onsubmit="changeUsername(event)">
+                                <div class="form-group">
+                                    <label for="current_username">Current Username</label>
+                                    <input type="text" id="current_username" readonly style="background: #f9fafb; cursor: not-allowed; width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_username">New Username <span class="required">*</span></label>
+                                    <input type="text" id="new_username" name="new_username" required 
+                                           placeholder="Enter new username" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                    <small style="color: #666;">Minimum 4 characters</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username_password">Confirm with Password <span class="required">*</span></label>
+                                    <input type="password" id="username_password" name="password" required 
+                                           placeholder="Enter your current password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <button type="submit" class="btn" style="width: 100%; padding: 12px; background: #dc2626; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px;">
+                                    <i class="fas fa-save"></i> Update Username
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Change Password Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-lock"></i> Change Password</h3>
+                        </div>
+                        <div style="padding: 25px;">
+                            <form id="changePasswordForm" onsubmit="changePassword(event)">
+                                <div class="form-group">
+                                    <label for="current_password">Current Password <span class="required">*</span></label>
+                                    <input type="password" id="current_password" name="current_password" required 
+                                           placeholder="Enter current password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_password">New Password <span class="required">*</span></label>
+                                    <input type="password" id="new_password" name="new_password" required 
+                                           placeholder="Enter new password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                    <small style="color: #666;">Minimum 8 characters</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirm New Password <span class="required">*</span></label>
+                                    <input type="password" id="confirm_password" name="confirm_password" required 
+                                           placeholder="Confirm new password" 
+                                           style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                </div>
+                                <button type="submit" class="btn" style="width: 100%; padding: 12px; background: #dc2626; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px;">
+                                    <i class="fas fa-save"></i> Update Password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Account Information Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-info-circle"></i> Account Information</h3>
+                        </div>
+                        <div style="padding: 25px;">
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Full Name</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_full_name">Loading...</p>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Email</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_email">Loading...</p>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Role</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_role">Loading...</p>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <label style="font-weight: bold; color: #666; font-size: 14px;">Last Login</label>
+                                <p style="font-size: 16px; margin-top: 5px;" id="settings_last_login">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Settings Section -->
         </div>
     </main>
+
+    <!-- Status Change Modal -->
+    <div id="statusChangeModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="closeStatusModal()">&times;</span>
+            <h2 style="color: #dc2626;">Change Booking Status</h2>
+            <p class="modal-subtitle" id="statusModalSubtitle">Update the status for this booking</p>
+            
+            <form id="statusChangeForm" onsubmit="updateBookingStatus(event)">
+                <input type="hidden" id="status_booking_id">
+                <input type="hidden" id="status_room_type_id">
+                <input type="hidden" id="status_current_room_id">
+                
+                <div class="form-group">
+                    <label for="new_status">Select New Status <span class="required">*</span></label>
+                    <select id="new_status" name="new_status" required onchange="handleStatusChange()" style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                        <option value="">-- Select Status --</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="checked_in">Checked In</option>
+                        <option value="checked_out">Checked Out</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="no_show">No Show</option>
+                    </select>
+                </div>
+
+                <!-- Room Assignment Section (shows when confirming) -->
+                <div id="roomAssignmentSection" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="assigned_room_id">Assign Room Number <span class="required">*</span></label>
+                        <select id="assigned_room_id" name="assigned_room_id" style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <option value="">-- Select Room --</option>
+                        </select>
+                        <small style="color: #10b981; display: block; margin-top: 5px;">
+                            <i class="fas fa-info-circle"></i> Only available rooms of this type are shown
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 30px;">
+                    <button type="button" class="btn-cancel" onclick="closeStatusModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Room Type Image Change Modal -->
+    <div id="roomImageModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" onclick="closeImageModal()">&times;</span>
+            <h2 style="color: #dc2626;">Change Room Type Image</h2>
+            <p class="modal-subtitle" id="imageModalSubtitle">Upload a new image for this room type</p>
+            
+            <form id="roomImageForm" onsubmit="updateRoomImage(event)" enctype="multipart/form-data">
+                <input type="hidden" id="image_room_type_id">
+                
+                <div id="currentImagePreview" style="margin-bottom: 20px; text-align: center;">
+                    <img id="currentImage" src="" alt="Current Image" style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                </div>
+                
+                <div class="form-group">
+                    <label for="room_image">Select New Image <span class="required">*</span></label>
+                    <input type="file" id="room_image" name="room_image" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" required style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                    <small style="color: #666; display: block; margin-top: 5px;">Allowed formats: JPG, PNG, GIF, WEBP. Max size: 5MB</small>
+                </div>
+                
+                <div id="newImagePreview" style="margin-top: 15px; text-align: center; display: none;">
+                    <p style="font-weight: 600; margin-bottom: 10px;">New Image Preview:</p>
+                    <img id="previewImage" src="" alt="Preview" style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                </div>
+                
+                <div class="form-actions" style="margin-top: 25px;">
+                    <button type="button" class="btn-cancel" onclick="closeImageModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Update Image</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Room Status Change Modal -->
+    <div id="roomStatusModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="closeRoomStatusModal()">&times;</span>
+            <h2 style="color: #dc2626;">Change Room Status</h2>
+            <p class="modal-subtitle" id="roomStatusSubtitle">Update the status for this room</p>
+            
+            <form id="roomStatusForm" onsubmit="updateRoomStatus(event)">
+                <input type="hidden" id="room_status_room_id">
+                
+                <div class="form-group">
+                    <label for="new_room_status">Select New Status <span class="required">*</span></label>
+                    <select id="new_room_status" name="status" required style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                        <option value="">-- Select Status --</option>
+                        <option value="available">Available</option>
+                        <option value="occupied">Occupied</option>
+                        <option value="maintenance">Under Maintenance</option>
+                    </select>
+                    <small style="color: #666; display: block; margin-top: 8px;">
+                        <i class="fas fa-info-circle"></i> Maintenance rooms will not be available for booking assignment
+                    </small>
+                </div>
+
+                <div class="form-actions" style="margin-top: 30px;">
+                    <button type="button" class="btn-cancel" onclick="closeRoomStatusModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Room Modal -->
+    <div id="addRoomModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 700px;">
+            <span class="close-modal" onclick="closeAddRoomModal()">&times;</span>
+            <h2 style="color: #dc2626;">Add New Room</h2>
+            <p class="modal-subtitle">Create a new room in the hotel inventory</p>
+            
+            <form id="addRoomForm" onsubmit="submitAddRoom(event)">
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label for="new_room_type_id">Room Type <span class="required">*</span></label>
+                        <select id="new_room_type_id" name="room_type_id" required 
+                                onchange="generateRoomNumber()"
+                                style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <option value="">-- Select Room Type First --</option>
+                        </select>
+                        <small style="color: #666;">Category of the room</small>
+                    </div>
+                </div>
+
+                <div class="form-row" id="roomNumberSection" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="new_room_number">Room Number <span class="required">*</span></label>
+                        <input type="text" id="new_room_number" name="room_number" required 
+                               readonly
+                               style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px; background: #f9fafb; cursor: not-allowed;">
+                        <small style="color: #10b981;" id="roomNumberHint">
+                            <i class="fas fa-info-circle"></i> Auto-generated based on existing rooms
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="new_floor_number">Floor Number <span class="required">*</span></label>
+                        <select id="new_floor_number" name="floor_number" required 
+                                style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <option value="1">1st Floor</option>
+                            <option value="2">2nd Floor</option>
+                            <option value="3">3rd Floor</option>
+                            <option value="4">4th Floor</option>
+                            <option value="5">5th Floor</option>
+                            <option value="6">6th Floor</option>
+                            <option value="7">7th Floor</option>
+                            <option value="8">8th Floor</option>
+                            <option value="9">9th Floor</option>
+                            <option value="10">10th Floor</option>
+                        </select>
+                        <small style="color: #666;">Floor location of the room</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new_view_type">View Type <span class="required">*</span></label>
+                        <select id="new_view_type" name="view_type" required 
+                                style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <option value="Garden">Garden View</option>
+                            <option value="Mountain">Mountain View</option>
+                            <option value="City">City View</option>
+                            <option value="Hill">Hill View</option>
+                            <option value="Pool">Pool View</option>
+                            <option value="Courtyard">Courtyard View</option>
+                        </select>
+                        <small style="color: #666;">View from the room</small>
+                    </div>
+                </div>
+
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="new_room_status">Initial Status <span class="required">*</span></label>
+                        <select id="new_room_status" name="status" required 
+                                style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <option value="available">Available</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="occupied">Occupied</option>
+                        </select>
+                        <small style="color: #666;">Current availability status</small>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="new_room_notes">Notes (Optional)</label>
+                    <textarea id="new_room_notes" name="notes" rows="3" 
+                              placeholder="Additional notes about this room..."
+                              style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+
+                <div class="form-actions" style="margin-top: 30px;">
+                    <button type="button" class="btn-cancel" onclick="closeAddRoomModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-plus"></i> Add Room
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="bookingDetailsModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <span class="close-modal" onclick="closeBookingDetailsModal()">&times;</span>
+            <h2 style="color: #dc2626; margin-bottom: 10px;"><i class="fas fa-file-invoice"></i> Booking Details</h2>
+            <p class="modal-subtitle" id="bookingDetailsSubtitle">Complete booking information</p>
+            
+            <div id="bookingDetailsContent" style="margin-top: 25px;">
+                <div style="text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                    <p style="margin-top: 15px; color: #666;">Loading booking details...</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Mobile menu toggle
@@ -373,16 +948,747 @@
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         dateElement.textContent = new Date().toLocaleDateString('en-US', options);
 
+        // Load dashboard statistics on page load
+        loadDashboardStats();
+
+        // Load recent bookings and activities
+        loadRecentBookings();
+        loadRecentActivities();
+
+        function loadDashboardStats() {
+            fetch('../php/get_dashboard_stats.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Today's Bookings
+                        document.getElementById('todayBookings').textContent = data.stats.today_bookings;
+                        const yesterdayChange = data.stats.yesterday_bookings > 0 
+                            ? (((data.stats.today_bookings - data.stats.yesterday_bookings) / data.stats.yesterday_bookings) * 100).toFixed(0)
+                            : (data.stats.today_bookings > 0 ? 100 : 0);
+                        const todayChangeEl = document.getElementById('todayBookingsChange');
+                        if (yesterdayChange > 0) {
+                            todayChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(yesterdayChange)}% from yesterday`;
+                            todayChangeEl.className = 'stat-change positive';
+                        } else if (yesterdayChange < 0) {
+                            todayChangeEl.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(yesterdayChange)}% from yesterday`;
+                            todayChangeEl.className = 'stat-change negative';
+                        } else {
+                            todayChangeEl.innerHTML = `<i class="fas fa-minus"></i> Same as yesterday`;
+                            todayChangeEl.className = 'stat-change';
+                        }
+
+                        // Total Guests
+                        document.getElementById('totalGuests').textContent = data.stats.total_guests;
+                        const lastWeekChange = data.stats.last_week_guests > 0 
+                            ? (((data.stats.total_guests - data.stats.last_week_guests) / data.stats.last_week_guests) * 100).toFixed(0)
+                            : (data.stats.total_guests > 0 ? 100 : 0);
+                        const guestsChangeEl = document.getElementById('totalGuestsChange');
+                        if (lastWeekChange > 0) {
+                            guestsChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(lastWeekChange)}% from last week`;
+                            guestsChangeEl.className = 'stat-change positive';
+                        } else if (lastWeekChange < 0) {
+                            guestsChangeEl.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(lastWeekChange)}% from last week`;
+                            guestsChangeEl.className = 'stat-change negative';
+                        } else {
+                            guestsChangeEl.innerHTML = `<i class="fas fa-minus"></i> Same as last week`;
+                            guestsChangeEl.className = 'stat-change';
+                        }
+
+                        // Available Rooms
+                        document.getElementById('availableRooms').textContent = `${data.stats.available_rooms}/${data.stats.total_rooms}`;
+                        const occupancyPercent = data.stats.total_rooms > 0 
+                            ? ((data.stats.occupied_rooms / data.stats.total_rooms) * 100).toFixed(0)
+                            : 0;
+                        document.getElementById('occupancyRate').innerHTML = `<i class="fas fa-bed"></i> ${occupancyPercent}% occupancy`;
+                        document.getElementById('occupancyRate').className = 'stat-change';
+
+                        // Revenue Today
+                        document.getElementById('revenueToday').textContent = `Rs. ${parseFloat(data.stats.today_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                        const avgRevenue = data.stats.average_daily_revenue;
+                        const revenueChange = avgRevenue > 0 
+                            ? (((data.stats.today_revenue - avgRevenue) / avgRevenue) * 100).toFixed(0)
+                            : (data.stats.today_revenue > 0 ? 100 : 0);
+                        const revenueChangeEl = document.getElementById('revenueTodayChange');
+                        if (revenueChange > 0) {
+                            revenueChangeEl.innerHTML = `<i class="fas fa-arrow-up"></i> ${Math.abs(revenueChange)}% from average`;
+                            revenueChangeEl.className = 'stat-change positive';
+                        } else if (revenueChange < 0) {
+                            revenueChangeEl.innerHTML = `<i class="fas fa-arrow-down"></i> ${Math.abs(revenueChange)}% from average`;
+                            revenueChangeEl.className = 'stat-change negative';
+                        } else {
+                            revenueChangeEl.innerHTML = `<i class="fas fa-minus"></i> Average revenue`;
+                            revenueChangeEl.className = 'stat-change';
+                        }
+
+                        // Room Status Overview
+                        document.getElementById('availableRoomsCount').textContent = data.stats.available_rooms;
+                        document.getElementById('occupiedRoomsCount').textContent = data.stats.occupied_rooms;
+                        document.getElementById('maintenanceRoomsCount').textContent = data.stats.maintenance_rooms;
+                    } else {
+                        console.error('Error loading dashboard stats:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
         // Active navigation
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function(e) {
                 if (!this.classList.contains('logout')) {
-                    e.preventDefault();
                     document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
                 }
             });
         });
+
+        // Section switching
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section-container').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                
+                // Load bookings data if bookings section
+                if (sectionName === 'bookings') {
+                    loadBookings();
+                }
+                // Load guests data if guests section
+                if (sectionName === 'guests') {
+                    loadGuests();
+                }
+                // Load rooms data if rooms section
+                if (sectionName === 'rooms') {
+                    loadRooms();
+                }
+                // Load revenue data if revenue section
+                if (sectionName === 'revenue') {
+                    loadRevenue();
+                }
+                // Load settings data if settings section
+                if (sectionName === 'settings') {
+                    loadSettings();
+                }
+            }
+        }
+
+        // Load bookings from database
+        let allBookings = [];
+        let currentFilter = 'all';
+
+        function loadBookings() {
+            fetch('../php/get_bookings.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        allBookings = data.bookings;
+                        displayBookings(allBookings);
+                    } else {
+                        document.getElementById('bookingsTableBody').innerHTML = 
+                            '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> ' + 
+                            (data.message || 'Failed to load bookings') + '</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading bookings:', error);
+                    document.getElementById('bookingsTableBody').innerHTML = 
+                        '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                });
+        }
+
+        function displayBookings(bookings) {
+            const tbody = document.getElementById('bookingsTableBody');
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px;"><i class="fas fa-inbox"></i> No bookings found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = bookings.map(booking => {
+                const statusColors = {
+                    'pending': '#f59e0b',
+                    'confirmed': '#3b82f6',
+                    'checked_in': '#10b981',
+                    'checked_out': '#6b7280',
+                    'cancelled': '#ef4444'
+                };
+                const statusColor = statusColors[booking.status] || '#6b7280';
+                
+                return `
+                    <tr>
+                        <td>
+                            <div class="action-buttons-container">
+                                <button class="action-icon-btn" onclick="viewBookingDetails('${booking.booking_reference}')" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-icon-btn" onclick="showStatusChangeModal('${booking.booking_id}', '${booking.status}', '${booking.booking_reference}', '${booking.room_type_id || ''}', '${booking.room_id || ''}')" title="Change Status">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td><strong>${booking.booking_reference}</strong></td>
+                        <td>${booking.guest_name}</td>
+                        <td>${booking.guest_email}</td>
+                        <td>${booking.guest_phone}</td>
+                        <td>${booking.type_name}</td>
+                        <td>${formatDate(booking.check_in_date)}</td>
+                        <td>${formatDate(booking.check_out_date)}</td>
+                        <td>${booking.total_nights}</td>
+                        <td><strong>$${parseFloat(booking.total_amount).toFixed(2)}</strong></td>
+                        <td><span class="status-badge" style="background: ${statusColor};">${formatStatus(booking.status)}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterBookings(status) {
+            currentFilter = status;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter bookings
+            const filteredBookings = status === 'all' 
+                ? allBookings 
+                : allBookings.filter(b => b.status === status);
+            
+            displayBookings(filteredBookings);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // Add Room functionality
+        function showAddRoomModal() {
+            // Load room types for dropdown
+            loadRoomTypesForDropdown();
+            document.getElementById('addRoomModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAddRoomModal() {
+            document.getElementById('addRoomModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('addRoomForm').reset();
+        }
+
+        async function loadRoomTypesForDropdown() {
+            try {
+                const response = await fetch('../php/get_room_types_list.php');
+                const data = await response.json();
+                
+                if (data.success && data.room_types) {
+                    const dropdown = document.getElementById('new_room_type_id');
+                    dropdown.innerHTML = '<option value="">-- Select Room Type First --</option>';
+                    
+                    data.room_types.forEach(type => {
+                        const option = document.createElement('option');
+                        option.value = type.room_type_id;
+                        option.textContent = `${type.type_name} - $${parseFloat(type.base_price).toFixed(2)}/night`;
+                        dropdown.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading room types:', error);
+            }
+        }
+
+        async function generateRoomNumber() {
+            const roomTypeId = document.getElementById('new_room_type_id').value;
+            const roomNumberSection = document.getElementById('roomNumberSection');
+            const roomNumberInput = document.getElementById('new_room_number');
+            const roomNumberHint = document.getElementById('roomNumberHint');
+            
+            if (!roomTypeId) {
+                roomNumberSection.style.display = 'none';
+                return;
+            }
+            
+            try {
+                // Show loading state
+                roomNumberSection.style.display = 'block';
+                roomNumberInput.value = 'Generating...';
+                
+                const response = await fetch(`../php/get_next_room_number.php?room_type_id=${roomTypeId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    roomNumberInput.value = data.next_room_number;
+                    roomNumberHint.innerHTML = `<i class="fas fa-info-circle"></i> ${data.message}`;
+                } else {
+                    roomNumberInput.value = '';
+                    roomNumberHint.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${data.message}`;
+                    roomNumberHint.style.color = '#ef4444';
+                }
+            } catch (error) {
+                console.error('Error generating room number:', error);
+                roomNumberInput.value = '';
+                roomNumberHint.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed to generate room number';
+                roomNumberHint.style.color = '#ef4444';
+            }
+        }
+
+        async function submitAddRoom(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('addRoomForm');
+            const formData = new FormData(form);
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('../php/add_room.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✓ Room ' + data.room_number + ' added successfully!');
+                    closeAddRoomModal();
+                    loadRooms(); // Reload rooms list
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error adding room:', error);
+                alert('Failed to add room. Please try again.');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Room Status Change functionality
+        function showRoomStatusModal(roomId, roomNumber, currentStatus) {
+            document.getElementById('room_status_room_id').value = roomId;
+            document.getElementById('new_room_status').value = currentStatus;
+            document.getElementById('roomStatusSubtitle').textContent = `Room ${roomNumber}`;
+            document.getElementById('roomStatusModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRoomStatusModal() {
+            document.getElementById('roomStatusModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('roomStatusForm').reset();
+        }
+
+        async function updateRoomStatus(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('roomStatusForm');
+            const formData = new FormData(form);
+            formData.append('room_id', document.getElementById('room_status_room_id').value);
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Updating...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('../php/update_room_status.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✓ ' + data.message);
+                    closeRoomStatusModal();
+                    loadRooms(); // Reload rooms list
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error updating room status:', error);
+                alert('Failed to update room status. Please try again.');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Delete Room functionality
+        async function deleteRoom(roomId, roomNumber) {
+            if (!confirm(`Are you sure you want to delete Room ${roomNumber}?\\n\\nThis action cannot be undone. The room will be permanently removed from the system.`)) {
+                return;
+            }
+            
+            try {
+                const formData = new FormData();
+                formData.append('room_id', roomId);
+                
+                const response = await fetch('../php/delete_room.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✓ ' + data.message);
+                    loadRooms(); // Reload rooms list
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error deleting room:', error);
+                alert('Failed to delete room. Please try again.');
+            }
+        }
+
+        function formatStatus(status) {
+            return status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        }
+
+        function viewBookingDetails(bookingRef) {
+            // Show modal
+            document.getElementById('bookingDetailsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Fetch booking details
+            fetch('../php/get_booking_details.php?ref=' + bookingRef)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayBookingDetails(data.booking);
+                    } else {
+                        document.getElementById('bookingDetailsContent').innerHTML = `
+                            <div style="text-align: center; padding: 40px; color: #dc2626;">
+                                <i class="fas fa-exclamation-circle" style="font-size: 30px;"></i>
+                                <p style="margin-top: 15px;">${data.message || 'Error loading booking details'}</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('bookingDetailsContent').innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #dc2626;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 30px;"></i>
+                            <p style="margin-top: 15px;">Error loading booking details</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function displayBookingDetails(booking) {
+            const statusColors = {
+                'pending': '#f59e0b',
+                'confirmed': '#3b82f6',
+                'checked_in': '#10b981',
+                'checked_out': '#6b7280',
+                'cancelled': '#ef4444',
+                'no_show': '#dc2626'
+            };
+            const statusColor = statusColors[booking.status] || '#6b7280';
+            
+            const content = `
+                <div style="display: grid; gap: 25px;">
+                    <!-- Booking Reference & Status -->
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                            <div>
+                                <p style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Booking Reference</p>
+                                <h3 style="font-size: 24px; margin: 0; font-weight: 700;">${booking.booking_reference}</h3>
+                            </div>
+                            <span style="padding: 10px 20px; background: ${statusColor}; border-radius: 8px; font-weight: 600; font-size: 14px;">
+                                ${booking.status.replace('_', ' ').toUpperCase()}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Guest Information -->
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <h3 style="color: #1e293b; margin-bottom: 15px; font-size: 18px;"><i class="fas fa-user" style="color: #dc2626;"></i> Guest Information</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                            <div>
+                                <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Full Name</p>
+                                <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.guest_name}</p>
+                            </div>
+                            <div>
+                                <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Email Address</p>
+                                <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.guest_email}</p>
+                            </div>
+                            <div>
+                                <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Phone Number</p>
+                                <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.guest_phone}</p>
+                            </div>
+                            ${booking.guest_address ? `
+                            <div style="grid-column: 1 / -1;">
+                                <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Address</p>
+                                <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.guest_address}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Room & Booking Details -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <!-- Room Information -->
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h3 style="color: #1e293b; margin-bottom: 15px; font-size: 18px;"><i class="fas fa-hotel" style="color: #dc2626;"></i> Room Details</h3>
+                            <div style="display: grid; gap: 12px;">
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Room Type</p>
+                                    <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.type_name}</p>
+                                </div>
+                                ${booking.room_number ? `
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Room Number</p>
+                                    <p style="color: #dc2626; font-weight: 700; font-size: 16px;">Room ${booking.room_number}</p>
+                                </div>
+                                ` : '<p style="color: #f59e0b; font-weight: 600;"><i class="fas fa-info-circle"></i> Room not assigned yet</p>'}
+                                ${booking.floor_number ? `
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Floor</p>
+                                    <p style="color: #1e293b; font-weight: 600; font-size: 15px;">Floor ${booking.floor_number}</p>
+                                </div>
+                                ` : ''}
+                                ${booking.view_type ? `
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">View</p>
+                                    <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.view_type} View</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        <!-- Stay Information -->
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h3 style="color: #1e293b; margin-bottom: 15px; font-size: 18px;"><i class="fas fa-calendar-check" style="color: #dc2626;"></i> Stay Details</h3>
+                            <div style="display: grid; gap: 12px;">
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Check-In Date</p>
+                                    <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.check_in_formatted}</p>
+                                </div>
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Check-Out Date</p>
+                                    <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.check_out_formatted}</p>
+                                </div>
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Number of Nights</p>
+                                    <p style="color: #dc2626; font-weight: 700; font-size: 16px;">${booking.total_nights} Night${booking.total_nights !== 1 ? 's' : ''}</p>
+                                </div>
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Adults</p>
+                                    <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.adults} Adult${booking.adults !== 1 ? 's' : ''}</p>
+                                </div>
+                                ${booking.children > 0 ? `
+                                <div>
+                                    <p style="color: #64748b; font-size: 13px; margin-bottom: 5px;">Children</p>
+                                    <p style="color: #1e293b; font-weight: 600; font-size: 15px;">${booking.children} Child${booking.children !== 1 ? 'ren' : ''}</p>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Information -->
+                    <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 15px; font-size: 18px; color: white;"><i class="fas fa-money-bill-wave"></i> Payment Details</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div>
+                                <p style="opacity: 0.9; font-size: 13px; margin-bottom: 5px;">Total Amount</p>
+                                <p style="font-weight: 700; font-size: 24px; margin: 0;">$${parseFloat(booking.total_amount).toFixed(2)}</p>
+                            </div>
+                            <div>
+                                <p style="opacity: 0.9; font-size: 13px; margin-bottom: 5px;">Base Price per Night</p>
+                                <p style="font-weight: 600; font-size: 18px; margin: 0;">$${parseFloat(booking.base_price).toFixed(2)}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Requests -->
+                    ${booking.special_requests ? `
+                    <div style="background: #fff7ed; padding: 20px; border-radius: 12px; border: 2px solid #fed7aa;">
+                        <h3 style="color: #c2410c; margin-bottom: 10px; font-size: 16px;"><i class="fas fa-comment-dots"></i> Special Requests</h3>
+                        <p style="color: #1e293b; line-height: 1.6; font-size: 15px;">${booking.special_requests}</p>
+                    </div>
+                    ` : ''}
+
+                    <!-- Booking Timeline -->
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <h3 style="color: #1e293b; margin-bottom: 15px; font-size: 18px;"><i class="fas fa-clock" style="color: #dc2626;"></i> Booking Timeline</h3>
+                        <div style="display: grid; gap: 10px;">
+                            <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
+                                <span style="color: #64748b; font-size: 14px;">Booking Created</span>
+                                <span style="color: #1e293b; font-weight: 600; font-size: 14px;">${booking.created_at_formatted}</span>
+                            </div>
+                            ${booking.confirmed_at ? `
+                            <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 6px;">
+                                <span style="color: #64748b; font-size: 14px;">Confirmed At</span>
+                                <span style="color: #10b981; font-weight: 600; font-size: 14px;">${booking.confirmed_at_formatted}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('bookingDetailsContent').innerHTML = content;
+        }
+
+        function closeBookingDetailsModal() {
+            document.getElementById('bookingDetailsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Status change modal functions
+        function showStatusChangeModal(bookingId, currentStatus, bookingRef, roomTypeId = null, currentRoomId = null) {
+            document.getElementById('status_booking_id').value = bookingId;
+            document.getElementById('status_room_type_id').value = roomTypeId || '';
+            document.getElementById('status_current_room_id').value = currentRoomId || '';
+            document.getElementById('new_status').value = currentStatus;
+            document.getElementById('statusModalSubtitle').textContent = `Booking Reference: ${bookingRef}`;
+            
+            // Hide room assignment section initially
+            document.getElementById('roomAssignmentSection').style.display = 'none';
+            
+            document.getElementById('statusChangeModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        async function handleStatusChange() {
+            const newStatus = document.getElementById('new_status').value;
+            const roomTypeId = document.getElementById('status_room_type_id').value;
+            const roomAssignmentSection = document.getElementById('roomAssignmentSection');
+            const assignedRoomSelect = document.getElementById('assigned_room_id');
+            
+            // Show room assignment when confirming or checking in
+            if ((newStatus === 'confirmed' || newStatus === 'checked_in') && roomTypeId) {
+                roomAssignmentSection.style.display = 'block';
+                assignedRoomSelect.required = true;
+                
+                // Load available rooms for this room type
+                await loadAvailableRooms(roomTypeId);
+            } else {
+                roomAssignmentSection.style.display = 'none';
+                assignedRoomSelect.required = false;
+            }
+        }
+
+        async function loadAvailableRooms(roomTypeId) {
+            try {
+                const response = await fetch(`../php/get_available_rooms.php?room_type_id=${roomTypeId}`);
+                const data = await response.json();
+                
+                const dropdown = document.getElementById('assigned_room_id');
+                const currentRoomId = document.getElementById('status_current_room_id').value;
+                
+                dropdown.innerHTML = '<option value="">-- Select Room --</option>';
+                
+                if (data.success && data.rooms && data.rooms.length > 0) {
+                    data.rooms.forEach(room => {
+                        const option = document.createElement('option');
+                        option.value = room.room_id;
+                        option.textContent = `Room ${room.room_number} - ${room.view_type} View (Floor ${room.floor_number})`;
+                        
+                        // Pre-select if this is the current room
+                        if (currentRoomId && room.room_id == currentRoomId) {
+                            option.selected = true;
+                        }
+                        
+                        dropdown.appendChild(option);
+                    });
+                } else {
+                    dropdown.innerHTML = '<option value="">No available rooms</option>';
+                }
+            } catch (error) {
+                console.error('Error loading available rooms:', error);
+                document.getElementById('assigned_room_id').innerHTML = '<option value="">Error loading rooms</option>';
+            }
+        }
+
+        function closeStatusModal() {
+            document.getElementById('statusChangeModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('statusChangeForm').reset();
+            document.getElementById('roomAssignmentSection').style.display = 'none';
+            document.getElementById('assigned_room_id').required = false;
+        }
+
+        function updateBookingStatus(event) {
+            event.preventDefault();
+            
+            const bookingId = document.getElementById('status_booking_id').value;
+            const newStatus = document.getElementById('new_status').value;
+            const assignedRoomId = document.getElementById('assigned_room_id').value;
+            const roomAssignmentVisible = document.getElementById('roomAssignmentSection').style.display !== 'none';
+            
+            if (!bookingId || !newStatus) {
+                alert('Please select a status');
+                return;
+            }
+
+            // Check if room assignment is required but not provided
+            if (roomAssignmentVisible && !assignedRoomId) {
+                alert('Please select a room to assign to this booking');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = event.target.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Updating...';
+            submitBtn.disabled = true;
+
+            // Prepare request body
+            let requestBody = `booking_id=${bookingId}&status=${newStatus}`;
+            if (assignedRoomId) {
+                requestBody += `&room_id=${assignedRoomId}`;
+            }
+
+            // Send update request
+            fetch('../php/update_booking_status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: requestBody
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✓ Booking status updated successfully!' + (assignedRoomId ? '\nRoom assigned.' : ''));
+                    closeStatusModal();
+                    loadBookings(); // Reload bookings table
+                    if (assignedRoomId) {
+                        // Also reload rooms if we assigned a room
+                        if (typeof loadRooms === 'function') {
+                            loadRooms();
+                        }
+                    }
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to update status'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the status');
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        }
 
         // Try to get admin info from session (would need PHP session handling)
         // For now, using placeholder text
@@ -390,12 +1696,776 @@
         document.getElementById('adminName').textContent = adminName;
         document.getElementById('welcomeName').textContent = adminName.split(' ')[0];
 
+        // Load guests from database
+        let allGuests = [];
+
+        function loadGuests() {
+            fetch('../php/get_guests.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        allGuests = data.guests;
+                        displayGuests(allGuests);
+                    } else {
+                        document.getElementById('guestsTableBody').innerHTML = 
+                            '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> ' + 
+                            (data.message || 'Failed to load guests') + '</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading guests:', error);
+                    document.getElementById('guestsTableBody').innerHTML = 
+                        '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading guests</td></tr>';
+                });
+        }
+
+        function displayGuests(guests) {
+            const tbody = document.getElementById('guestsTableBody');
+            
+            if (guests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px;"><i class="fas fa-info-circle"></i> No guests found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = guests.map(guest => {
+                return `
+                    <tr>
+                        <td><strong>${guest.guest_name || 'N/A'}</strong></td>
+                        <td>${guest.guest_email || 'N/A'}</td>
+                        <td>${guest.guest_phone || 'N/A'}</td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #3b82f6; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.total_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #10b981; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.confirmed_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #8b5cf6; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.checked_in_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #6b7280; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.checked_out_bookings}</span></td>
+                        <td style="text-align: center;"><span style="display: inline-block; min-width: 35px; padding: 6px 12px; background: #ef4444; color: white; border-radius: 6px; font-weight: 600; font-size: 14px;">${guest.cancelled_bookings}</span></td>
+                        <td><strong style="color: #10b981; font-size: 15px;">$${parseFloat(guest.total_spent || 0).toFixed(2)}</strong></td>
+                        <td>${guest.last_check_in ? formatDate(guest.last_check_in) : 'N/A'}</td>
+                        <td>${formatDate(guest.first_booking_date)}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterGuests() {
+            const searchTerm = document.getElementById('guestSearch').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                displayGuests(allGuests);
+                return;
+            }
+            
+            const filteredGuests = allGuests.filter(guest => {
+                return (guest.guest_name && guest.guest_name.toLowerCase().includes(searchTerm)) ||
+                       (guest.guest_email && guest.guest_email.toLowerCase().includes(searchTerm)) ||
+                       (guest.guest_phone && guest.guest_phone.includes(searchTerm));
+            });
+            
+            displayGuests(filteredGuests);
+        }
+
+        // Load rooms from database
+        let allRooms = [];
+        let currentRoomFilter = 'all';
+
+        function loadRooms() {
+            fetch('../php/get_all_rooms.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        allRooms = data.rooms;
+                        updateRoomStats(data.stats);
+                        displayRooms(allRooms);
+                    } else {
+                        document.getElementById('roomsTableBody').innerHTML = 
+                            '<tr><td colspan="12" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> ' + 
+                            (data.message || 'Failed to load rooms') + '</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading rooms:', error);
+                    document.getElementById('roomsTableBody').innerHTML = 
+                        '<tr><td colspan="12" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading rooms</td></tr>';
+                });
+        }
+
+        function updateRoomStats(stats) {
+            document.getElementById('roomsPageTotalCount').textContent = stats.total_rooms;
+            document.getElementById('roomsPageAvailableCount').textContent = stats.available;
+            document.getElementById('roomsPageOccupiedCount').textContent = stats.occupied;
+            document.getElementById('roomsPageMaintenanceCount').textContent = stats.maintenance;
+        }
+
+        function displayRooms(rooms) {
+            const container = document.getElementById('roomsTreeView');
+            
+            if (rooms.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-info-circle"></i> <p>No rooms found</p></div>';
+                return;
+            }
+            
+            // Group rooms by room type
+            const groupedRooms = {};
+            rooms.forEach(room => {
+                const typeName = room.type_name || 'Unknown';
+                if (!groupedRooms[typeName]) {
+                    groupedRooms[typeName] = {
+                        room_type_id: room.room_type_id,
+                        badge_label: room.badge_label,
+                        base_price: room.base_price,
+                        max_occupancy: room.max_occupancy,
+                        bed_type: room.bed_type,
+                        size_sqm: room.size_sqm,
+                        image_url: room.image_url,
+                        rooms: []
+                    };
+                }
+                groupedRooms[typeName].rooms.push(room);
+            });
+            
+            const statusColors = {
+                'available': '#10b981',
+                'occupied': '#ef4444',
+                'maintenance': '#f59e0b'
+            };
+            
+            // Build tree HTML
+            let html = '';
+            Object.keys(groupedRooms).sort().forEach((typeName, index) => {
+                const typeData = groupedRooms[typeName];
+                const roomCount = typeData.rooms.length;
+                const availableCount = typeData.rooms.filter(r => r.status === 'available').length;
+                
+                html += `
+                    <div class="room-type-category">
+                        <div class="category-header" onclick="toggleCategory('category-${index}')">
+                            <div class="category-left">
+                                <i class="fas fa-chevron-down category-icon" id="icon-category-${index}"></i>
+                                ${typeData.image_url ? `<img src="../${typeData.image_url}" alt="${typeName}" class="room-type-image" onerror="this.style.display='none'">` : ''}
+                                <i class="fas fa-hotel" style="color: #dc2626; margin-right: 10px;"></i>
+                                <h3 style="margin: 0; color: #1e293b; font-size: 18px;">${typeName}</h3>
+                                <span class="badge" style="background: #8b5cf6; margin-left: 15px;">${typeData.badge_label || 'Standard'}</span>
+                            </div>
+                            <div class="category-right">
+                                <button class="edit-image-btn" onclick="event.stopPropagation(); showImageModal(${typeData.room_type_id}, '${typeName}', '${typeData.image_url || ''}')" title="Change room type image">
+                                    <i class="fas fa-camera"></i> Change Image
+                                </button>
+                                <span class="room-count-badge">${roomCount} room${roomCount !== 1 ? 's' : ''}</span>
+                                <span class="badge" style="background: #10b981; margin-left: 10px;">${availableCount} available</span>
+                                <span style="color: #10b981; font-weight: bold; margin-left: 15px; font-size: 16px;">$${parseFloat(typeData.base_price || 0).toFixed(2)}/night</span>
+                            </div>
+                        </div>
+                        <div class="category-details">
+                            <div class="type-info">
+                                <span><i class="fas fa-bed"></i> ${typeData.bed_type}</span>
+                                <span><i class="fas fa-users"></i> Max ${typeData.max_occupancy} guests</span>
+                                <span><i class="fas fa-ruler-combined"></i> ${typeData.size_sqm} m²</span>
+                            </div>
+                        </div>
+                        <div class="category-rooms" id="category-${index}" style="display: block;">
+                            ${typeData.rooms.map(room => {
+                                const statusColor = statusColors[room.status] || '#6b7280';
+                                return `
+                                    <div class="room-item">
+                                        <div class="room-main-info">
+                                            <div class="room-number">
+                                                <i class="fas fa-door-closed" style="color: #dc2626;"></i>
+                                                <strong>Room ${room.room_number}</strong>
+                                            </div>
+                                            <div class="room-details">
+                                                <span class="room-detail-item"><i class="fas fa-layer-group"></i> Floor ${room.floor_number || 'N/A'}</span>
+                                                <span class="room-detail-item"><i class="fas fa-eye"></i> ${room.view_type || 'N/A'} View</span>
+                                                ${room.current_bookings > 0 ? 
+                                                    '<span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #ef4444; color: white; border-radius: 6px; font-weight: 600; font-size: 13px; border: 2px solid #dc2626;"><i class="fas fa-calendar-check"></i> ' + room.current_bookings + ' active booking' + (room.current_bookings !== 1 ? 's' : '') + '</span>' : 
+                                                    '<span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #10b981; color: white; border-radius: 6px; font-weight: 600; font-size: 13px; border: 2px solid #059669;"><i class="fas fa-check-circle"></i> No bookings</span>'
+                                                }
+                                                <span style="display: inline-flex; align-items: center; padding: 6px 14px; background: ${statusColor}; color: white; border-radius: 6px; font-weight: 600; font-size: 13px; border: 2px solid ${statusColor === '#f59e0b' ? '#d97706' : statusColor === '#10b981' ? '#059669' : '#dc2626'};">${formatStatus(room.status)}</span>
+                                            </div>
+                                            <div style="display: flex; gap: 8px; margin-left: auto;">
+                                                <button class="change-status-btn" onclick="showRoomStatusModal(${room.room_id}, '${room.room_number}', '${room.status}')" title="Change room status">
+                                                    <i class="fas fa-sync-alt"></i> Status
+                                                </button>
+                                                ${room.status !== 'occupied' ? `
+                                                    <button class="delete-room-btn" onclick="deleteRoom(${room.room_id}, '${room.room_number}')" title="Delete room">
+                                                        <i class="fas fa-trash-alt"></i> Delete
+                                                    </button>
+                                                ` : `
+                                                    <button class="delete-room-btn" disabled style="opacity: 0.5; cursor: not-allowed;" title="Cannot delete occupied room">
+                                                        <i class="fas fa-lock"></i> Occupied
+                                                    </button>
+                                                `}
+                                            </div>
+                                        </div>
+                                        ${room.notes ? `<div class="room-notes"><i class="fas fa-sticky-note"></i> ${room.notes}</div>` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function toggleCategory(categoryId) {
+            const categoryRooms = document.getElementById(categoryId);
+            const icon = document.getElementById('icon-' + categoryId);
+            
+            if (categoryRooms.style.display === 'none') {
+                categoryRooms.style.display = 'block';
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                categoryRooms.style.display = 'none';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-right');
+            }
+        }
+
+        function filterRooms(status) {
+            currentRoomFilter = status;
+            
+            // Update filter buttons
+            document.querySelectorAll('#rooms-section .filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter rooms
+            const filteredRooms = status === 'all' 
+                ? allRooms 
+                : allRooms.filter(r => r.status === status);
+            
+            displayRooms(filteredRooms);
+        }
+
+        // Room type image management
+        function showImageModal(roomTypeId, typeName, imageUrl) {
+            document.getElementById('image_room_type_id').value = roomTypeId;
+            document.getElementById('imageModalSubtitle').textContent = `Upload a new image for ${typeName}`;
+            
+            // Show current image if exists (imageUrl already includes ../ prefix from database)
+            if (imageUrl) {
+                document.getElementById('currentImage').src = imageUrl;
+                document.getElementById('currentImagePreview').style.display = 'block';
+            } else {
+                document.getElementById('currentImagePreview').style.display = 'none';
+            }
+            
+            document.getElementById('roomImageModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeImageModal() {
+            document.getElementById('roomImageModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('roomImageForm').reset();
+            document.getElementById('newImagePreview').style.display = 'none';
+        }
+        
+        // Preview image before upload
+        document.addEventListener('DOMContentLoaded', function() {
+            // Automatically update booking statuses based on dates
+            autoUpdateBookingStatuses();
+            
+            const imageInput = document.getElementById('room_image');
+            if (imageInput) {
+                imageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('previewImage').src = e.target.result;
+                            document.getElementById('newImagePreview').style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+        
+        // Automatic status update function
+        async function autoUpdateBookingStatuses() {
+            console.log('🔄 Running automatic booking status update...');
+            try {
+                const response = await fetch('../php/auto_update_booking_status.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ Auto-update completed:', result);
+                    
+                    // Log the updates
+                    if (result.updates_count > 0) {
+                        console.log(`📊 Auto-updated ${result.updates_count} booking(s)`);
+                        
+                        if (result.check_ins.length > 0) {
+                            console.log('🔑 Check-ins processed:', result.check_ins);
+                        }
+                        
+                        if (result.check_outs.length > 0) {
+                            console.log('🚪 Check-outs processed:', result.check_outs);
+                        }
+                        
+                        // Reload bookings if we're on the bookings tab
+                        const currentSection = document.querySelector('.section.active');
+                        if (currentSection && currentSection.id === 'bookings') {
+                            console.log('↻ Reloading bookings...');
+                            loadBookings();
+                        }
+                    } else {
+                        console.log('ℹ️ No bookings required status updates');
+                    }
+                    
+                    if (result.errors && result.errors.length > 0) {
+                        console.warn('⚠️ Errors during auto-update:', result.errors);
+                    }
+                } else {
+                    console.error('❌ Auto-update failed:', result.message);
+                }
+            } catch (error) {
+                console.error('❌ Error auto-updating booking statuses:', error);
+            }
+        }
+        
+        function updateRoomImage(event) {
+            event.preventDefault();
+            
+            const roomTypeId = document.getElementById('image_room_type_id').value;
+            const fileInput = document.getElementById('room_image');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = event.target.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Uploading...';
+            submitBtn.disabled = true;
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('room_type_id', roomTypeId);
+            formData.append('room_image', file);
+            
+            // Send update request
+            fetch('../php/update_room_type_image.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Room type image updated successfully!');
+                    closeImageModal();
+                    loadRooms(); // Reload rooms to show new image
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to update image'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the image');
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
         // Logout confirmation
         function confirmLogout(event) {
             event.preventDefault();
             if (confirm('Are you sure you want to logout?')) {
                 window.location.href = '../php/logout.php';
             }
+        }
+
+        // ========================================
+        // REVENUE MANAGEMENT FUNCTIONS
+        // ========================================
+        
+        let allRevenueBookings = [];
+        let currentRevenueFilter = 'all';
+
+        function loadRevenue() {
+            fetch('../php/get_revenue.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update summary cards
+                        document.getElementById('totalRevenue').textContent = 'Rs. ' + parseFloat(data.summary.total_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        document.getElementById('confirmedBookingsCount').textContent = data.summary.confirmed_count;
+                        document.getElementById('averageBookingValue').textContent = 'Rs. ' + parseFloat(data.summary.average_booking_value).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        document.getElementById('todayRevenue').textContent = 'Rs. ' + parseFloat(data.summary.today_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                        
+                        // Display revenue by room type
+                        displayRevenueByRoomType(data.by_room_type, data.summary.total_revenue);
+                        
+                        // Store and display bookings
+                        allRevenueBookings = data.bookings;
+                        displayRevenueBookings(allRevenueBookings);
+                    } else {
+                        console.error('Error loading revenue:', data.message);
+                        document.getElementById('revenueByRoomTypeBody').innerHTML = 
+                            '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Failed to load revenue data</td></tr>';
+                        document.getElementById('revenueBookingsBody').innerHTML = 
+                            '<tr><td colspan="8" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Failed to load bookings</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('revenueByRoomTypeBody').innerHTML = 
+                        '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading revenue data</td></tr>';
+                    document.getElementById('revenueBookingsBody').innerHTML = 
+                        '<tr><td colspan="8" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                });
+        }
+
+        function displayRevenueByRoomType(roomTypes, totalRevenue) {
+            const tbody = document.getElementById('revenueByRoomTypeBody');
+            
+            if (!roomTypes || roomTypes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-info-circle"></i> No revenue data available</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = roomTypes.map(rt => {
+                const percentage = totalRevenue > 0 ? ((rt.total_revenue / totalRevenue) * 100).toFixed(1) : 0;
+                return `
+                    <tr>
+                        <td><strong>${rt.type_name}</strong></td>
+                        <td>${rt.booking_count}</td>
+                        <td><strong style="color: #28a745;">Rs. ${parseFloat(rt.total_revenue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="flex: 1; height: 8px; background: #e5e5e5; border-radius: 4px; overflow: hidden;">
+                                    <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, #667eea, #764ba2);"></div>
+                                </div>
+                                <span style="font-weight: bold; color: #667eea;">${percentage}%</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function displayRevenueBookings(bookings) {
+            const tbody = document.getElementById('revenueBookingsBody');
+            
+            if (!bookings || bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-info-circle"></i> No confirmed bookings found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = bookings.map(booking => `
+                <tr>
+                    <td><span style="font-family: monospace; font-weight: bold; color: #667eea;">${booking.booking_reference}</span></td>
+                    <td>${booking.guest_name}</td>
+                    <td>${booking.type_name}</td>
+                    <td>${formatDate(booking.check_in_date)}</td>
+                    <td>${formatDate(booking.check_out_date)}</td>
+                    <td><span class="badge" style="background: #4facfe; color: white; padding: 4px 12px; border-radius: 12px;">${booking.total_nights}</span></td>
+                    <td><strong style="color: #28a745;">Rs. ${parseFloat(booking.total_amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></td>
+                    <td>${formatDate(booking.confirmed_at)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterRevenueBookings(filter) {
+            currentRevenueFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('#revenue-section .filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            let filteredBookings = allRevenueBookings;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (filter === 'today') {
+                filteredBookings = allRevenueBookings.filter(booking => {
+                    const confirmedDate = new Date(booking.confirmed_at);
+                    confirmedDate.setHours(0, 0, 0, 0);
+                    return confirmedDate.getTime() === today.getTime();
+                });
+            } else if (filter === 'week') {
+                const weekAgo = new Date(today);
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                filteredBookings = allRevenueBookings.filter(booking => {
+                    const confirmedDate = new Date(booking.confirmed_at);
+                    return confirmedDate >= weekAgo;
+                });
+            } else if (filter === 'month') {
+                const monthAgo = new Date(today);
+                monthAgo.setMonth(monthAgo.getMonth() - 1);
+                filteredBookings = allRevenueBookings.filter(booking => {
+                    const confirmedDate = new Date(booking.confirmed_at);
+                    return confirmedDate >= monthAgo;
+                });
+            }
+            
+            displayRevenueBookings(filteredBookings);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+        }
+
+        // ========================================
+        // SETTINGS FUNCTIONS
+        // ========================================
+        
+        function loadSettings() {
+            fetch('../php/get_admin_info.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Populate current username
+                        document.getElementById('current_username').value = data.admin.username;
+                        
+                        // Populate account information
+                        document.getElementById('settings_full_name').textContent = data.admin.full_name;
+                        document.getElementById('settings_email').textContent = data.admin.email;
+                        document.getElementById('settings_role').textContent = data.admin.role.charAt(0).toUpperCase() + data.admin.role.slice(1);
+                        document.getElementById('settings_last_login').textContent = data.admin.last_login ? formatDate(data.admin.last_login) : 'Never';
+                    } else {
+                        console.error('Error loading settings:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function changeUsername(event) {
+            event.preventDefault();
+            
+            const newUsername = document.getElementById('new_username').value.trim();
+            const password = document.getElementById('username_password').value;
+            
+            if (newUsername.length < 4) {
+                alert('Username must be at least 4 characters long');
+                return;
+            }
+            
+            if (!confirm('Are you sure you want to change your username?')) {
+                return;
+            }
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            submitBtn.disabled = true;
+            
+            fetch('../php/update_username.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    new_username: newUsername,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Username updated successfully! Please login again with your new username.');
+                    // Logout and redirect to login
+                    window.location.href = '../php/logout.php';
+                } else {
+                    alert('❌ Error: ' + (data.message || 'Failed to update username'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating username');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        function changePassword(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('current_password').value;
+            const newPassword = document.getElementById('new_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (newPassword.length < 8) {
+                alert('New password must be at least 8 characters long');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('New password and confirm password do not match');
+                return;
+            }
+            
+            if (!confirm('Are you sure you want to change your password?')) {
+                return;
+            }
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            submitBtn.disabled = true;
+            
+            fetch('../php/update_password.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    current_password: currentPassword,
+                    new_password: newPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Password updated successfully! Please login again with your new password.');
+                    // Clear form
+                    event.target.reset();
+                    // Logout and redirect to login
+                    window.location.href = '../php/logout.php';
+                } else {
+                    alert('❌ Error: ' + (data.message || 'Failed to update password'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating password');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        // ========================================
+        // RECENT BOOKINGS & ACTIVITIES
+        // ========================================
+
+        function loadRecentBookings() {
+            fetch('../php/get_recent_data.php?type=bookings')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayRecentBookings(data.bookings);
+                    } else {
+                        document.getElementById('recentBookingsTable').innerHTML = 
+                            '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('recentBookingsTable').innerHTML = 
+                        '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                });
+        }
+
+        function displayRecentBookings(bookings) {
+            const tbody = document.getElementById('recentBookingsTable');
+            
+            if (!bookings || bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-inbox"></i> No recent bookings</td></tr>';
+                return;
+            }
+
+            const statusColors = {
+                'pending': '#f59e0b',
+                'confirmed': '#3b82f6',
+                'checked_in': '#10b981',
+                'checked_out': '#6b7280',
+                'cancelled': '#ef4444'
+            };
+
+            tbody.innerHTML = bookings.map(booking => {
+                const statusColor = statusColors[booking.status] || '#6b7280';
+                
+                return `
+                    <tr>
+                        <td>${booking.type_name}</td>
+                        <td>${formatDate(booking.check_in_date)}</td>
+                        <td>
+                            <span style="padding: 4px 12px; border-radius: 12px; background: ${statusColor}; color: white; font-size: 12px; font-weight: 500;">
+                                ${booking.status.replace('_', ' ').toUpperCase()}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function loadRecentActivities() {
+            fetch('../php/get_recent_data.php?type=activities')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayRecentActivities(data.activities);
+                    } else {
+                        document.getElementById('recentActivityList').innerHTML = 
+                            '<div class="activity-item" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading activities</div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('recentActivityList').innerHTML = 
+                        '<div class="activity-item" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading activities</div>';
+                });
+        }
+
+        function displayRecentActivities(activities) {
+            const container = document.getElementById('recentActivityList');
+            
+            if (!activities || activities.length === 0) {
+                container.innerHTML = '<div class="activity-item" style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-inbox"></i> No recent activities</div>';
+                return;
+            }
+
+            const activityIcons = {
+                'new_booking': { icon: 'fa-calendar-check', color: '#667eea' },
+                'confirmed': { icon: 'fa-check-circle', color: '#10b981' },
+                'checked_in': { icon: 'fa-sign-in-alt', color: '#43e97b' },
+                'checked_out': { icon: 'fa-sign-out-alt', color: '#fa709a' },
+                'cancelled': { icon: 'fa-times-circle', color: '#ef4444' },
+                'room_added': { icon: 'fa-bed', color: '#4facfe' }
+            };
+
+            container.innerHTML = activities.map(activity => {
+                const config = activityIcons[activity.type] || { icon: 'fa-info-circle', color: '#6b7280' };
+                return `
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: ${config.color};">
+                            <i class="fas ${config.icon}"></i>
+                        </div>
+                        <div class="activity-info">
+                            <p>${activity.description}</p>
+                            <span class="activity-time">${activity.time_ago}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
     </script>
 </body>
