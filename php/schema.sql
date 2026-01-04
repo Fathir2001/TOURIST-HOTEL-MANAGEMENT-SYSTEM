@@ -80,6 +80,8 @@ CREATE TABLE IF NOT EXISTS room_types (
     size_sqm DECIMAL(6, 2) COMMENT 'Size in square meters',
     bed_type VARCHAR(50) COMMENT 'e.g., King, Queen, Twin',
     amenities TEXT COMMENT 'JSON array of amenities',
+    badge_label VARCHAR(50) COMMENT 'Premium, Heritage, Deluxe, Garden Wing, etc.',
+    features TEXT COMMENT 'JSON array of room-specific features',
     image_url VARCHAR(255),
     status TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -87,12 +89,14 @@ CREATE TABLE IF NOT EXISTS room_types (
     INDEX idx_status (status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert sample room types
-INSERT INTO room_types (type_name, description, base_price, max_occupancy, size_sqm, bed_type, amenities) VALUES
-('Standard Room', 'Comfortable room with garden view and basic amenities', 5000.00, 2, 25.00, 'Queen', '["Air Conditioning", "Free WiFi", "TV", "Mini Fridge"]'),
-('Deluxe Room', 'Spacious room with mountain view and premium amenities', 8000.00, 2, 35.00, 'King', '["Air Conditioning", "Free WiFi", "Smart TV", "Mini Bar", "Coffee Maker"]'),
-('Suite', 'Luxury suite with separate living area and panoramic views', 15000.00, 4, 50.00, 'King + Sofa Bed', '["Air Conditioning", "Free WiFi", "Smart TV", "Mini Bar", "Jacuzzi", "Balcony"]'),
-('Family Room', 'Large room suitable for families with extra beds', 12000.00, 5, 45.00, '2 Queens', '["Air Conditioning", "Free WiFi", "TV", "Mini Fridge", "Extra Beds"]');
+-- Insert room types from Accommodation page
+INSERT INTO room_types (type_name, description, base_price, max_occupancy, size_sqm, bed_type, amenities, badge_label, features, image_url) VALUES
+('Presidential Suite', 'Spanning a majestic 623 square feet, these opulent retreats offer a haven of personalized service and top-tier amenities. Unwind in a separate sitting area, designed for relaxation, and rejuvenate in the exquisite bathroom. Wake up to breathtaking garden views from the master bedroom.', 350.00, 4, 57.88, 'King Size Bed', '["Free WiFi", "Flat Screen TV", "Air Conditioning", "Tea/Coffee Maker", "Safe Deposit Box", "Room Service", "Mini Bar", "Bathroom Toiletries"]', 'Premium', '["Separate Sitting Area", "Garden Views", "Luxury Bathroom", "King Size Bed"]', '../images/presidential-suite.jpg'),
+('The Heritage Suite', 'Vintage Luxury - Luxury Suites highlighting Ceylon\'s Cultural Heritage. Experience the perfect blend of traditional elegance and modern comfort in these thoughtfully designed suites that pay homage to Sri Lanka\'s rich cultural legacy.', 280.00, 3, 51.10, 'King/Queen Bed', '["Free WiFi", "Flat Screen TV", "Air Conditioning", "Tea/Coffee Maker", "Safe Deposit Box", "Room Service", "Mini Bar", "Bathroom Toiletries"]', 'Heritage', '["Cultural Decor", "Vintage Furnishings", "Modern Amenities", "Premium Linens"]', '../images/heritage-suite.jpg'),
+('Deluxe Double Room', 'Indulge in timeless luxury with spacious layouts offering a haven of comfort. Featuring plush queen-sized beds and adorned with beautiful materials, modern conveniences and elegant furnishings ensure a truly unforgettable stay.', 180.00, 2, 37.16, 'Queen Size Bed', '["Free WiFi", "Flat Screen TV", "Air Conditioning", "Tea/Coffee Maker", "Safe Deposit Box", "Room Service", "Mini Bar", "Bathroom Toiletries"]', 'Deluxe', '["Queen Size Bed", "Elegant Furnishings", "Modern Amenities", "City/Garden View"]', '../images/deluxe-room.jpg'),
+('Premium Garden Wing', 'Serenity in Nature - Our larger rooms with easy access to our Garden and Spa. Perfect for guests seeking tranquility and natural beauty, these rooms offer direct access to lush gardens and wellness facilities.', 220.00, 3, 41.81, 'Queen Bed', '["Free WiFi", "Flat Screen TV", "Air Conditioning", "Tea/Coffee Maker", "Safe Deposit Box", "Room Service", "Mini Bar", "Bathroom Toiletries"]', 'Garden Wing', '["Garden Access", "Spa Proximity", "Spacious Layout", "Nature Views"]', '../images/garden-wing.jpg'),
+('Standard Triple Room', 'Unwind in spacious comfort at your Bandarawela hideaway. Our Standard Triple Room offers ample space for families or groups of three, featuring revitalized beds with crisp white cotton sheets, plump pillows, and a cozy duvet for a peaceful night\'s sleep.', 150.00, 3, 35.30, 'Three Single Beds', '["Free WiFi", "Flat Screen TV", "Air Conditioning", "Tea/Coffee Maker", "Safe Deposit Box", "Room Service", "Mini Bar", "Bathroom Toiletries"]', 'Standard', '["Three Beds", "Family Friendly", "Cotton Linens", "Scenic Views"]', '../images/triple-room.jpg'),
+('Standard Double Room', 'Bathe in the soft glow of Bandarawela\'s rolling hills with our Standard Double Bedrooms. Natural light streams in, creating a warm and inviting atmosphere perfect for unwinding after a day exploring this charming hill station.', 120.00, 2, 29.73, 'Double Bed', '["Free WiFi", "Flat Screen TV", "Air Conditioning", "Tea/Coffee Maker", "Safe Deposit Box", "Room Service", "Mini Bar", "Bathroom Toiletries"]', 'Standard', '["Double Bed", "Natural Light", "Cozy Atmosphere", "Hill Views"]', '../images/double-room.jpg');
 
 -- ===================================================================
 -- 4. ROOMS TABLE
@@ -114,14 +118,54 @@ CREATE TABLE IF NOT EXISTS rooms (
     INDEX idx_room_type (room_type_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert sample rooms
+-- Insert room inventory (30 rooms total)
+-- Presidential Suites (2 rooms)
 INSERT INTO rooms (room_number, room_type_id, floor_number, view_type) VALUES
-('101', 1, 1, 'Garden'),
-('102', 1, 1, 'Garden'),
-('103', 2, 1, 'Mountain'),
-('201', 2, 2, 'Mountain'),
-('202', 3, 2, 'Mountain'),
-('301', 4, 3, 'City');
+('401', (SELECT room_type_id FROM room_types WHERE type_name = 'Presidential Suite'), 4, 'Garden'),
+('402', (SELECT room_type_id FROM room_types WHERE type_name = 'Presidential Suite'), 4, 'Garden');
+
+-- Heritage Suites (3 rooms)
+INSERT INTO rooms (room_number, room_type_id, floor_number, view_type) VALUES
+('301', (SELECT room_type_id FROM room_types WHERE type_name = 'The Heritage Suite'), 3, 'Mountain'),
+('302', (SELECT room_type_id FROM room_types WHERE type_name = 'The Heritage Suite'), 3, 'Mountain'),
+('303', (SELECT room_type_id FROM room_types WHERE type_name = 'The Heritage Suite'), 3, 'City');
+
+-- Deluxe Double Rooms (5 rooms)
+INSERT INTO rooms (room_number, room_type_id, floor_number, view_type) VALUES
+('201', (SELECT room_type_id FROM room_types WHERE type_name = 'Deluxe Double Room'), 2, 'Garden'),
+('202', (SELECT room_type_id FROM room_types WHERE type_name = 'Deluxe Double Room'), 2, 'City'),
+('203', (SELECT room_type_id FROM room_types WHERE type_name = 'Deluxe Double Room'), 2, 'Garden'),
+('204', (SELECT room_type_id FROM room_types WHERE type_name = 'Deluxe Double Room'), 2, 'Mountain'),
+('205', (SELECT room_type_id FROM room_types WHERE type_name = 'Deluxe Double Room'), 2, 'City');
+
+-- Premium Garden Wing (4 rooms)
+INSERT INTO rooms (room_number, room_type_id, floor_number, view_type) VALUES
+('G01', (SELECT room_type_id FROM room_types WHERE type_name = 'Premium Garden Wing'), 1, 'Garden'),
+('G02', (SELECT room_type_id FROM room_types WHERE type_name = 'Premium Garden Wing'), 1, 'Garden'),
+('G03', (SELECT room_type_id FROM room_types WHERE type_name = 'Premium Garden Wing'), 1, 'Garden'),
+('G04', (SELECT room_type_id FROM room_types WHERE type_name = 'Premium Garden Wing'), 1, 'Garden');
+
+-- Standard Triple Rooms (6 rooms)
+INSERT INTO rooms (room_number, room_type_id, floor_number, view_type) VALUES
+('101', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Triple Room'), 1, 'City'),
+('102', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Triple Room'), 1, 'Garden'),
+('103', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Triple Room'), 1, 'Mountain'),
+('104', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Triple Room'), 1, 'City'),
+('105', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Triple Room'), 1, 'Garden'),
+('106', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Triple Room'), 1, 'Mountain');
+
+-- Standard Double Rooms (10 rooms)
+INSERT INTO rooms (room_number, room_type_id, floor_number, view_type) VALUES
+('107', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 1, 'City'),
+('108', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 1, 'Garden'),
+('109', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 1, 'Hill'),
+('110', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 1, 'Hill'),
+('206', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 2, 'Hill'),
+('207', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 2, 'Garden'),
+('208', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 2, 'Hill'),
+('209', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 2, 'City'),
+('210', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 2, 'Hill'),
+('211', (SELECT room_type_id FROM room_types WHERE type_name = 'Standard Double Room'), 2, 'Garden');
 
 -- ===================================================================
 -- 5. BOOKINGS TABLE

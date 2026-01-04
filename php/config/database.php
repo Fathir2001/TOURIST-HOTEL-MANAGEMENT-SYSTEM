@@ -55,6 +55,14 @@ function testDBConnection() {
     return false;
 }
 
+/**
+ * Alias for getDBConnection() for compatibility
+ * @return PDO|null Returns PDO connection object or null on failure
+ */
+function getDatabaseConnection() {
+    return getDBConnection();
+}
+
 // Initialize connection (optional - remove if you want lazy loading)
 // $db = getDBConnection();
 ?>
