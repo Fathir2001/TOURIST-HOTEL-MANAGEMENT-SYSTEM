@@ -1537,6 +1537,9 @@
         
         // Preview image before upload
         document.addEventListener('DOMContentLoaded', function() {
+            // Automatically update booking statuses based on dates
+            autoUpdateBookingStatuses();
+            
             const imageInput = document.getElementById('room_image');
             if (imageInput) {
                 imageInput.addEventListener('change', function(e) {
@@ -1552,6 +1555,55 @@
                 });
             }
         });
+        
+        // Automatic status update function
+        async function autoUpdateBookingStatuses() {
+            console.log('🔄 Running automatic booking status update...');
+            try {
+                const response = await fetch('../php/auto_update_booking_status.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ Auto-update completed:', result);
+                    
+                    // Log the updates
+                    if (result.updates_count > 0) {
+                        console.log(`📊 Auto-updated ${result.updates_count} booking(s)`);
+                        
+                        if (result.check_ins.length > 0) {
+                            console.log('🔑 Check-ins processed:', result.check_ins);
+                        }
+                        
+                        if (result.check_outs.length > 0) {
+                            console.log('🚪 Check-outs processed:', result.check_outs);
+                        }
+                        
+                        // Reload bookings if we're on the bookings tab
+                        const currentSection = document.querySelector('.section.active');
+                        if (currentSection && currentSection.id === 'bookings') {
+                            console.log('↻ Reloading bookings...');
+                            loadBookings();
+                        }
+                    } else {
+                        console.log('ℹ️ No bookings required status updates');
+                    }
+                    
+                    if (result.errors && result.errors.length > 0) {
+                        console.warn('⚠️ Errors during auto-update:', result.errors);
+                    }
+                } else {
+                    console.error('❌ Auto-update failed:', result.message);
+                }
+            } catch (error) {
+                console.error('❌ Error auto-updating booking statuses:', error);
+            }
+        }
         
         function updateRoomImage(event) {
             event.preventDefault();
