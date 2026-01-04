@@ -26,7 +26,7 @@ const navbarHTML = `<!-- Navigation Section -->
             <li><a href="THINGS TO DO.html">Things To Do</a></li>
             <li><a href="TESTIMONIALS.html">Testimonials</a></li>
             <li><a href="GALLARY.html">Gallery</a></li>
-            <li><a href="ACCOMMODATION.html">Accommodation</a></li>
+            <li><a href="ACCOMMODATION.PHP">Accommodation</a></li>
             <li><a href="FAQ.html">FAQ</a></li>
             <li><a href="ADMIN.html">Admin</a></li>
         </ul>
@@ -59,7 +59,7 @@ const footerHTML = `<!-- Footer Section -->
                 <li><a href="THINGS TO DO.html">Things To Do</a></li>
                 <li><a href="TESTIMONIALS.html">Testimonials</a></li>
                 <li><a href="GALLARY.html">Gallery</a></li>
-                <li><a href="ACCOMMODATION.html">Accommodation</a></li>
+                <li><a href="ACCOMMODATION.PHP">Accommodation</a></li>
                 <li><a href="FAQ.html">FAQ</a></li>
                 <li><a href="ADMIN.html">Admin</a></li>
             </ul>
