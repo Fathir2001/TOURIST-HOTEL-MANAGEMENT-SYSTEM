@@ -144,6 +144,93 @@ $rooms = getRoomTypes();
         </div>
     </section>
 
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="booking-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeBookingModal()">&times;</span>
+            <h2>Book Your Stay</h2>
+            <p class="modal-subtitle">Please fill in your details to proceed</p>
+            
+            <form id="bookingForm" action="../php/process_booking.php" method="POST" onsubmit="return validateBookingForm()">
+                <input type="hidden" id="room_type_id" name="room_type_id">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="room_type_display">Room Type <span class="required">*</span></label>
+                        <input type="text" id="room_type_display" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="room_price_display">Price per Night</label>
+                        <input type="text" id="room_price_display" readonly>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="check_in_date">Check-in Date <span class="required">*</span></label>
+                        <input type="date" id="check_in_date" name="check_in_date" required onchange="calculateTotal()">
+                    </div>
+                    <div class="form-group">
+                        <label for="check_out_date">Check-out Date <span class="required">*</span></label>
+                        <input type="date" id="check_out_date" name="check_out_date" required onchange="calculateTotal()">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="adults">Adults <span class="required">*</span></label>
+                        <input type="number" id="adults" name="adults" min="1" max="10" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="children">Children</label>
+                        <input type="number" id="children" name="children" min="0" max="10" value="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="guest_name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="guest_name" name="guest_name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="guest_email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="guest_email" name="guest_email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="guest_phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="guest_phone" name="guest_phone" required placeholder="+94 XX XXX XXXX">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="special_requests">Special Requests (Optional)</label>
+                    <textarea id="special_requests" name="special_requests" rows="3" placeholder="Any special requirements or preferences?"></textarea>
+                </div>
+
+                <div class="booking-summary">
+                    <div class="summary-row">
+                        <span>Number of Nights:</span>
+                        <span id="nights_display">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Room Rate:</span>
+                        <span id="rate_display">-</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total Amount:</span>
+                        <span id="total_display">-</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeBookingModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer Section -->
     <footer class="footer">
         <div id="footer-placeholder"></div>
@@ -151,11 +238,82 @@ $rooms = getRoomTypes();
 
     <script src="../js/include.js"></script>
     <script>
+        const roomsData = <?php echo json_encode($rooms); ?>;
+
         function bookRoom(roomTypeId) {
-            // TODO: Implement booking functionality
-            alert('Booking functionality coming soon!\nRoom Type ID: ' + roomTypeId);
-            // Redirect to booking page with room type
-            // window.location.href = 'booking.php?room_type=' + roomTypeId;
+            const room = roomsData.find(r => r.room_type_id == roomTypeId);
+            if (!room) return;
+
+            // Populate modal with room data
+            document.getElementById('room_type_id').value = roomTypeId;
+            document.getElementById('room_type_display').value = room.type_name;
+            document.getElementById('room_price_display').value = '$' + parseFloat(room.base_price).toFixed(2);
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('check_in_date').setAttribute('min', today);
+            document.getElementById('check_out_date').setAttribute('min', today);
+            
+            // Show modal
+            document.getElementById('bookingModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('bookingForm').reset();
+            // Reset summary
+            document.getElementById('nights_display').textContent = '-';
+            document.getElementById('rate_display').textContent = '-';
+            document.getElementById('total_display').textContent = '-';
+        }
+
+        function calculateTotal() {
+            const checkIn = new Date(document.getElementById('check_in_date').value);
+            const checkOut = new Date(document.getElementById('check_out_date').value);
+            const priceText = document.getElementById('room_price_display').value;
+            const pricePerNight = parseFloat(priceText.replace('$', ''));
+
+            if (checkIn && checkOut && checkOut > checkIn && pricePerNight) {
+                const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                const total = nights * pricePerNight;
+                
+                document.getElementById('nights_display').textContent = nights + (nights === 1 ? ' night' : ' nights');
+                document.getElementById('rate_display').textContent = '$' + pricePerNight.toFixed(2) + ' × ' + nights;
+                document.getElementById('total_display').textContent = '$' + total.toFixed(2);
+            } else {
+                document.getElementById('nights_display').textContent = '-';
+                document.getElementById('rate_display').textContent = '-';
+                document.getElementById('total_display').textContent = '-';
+            }
+        }
+
+        function validateBookingForm() {
+            const checkIn = new Date(document.getElementById('check_in_date').value);
+            const checkOut = new Date(document.getElementById('check_out_date').value);
+            
+            if (checkOut <= checkIn) {
+                alert('Check-out date must be after check-in date');
+                return false;
+            }
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (checkIn < today) {
+                alert('Check-in date cannot be in the past');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('bookingModal');
+            if (event.target === modal) {
+                closeBookingModal();
+            }
         }
     </script>
 </body>

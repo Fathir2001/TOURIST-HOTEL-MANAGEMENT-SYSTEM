@@ -169,17 +169,9 @@
             <section class="quick-actions-section">
                 <h2 class="section-title">Quick Actions</h2>
                 <div class="quick-actions-grid">
-                    <button class="action-btn" onclick="alert('New Booking feature coming soon!')">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>New Booking</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Check-In feature coming soon!')">
-                        <i class="fas fa-sign-in-alt"></i>
-                        <span>Check-In Guest</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Check-Out feature coming soon!')">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Check-Out Guest</span>
+                    <button class="action-btn" onclick="window.location.href='ADMIN_BOOKINGS.PHP'">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>View Bookings</span>
                     </button>
                     <button class="action-btn" onclick="alert('Room Status feature coming soon!')">
                         <i class="fas fa-door-open"></i>
@@ -188,10 +180,6 @@
                     <button class="action-btn" onclick="alert('Reports feature coming soon!')">
                         <i class="fas fa-file-invoice"></i>
                         <span>Generate Report</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Messages feature coming soon!')">
-                        <i class="fas fa-envelope-open"></i>
-                        <span>View Messages</span>
                     </button>
                 </div>
             </section>
@@ -212,7 +200,6 @@
                                         <th>Guest Name</th>
                                         <th>Room</th>
                                         <th>Check-In</th>
-                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -225,7 +212,6 @@
                                         </td>
                                         <td>Presidential Suite</td>
                                         <td>Jan 02, 2026</td>
-                                        <td><span class="status-badge confirmed">Confirmed</span></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -236,7 +222,6 @@
                                         </td>
                                         <td>Deluxe Double</td>
                                         <td>Jan 03, 2026</td>
-                                        <td><span class="status-badge pending">Pending</span></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -247,7 +232,6 @@
                                         </td>
                                         <td>Heritage Suite</td>
                                         <td>Jan 01, 2026</td>
-                                        <td><span class="status-badge checked-in">Checked In</span></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -258,7 +242,6 @@
                                         </td>
                                         <td>Garden Wing</td>
                                         <td>Jan 04, 2026</td>
-                                        <td><span class="status-badge confirmed">Confirmed</span></td>
                                     </tr>
                                 </tbody>
                             </table>
