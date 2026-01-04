@@ -37,8 +37,8 @@ try {
         exit;
     }
     
-    // Check if room exists
-    $checkRoom = $conn->prepare("SELECT r.room_id, r.room_number, rt.type_name 
+    // Check if room exists and get status
+    $checkRoom = $conn->prepare("SELECT r.room_id, r.room_number, r.status, rt.type_name 
                                  FROM rooms r 
                                  INNER JOIN room_types rt ON r.room_type_id = rt.room_type_id 
                                  WHERE r.room_id = ?");
@@ -49,6 +49,15 @@ try {
         echo json_encode([
             'success' => false,
             'message' => 'Room not found'
+        ]);
+        exit;
+    }
+    
+    // Check if room is occupied
+    if ($room['status'] === 'occupied') {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Cannot delete occupied room. Room ' . $room['room_number'] . ' is currently occupied. Please check out the guest first.'
         ]);
         exit;
     }

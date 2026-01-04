@@ -568,7 +568,6 @@
                                     <button class="filter-btn" onclick="filterRooms('available')">Available</button>
                                     <button class="filter-btn" onclick="filterRooms('occupied')">Occupied</button>
                                     <button class="filter-btn" onclick="filterRooms('maintenance')">Maintenance</button>
-                                    <button class="filter-btn" onclick="filterRooms('cleaning')">Cleaning</button>
                                 </div>
                                 <button class="btn-submit" onclick="showAddRoomModal()" style="padding: 10px 20px; font-size: 14px;">
                                     <i class="fas fa-plus"></i> Add Room
@@ -597,10 +596,12 @@
             
             <form id="statusChangeForm" onsubmit="updateBookingStatus(event)">
                 <input type="hidden" id="status_booking_id">
+                <input type="hidden" id="status_room_type_id">
+                <input type="hidden" id="status_current_room_id">
                 
                 <div class="form-group">
                     <label for="new_status">Select New Status <span class="required">*</span></label>
-                    <select id="new_status" name="new_status" required style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                    <select id="new_status" name="new_status" required onchange="handleStatusChange()" style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
                         <option value="">-- Select Status --</option>
                         <option value="pending">Pending</option>
                         <option value="confirmed">Confirmed</option>
@@ -609,6 +610,19 @@
                         <option value="cancelled">Cancelled</option>
                         <option value="no_show">No Show</option>
                     </select>
+                </div>
+
+                <!-- Room Assignment Section (shows when confirming) -->
+                <div id="roomAssignmentSection" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="assigned_room_id">Assign Room Number <span class="required">*</span></label>
+                        <select id="assigned_room_id" name="assigned_room_id" style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <option value="">-- Select Room --</option>
+                        </select>
+                        <small style="color: #10b981; display: block; margin-top: 5px;">
+                            <i class="fas fa-info-circle"></i> Only available rooms of this type are shown
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-actions" style="margin-top: 30px;">
@@ -647,6 +661,37 @@
                 <div class="form-actions" style="margin-top: 25px;">
                     <button type="button" class="btn-cancel" onclick="closeImageModal()">Cancel</button>
                     <button type="submit" class="btn-submit">Update Image</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Room Status Change Modal -->
+    <div id="roomStatusModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="closeRoomStatusModal()">&times;</span>
+            <h2 style="color: #dc2626;">Change Room Status</h2>
+            <p class="modal-subtitle" id="roomStatusSubtitle">Update the status for this room</p>
+            
+            <form id="roomStatusForm" onsubmit="updateRoomStatus(event)">
+                <input type="hidden" id="room_status_room_id">
+                
+                <div class="form-group">
+                    <label for="new_room_status">Select New Status <span class="required">*</span></label>
+                    <select id="new_room_status" name="status" required style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                        <option value="">-- Select Status --</option>
+                        <option value="available">Available</option>
+                        <option value="occupied">Occupied</option>
+                        <option value="maintenance">Under Maintenance</option>
+                    </select>
+                    <small style="color: #666; display: block; margin-top: 8px;">
+                        <i class="fas fa-info-circle"></i> Maintenance rooms will not be available for booking assignment
+                    </small>
+                </div>
+
+                <div class="form-actions" style="margin-top: 30px;">
+                    <button type="button" class="btn-cancel" onclick="closeRoomStatusModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Update Status</button>
                 </div>
             </form>
         </div>
@@ -725,7 +770,6 @@
                                 style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
                             <option value="available">Available</option>
                             <option value="maintenance">Maintenance</option>
-                            <option value="cleaning">Cleaning</option>
                             <option value="occupied">Occupied</option>
                         </select>
                         <small style="color: #666;">Current availability status</small>
@@ -846,7 +890,7 @@
                                 <button class="action-icon-btn" onclick="viewBookingDetails('${booking.booking_reference}')" title="View Details">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="action-icon-btn" onclick="showStatusChangeModal('${booking.booking_id}', '${booking.status}', '${booking.booking_reference}')" title="Change Status">
+                                <button class="action-icon-btn" onclick="showStatusChangeModal('${booking.booking_id}', '${booking.status}', '${booking.booking_reference}', '${booking.room_type_id || ''}', '${booking.room_id || ''}')" title="Change Status">
                                     <i class="fas fa-edit"></i>
                                 </button>
                             </div>
@@ -992,6 +1036,58 @@
             }
         }
 
+        // Room Status Change functionality
+        function showRoomStatusModal(roomId, roomNumber, currentStatus) {
+            document.getElementById('room_status_room_id').value = roomId;
+            document.getElementById('new_room_status').value = currentStatus;
+            document.getElementById('roomStatusSubtitle').textContent = `Room ${roomNumber}`;
+            document.getElementById('roomStatusModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRoomStatusModal() {
+            document.getElementById('roomStatusModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('roomStatusForm').reset();
+        }
+
+        async function updateRoomStatus(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('roomStatusForm');
+            const formData = new FormData(form);
+            formData.append('room_id', document.getElementById('room_status_room_id').value);
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Updating...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('../php/update_room_status.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✓ ' + data.message);
+                    closeRoomStatusModal();
+                    loadRooms(); // Reload rooms list
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error updating room status:', error);
+                alert('Failed to update room status. Please try again.');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
         // Delete Room functionality
         async function deleteRoom(roomId, roomNumber) {
             if (!confirm(`Are you sure you want to delete Room ${roomNumber}?\\n\\nThis action cannot be undone. The room will be permanently removed from the system.`)) {
@@ -1030,18 +1126,77 @@
         }
 
         // Status change modal functions
-        function showStatusChangeModal(bookingId, currentStatus, bookingRef) {
+        function showStatusChangeModal(bookingId, currentStatus, bookingRef, roomTypeId = null, currentRoomId = null) {
             document.getElementById('status_booking_id').value = bookingId;
+            document.getElementById('status_room_type_id').value = roomTypeId || '';
+            document.getElementById('status_current_room_id').value = currentRoomId || '';
             document.getElementById('new_status').value = currentStatus;
             document.getElementById('statusModalSubtitle').textContent = `Booking Reference: ${bookingRef}`;
+            
+            // Hide room assignment section initially
+            document.getElementById('roomAssignmentSection').style.display = 'none';
+            
             document.getElementById('statusChangeModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
+        }
+
+        async function handleStatusChange() {
+            const newStatus = document.getElementById('new_status').value;
+            const roomTypeId = document.getElementById('status_room_type_id').value;
+            const roomAssignmentSection = document.getElementById('roomAssignmentSection');
+            const assignedRoomSelect = document.getElementById('assigned_room_id');
+            
+            // Show room assignment when confirming or checking in
+            if ((newStatus === 'confirmed' || newStatus === 'checked_in') && roomTypeId) {
+                roomAssignmentSection.style.display = 'block';
+                assignedRoomSelect.required = true;
+                
+                // Load available rooms for this room type
+                await loadAvailableRooms(roomTypeId);
+            } else {
+                roomAssignmentSection.style.display = 'none';
+                assignedRoomSelect.required = false;
+            }
+        }
+
+        async function loadAvailableRooms(roomTypeId) {
+            try {
+                const response = await fetch(`../php/get_available_rooms.php?room_type_id=${roomTypeId}`);
+                const data = await response.json();
+                
+                const dropdown = document.getElementById('assigned_room_id');
+                const currentRoomId = document.getElementById('status_current_room_id').value;
+                
+                dropdown.innerHTML = '<option value="">-- Select Room --</option>';
+                
+                if (data.success && data.rooms && data.rooms.length > 0) {
+                    data.rooms.forEach(room => {
+                        const option = document.createElement('option');
+                        option.value = room.room_id;
+                        option.textContent = `Room ${room.room_number} - ${room.view_type} View (Floor ${room.floor_number})`;
+                        
+                        // Pre-select if this is the current room
+                        if (currentRoomId && room.room_id == currentRoomId) {
+                            option.selected = true;
+                        }
+                        
+                        dropdown.appendChild(option);
+                    });
+                } else {
+                    dropdown.innerHTML = '<option value="">No available rooms</option>';
+                }
+            } catch (error) {
+                console.error('Error loading available rooms:', error);
+                document.getElementById('assigned_room_id').innerHTML = '<option value="">Error loading rooms</option>';
+            }
         }
 
         function closeStatusModal() {
             document.getElementById('statusChangeModal').style.display = 'none';
             document.body.style.overflow = 'auto';
             document.getElementById('statusChangeForm').reset();
+            document.getElementById('roomAssignmentSection').style.display = 'none';
+            document.getElementById('assigned_room_id').required = false;
         }
 
         function updateBookingStatus(event) {
@@ -1049,9 +1204,17 @@
             
             const bookingId = document.getElementById('status_booking_id').value;
             const newStatus = document.getElementById('new_status').value;
+            const assignedRoomId = document.getElementById('assigned_room_id').value;
+            const roomAssignmentVisible = document.getElementById('roomAssignmentSection').style.display !== 'none';
             
             if (!bookingId || !newStatus) {
                 alert('Please select a status');
+                return;
+            }
+
+            // Check if room assignment is required but not provided
+            if (roomAssignmentVisible && !assignedRoomId) {
+                alert('Please select a room to assign to this booking');
                 return;
             }
 
@@ -1061,20 +1224,32 @@
             submitBtn.textContent = 'Updating...';
             submitBtn.disabled = true;
 
+            // Prepare request body
+            let requestBody = `booking_id=${bookingId}&status=${newStatus}`;
+            if (assignedRoomId) {
+                requestBody += `&room_id=${assignedRoomId}`;
+            }
+
             // Send update request
             fetch('../php/update_booking_status.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `booking_id=${bookingId}&status=${newStatus}`
+                body: requestBody
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Booking status updated successfully!');
+                    alert('✓ Booking status updated successfully!' + (assignedRoomId ? '\nRoom assigned.' : ''));
                     closeStatusModal();
                     loadBookings(); // Reload bookings table
+                    if (assignedRoomId) {
+                        // Also reload rooms if we assigned a room
+                        if (typeof loadRooms === 'function') {
+                            loadRooms();
+                        }
+                    }
                 } else {
                     alert('Error: ' + (data.message || 'Failed to update status'));
                 }
@@ -1224,8 +1399,7 @@
             const statusColors = {
                 'available': '#10b981',
                 'occupied': '#ef4444',
-                'maintenance': '#f59e0b',
-                'cleaning': '#3b82f6'
+                'maintenance': '#f59e0b'
             };
             
             // Build tree HTML
@@ -1280,9 +1454,20 @@
                                                 }
                                                 <span class="badge" style="background: ${statusColor};">${formatStatus(room.status)}</span>
                                             </div>
-                                            <button class="delete-room-btn" onclick="deleteRoom(${room.room_id}, '${room.room_number}')" title="Delete room">
-                                                <i class="fas fa-trash-alt"></i> Delete
-                                            </button>
+                                            <div style="display: flex; gap: 8px; margin-left: auto;">
+                                                <button class="change-status-btn" onclick="showRoomStatusModal(${room.room_id}, '${room.room_number}', '${room.status}')" title="Change room status">
+                                                    <i class="fas fa-sync-alt"></i> Status
+                                                </button>
+                                                ${room.status !== 'occupied' ? `
+                                                    <button class="delete-room-btn" onclick="deleteRoom(${room.room_id}, '${room.room_number}')" title="Delete room">
+                                                        <i class="fas fa-trash-alt"></i> Delete
+                                                    </button>
+                                                ` : `
+                                                    <button class="delete-room-btn" disabled style="opacity: 0.5; cursor: not-allowed;" title="Cannot delete occupied room">
+                                                        <i class="fas fa-lock"></i> Occupied
+                                                    </button>
+                                                `}
+                                            </div>
                                         </div>
                                         ${room.notes ? `<div class="room-notes"><i class="fas fa-sticky-note"></i> ${room.notes}</div>` : ''}
                                     </div>

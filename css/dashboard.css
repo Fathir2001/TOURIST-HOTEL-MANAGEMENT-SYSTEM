@@ -1214,7 +1214,6 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-left: auto;
     box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
 }
 
@@ -1225,6 +1224,33 @@ body {
 }
 
 .delete-room-btn i {
+    font-size: 11px;
+}
+
+/* Change Room Status Button */
+.change-status-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.change-status-btn:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+.change-status-btn i {
     font-size: 11px;
 }
 

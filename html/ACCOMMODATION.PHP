@@ -168,11 +168,17 @@ $rooms = getRoomTypes();
                 <div class="form-row">
                     <div class="form-group">
                         <label for="check_in_date">Check-in Date <span class="required">*</span></label>
-                        <input type="date" id="check_in_date" name="check_in_date" required onchange="calculateTotal()">
+                        <input type="date" id="check_in_date" name="check_in_date" required onchange="validateCheckInDate(); calculateTotal()">
+                        <small id="check_in_error" style="color: #ef4444; display: none; margin-top: 5px;">
+                            <i class="fas fa-exclamation-circle"></i> <span id="check_in_error_msg"></span>
+                        </small>
                     </div>
                     <div class="form-group">
                         <label for="check_out_date">Check-out Date <span class="required">*</span></label>
-                        <input type="date" id="check_out_date" name="check_out_date" required onchange="calculateTotal()">
+                        <input type="date" id="check_out_date" name="check_out_date" required onchange="validateCheckOutDate(); calculateTotal()">
+                        <small id="check_out_error" style="color: #ef4444; display: none; margin-top: 5px;">
+                            <i class="fas fa-exclamation-circle"></i> <span id="check_out_error_msg"></span>
+                        </small>
                     </div>
                 </div>
 
@@ -249,10 +255,22 @@ $rooms = getRoomTypes();
             document.getElementById('room_type_display').value = room.type_name;
             document.getElementById('room_price_display').value = '$' + parseFloat(room.base_price).toFixed(2);
             
-            // Set minimum date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('check_in_date').setAttribute('min', today);
-            document.getElementById('check_out_date').setAttribute('min', today);
+            // Set minimum date to today for check-in
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayString = today.toISOString().split('T')[0];
+            
+            const checkInInput = document.getElementById('check_in_date');
+            const checkOutInput = document.getElementById('check_out_date');
+            
+            checkInInput.setAttribute('min', todayString);
+            checkInInput.value = '';
+            checkOutInput.value = '';
+            checkOutInput.removeAttribute('min');
+            
+            // Clear any validation errors
+            document.getElementById('check_in_error').style.display = 'none';
+            document.getElementById('check_out_error').style.display = 'none';
             
             // Show modal
             document.getElementById('bookingModal').style.display = 'flex';
@@ -289,19 +307,166 @@ $rooms = getRoomTypes();
             }
         }
 
+        function validateCheckInDate() {
+            const checkInInput = document.getElementById('check_in_date');
+            const checkOutInput = document.getElementById('check_out_date');
+            const errorElement = document.getElementById('check_in_error');
+            const errorMsg = document.getElementById('check_in_error_msg');
+            
+            const checkInValue = checkInInput.value;
+            if (!checkInValue) {
+                errorElement.style.display = 'none';
+                return false;
+            }
+            
+            const checkIn = new Date(checkInValue);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            checkIn.setHours(0, 0, 0, 0);
+            
+            // Validate check-in is not in the past
+            if (checkIn < today) {
+                errorMsg.textContent = 'Check-in date cannot be in the past';
+                errorElement.style.display = 'block';
+                checkInInput.style.borderColor = '#ef4444';
+                return false;
+            }
+            
+            // Validate check-in is not more than 1 year in future
+            const oneYearFromNow = new Date();
+            oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+            if (checkIn > oneYearFromNow) {
+                errorMsg.textContent = 'Check-in date cannot be more than 1 year in advance';
+                errorElement.style.display = 'block';
+                checkInInput.style.borderColor = '#ef4444';
+                return false;
+            }
+            
+            // Clear error
+            errorElement.style.display = 'none';
+            checkInInput.style.borderColor = '#e5e5e5';
+            
+            // Update check-out minimum date to day after check-in
+            if (checkInValue) {
+                const nextDay = new Date(checkIn);
+                nextDay.setDate(nextDay.getDate() + 1);
+                const nextDayString = nextDay.toISOString().split('T')[0];
+                checkOutInput.setAttribute('min', nextDayString);
+                
+                // Re-validate check-out if it's already set
+                if (checkOutInput.value) {
+                    validateCheckOutDate();
+                }
+            }
+            
+            return true;
+        }
+
+        function validateCheckOutDate() {
+            const checkInInput = document.getElementById('check_in_date');
+            const checkOutInput = document.getElementById('check_out_date');
+            const errorElement = document.getElementById('check_out_error');
+            const errorMsg = document.getElementById('check_out_error_msg');
+            
+            const checkInValue = checkInInput.value;
+            const checkOutValue = checkOutInput.value;
+            
+            if (!checkOutValue) {
+                errorElement.style.display = 'none';
+                return false;
+            }
+            
+            if (!checkInValue) {
+                errorMsg.textContent = 'Please select check-in date first';
+                errorElement.style.display = 'block';
+                checkOutInput.style.borderColor = '#ef4444';
+                return false;
+            }
+            
+            const checkIn = new Date(checkInValue);
+            const checkOut = new Date(checkOutValue);
+            checkIn.setHours(0, 0, 0, 0);
+            checkOut.setHours(0, 0, 0, 0);
+            
+            // Validate check-out is after check-in
+            if (checkOut <= checkIn) {
+                errorMsg.textContent = 'Check-out must be at least 1 day after check-in';
+                errorElement.style.display = 'block';
+                checkOutInput.style.borderColor = '#ef4444';
+                return false;
+            }
+            
+            // Validate maximum stay duration (e.g., 30 days)
+            const maxStayDays = 30;
+            const daysDiff = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+            if (daysDiff > maxStayDays) {
+                errorMsg.textContent = `Maximum stay is ${maxStayDays} days`;
+                errorElement.style.display = 'block';
+                checkOutInput.style.borderColor = '#ef4444';
+                return false;
+            }
+            
+            // Clear error
+            errorElement.style.display = 'none';
+            checkOutInput.style.borderColor = '#e5e5e5';
+            return true;
+        }
+
         function validateBookingForm() {
+            // Validate check-in date
+            const checkInValid = validateCheckInDate();
+            if (!checkInValid) {
+                alert('Please correct the check-in date errors');
+                document.getElementById('check_in_date').focus();
+                return false;
+            }
+            
+            // Validate check-out date
+            const checkOutValid = validateCheckOutDate();
+            if (!checkOutValid) {
+                alert('Please correct the check-out date errors');
+                document.getElementById('check_out_date').focus();
+                return false;
+            }
+            
             const checkIn = new Date(document.getElementById('check_in_date').value);
             const checkOut = new Date(document.getElementById('check_out_date').value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            checkIn.setHours(0, 0, 0, 0);
+            checkOut.setHours(0, 0, 0, 0);
+            
+            // Double-check dates are valid
+            if (checkIn < today) {
+                alert('Check-in date cannot be in the past');
+                return false;
+            }
             
             if (checkOut <= checkIn) {
                 alert('Check-out date must be after check-in date');
                 return false;
             }
             
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (checkIn < today) {
-                alert('Check-in date cannot be in the past');
+            // Validate guest details
+            const guestName = document.getElementById('guest_name').value.trim();
+            if (guestName.length < 3) {
+                alert('Please enter a valid full name (at least 3 characters)');
+                document.getElementById('guest_name').focus();
+                return false;
+            }
+            
+            const guestEmail = document.getElementById('guest_email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(guestEmail)) {
+                alert('Please enter a valid email address');
+                document.getElementById('guest_email').focus();
+                return false;
+            }
+            
+            const guestPhone = document.getElementById('guest_phone').value.trim();
+            if (guestPhone.length < 10) {
+                alert('Please enter a valid phone number (at least 10 digits)');
+                document.getElementById('guest_phone').focus();
                 return false;
             }
             

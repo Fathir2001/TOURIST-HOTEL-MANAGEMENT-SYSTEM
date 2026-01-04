@@ -47,8 +47,7 @@ try {
         'total_rooms' => count($rooms),
         'available' => 0,
         'occupied' => 0,
-        'maintenance' => 0,
-        'cleaning' => 0
+        'maintenance' => 0
     ];
     
     foreach ($rooms as $room) {

@@ -76,7 +76,7 @@ try {
     }
     
     // Validate status
-    $validStatuses = ['available', 'occupied', 'maintenance', 'cleaning'];
+    $validStatuses = ['available', 'occupied', 'maintenance'];
     if (!in_array($status, $validStatuses)) {
         $status = 'available';
     }
