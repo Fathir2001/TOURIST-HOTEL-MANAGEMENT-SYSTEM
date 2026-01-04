@@ -25,11 +25,11 @@
                 <i class="fas fa-calendar-check"></i>
                 <span>Bookings</span>
             </a>
-            <a href="#guests" class="nav-item">
+            <a href="#guests" class="nav-item" onclick="showSection('guests'); return false;">
                 <i class="fas fa-users"></i>
                 <span>Guests</span>
             </a>
-            <a href="#rooms" class="nav-item">
+            <a href="#rooms" class="nav-item" onclick="showSection('rooms'); return false;">
                 <i class="fas fa-bed"></i>
                 <span>Rooms</span>
             </a>
@@ -401,6 +401,185 @@
                 </section>
             </div>
             <!-- End Bookings Section -->
+
+            <!-- Guests Section -->
+            <div id="guests-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-users"></i> Guest Management</h2>
+                            <p>View and manage all hotel guests</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Guests</h3>
+                            <div class="search-box" style="max-width: 300px;">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="guestSearch" placeholder="Search guests..." onkeyup="filterGuests()">
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="guestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Guest Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Total Bookings</th>
+                                        <th>Confirmed</th>
+                                        <th>Checked In</th>
+                                        <th>Checked Out</th>
+                                        <th>Cancelled</th>
+                                        <th>Total Spent</th>
+                                        <th>Last Check-In</th>
+                                        <th>First Booking</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="guestsTableBody">
+                                    <tr>
+                                        <td colspan="11" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading guests...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Guests Section -->
+            <!-- Guests Section -->
+            <div id="guests-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-users"></i> Guest Management</h2>
+                            <p>View and manage all hotel guests</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Guests</h3>
+                            <div class="search-box" style="max-width: 300px;">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="guestSearch" placeholder="Search guests..." onkeyup="filterGuests()">
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="guestsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Guest Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Total Bookings</th>
+                                        <th>Confirmed</th>
+                                        <th>Checked In</th>
+                                        <th>Checked Out</th>
+                                        <th>Cancelled</th>
+                                        <th>Total Spent</th>
+                                        <th>Last Check-In</th>
+                                        <th>First Booking</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="guestsTableBody">
+                                    <tr>
+                                        <td colspan="11" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading guests...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Guests Section -->
+
+            <!-- Rooms Section -->
+            <div id="rooms-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-bed"></i> Room Management</h2>
+                            <p>View and manage all hotel rooms and their availability</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Room Stats -->
+                <section class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Total Rooms</p>
+                                <h3 class="stat-value" id="totalRoomsCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-door-open"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Available</p>
+                                <h3 class="stat-value" id="availableRoomsCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Occupied</p>
+                                <h3 class="stat-value" id="occupiedRoomsCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <div class="stat-content">
+                                <p class="stat-label">Maintenance</p>
+                                <h3 class="stat-value" id="maintenanceRoomsCount">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Rooms</h3>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" onclick="filterRooms('all')">All</button>
+                                <button class="filter-btn" onclick="filterRooms('available')">Available</button>
+                                <button class="filter-btn" onclick="filterRooms('occupied')">Occupied</button>
+                                <button class="filter-btn" onclick="filterRooms('maintenance')">Maintenance</button>
+                                <button class="filter-btn" onclick="filterRooms('cleaning')">Cleaning</button>
+                            </div>
+                        </div>
+                        <div class="tree-view-container" id="roomsTreeView">
+                            <div style="text-align: center; padding: 40px;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                <p>Loading rooms...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Rooms Section -->
         </div>
     </main>
 
@@ -430,6 +609,39 @@
                 <div class="form-actions" style="margin-top: 30px;">
                     <button type="button" class="btn-cancel" onclick="closeStatusModal()">Cancel</button>
                     <button type="submit" class="btn-submit">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Room Type Image Change Modal -->
+    <div id="roomImageModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" onclick="closeImageModal()">&times;</span>
+            <h2 style="color: #dc2626;">Change Room Type Image</h2>
+            <p class="modal-subtitle" id="imageModalSubtitle">Upload a new image for this room type</p>
+            
+            <form id="roomImageForm" onsubmit="updateRoomImage(event)" enctype="multipart/form-data">
+                <input type="hidden" id="image_room_type_id">
+                
+                <div id="currentImagePreview" style="margin-bottom: 20px; text-align: center;">
+                    <img id="currentImage" src="" alt="Current Image" style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                </div>
+                
+                <div class="form-group">
+                    <label for="room_image">Select New Image <span class="required">*</span></label>
+                    <input type="file" id="room_image" name="room_image" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" required style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                    <small style="color: #666; display: block; margin-top: 5px;">Allowed formats: JPG, PNG, GIF, WEBP. Max size: 5MB</small>
+                </div>
+                
+                <div id="newImagePreview" style="margin-top: 15px; text-align: center; display: none;">
+                    <p style="font-weight: 600; margin-bottom: 10px;">New Image Preview:</p>
+                    <img id="previewImage" src="" alt="Preview" style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                </div>
+                
+                <div class="form-actions" style="margin-top: 25px;">
+                    <button type="button" class="btn-cancel" onclick="closeImageModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Update Image</button>
                 </div>
             </form>
         </div>
@@ -471,6 +683,14 @@
                 // Load bookings data if bookings section
                 if (sectionName === 'bookings') {
                     loadBookings();
+                }
+                // Load guests data if guests section
+                if (sectionName === 'guests') {
+                    loadGuests();
+                }
+                // Load rooms data if rooms section
+                if (sectionName === 'rooms') {
+                    loadRooms();
                 }
             }
         }
@@ -637,6 +857,330 @@
         const adminName = "Admin User"; // This would come from PHP session
         document.getElementById('adminName').textContent = adminName;
         document.getElementById('welcomeName').textContent = adminName.split(' ')[0];
+
+        // Load guests from database
+        let allGuests = [];
+
+        function loadGuests() {
+            fetch('../php/get_guests.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        allGuests = data.guests;
+                        displayGuests(allGuests);
+                    } else {
+                        document.getElementById('guestsTableBody').innerHTML = 
+                            '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> ' + 
+                            (data.message || 'Failed to load guests') + '</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading guests:', error);
+                    document.getElementById('guestsTableBody').innerHTML = 
+                        '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading guests</td></tr>';
+                });
+        }
+
+        function displayGuests(guests) {
+            const tbody = document.getElementById('guestsTableBody');
+            
+            if (guests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px;"><i class="fas fa-info-circle"></i> No guests found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = guests.map(guest => {
+                return `
+                    <tr>
+                        <td><strong>${guest.guest_name || 'N/A'}</strong></td>
+                        <td>${guest.guest_email || 'N/A'}</td>
+                        <td>${guest.guest_phone || 'N/A'}</td>
+                        <td><span class="badge" style="background: #3b82f6;">${guest.total_bookings}</span></td>
+                        <td><span class="badge" style="background: #10b981;">${guest.confirmed_bookings}</span></td>
+                        <td><span class="badge" style="background: #8b5cf6;">${guest.checked_in_bookings}</span></td>
+                        <td><span class="badge" style="background: #6b7280;">${guest.checked_out_bookings}</span></td>
+                        <td><span class="badge" style="background: #ef4444;">${guest.cancelled_bookings}</span></td>
+                        <td><strong style="color: #10b981;">$${parseFloat(guest.total_spent || 0).toFixed(2)}</strong></td>
+                        <td>${guest.last_check_in ? formatDate(guest.last_check_in) : 'N/A'}</td>
+                        <td>${formatDate(guest.first_booking_date)}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterGuests() {
+            const searchTerm = document.getElementById('guestSearch').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                displayGuests(allGuests);
+                return;
+            }
+            
+            const filteredGuests = allGuests.filter(guest => {
+                return (guest.guest_name && guest.guest_name.toLowerCase().includes(searchTerm)) ||
+                       (guest.guest_email && guest.guest_email.toLowerCase().includes(searchTerm)) ||
+                       (guest.guest_phone && guest.guest_phone.includes(searchTerm));
+            });
+            
+            displayGuests(filteredGuests);
+        }
+
+        // Load rooms from database
+        let allRooms = [];
+        let currentRoomFilter = 'all';
+
+        function loadRooms() {
+            fetch('../php/get_all_rooms.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        allRooms = data.rooms;
+                        updateRoomStats(data.stats);
+                        displayRooms(allRooms);
+                    } else {
+                        document.getElementById('roomsTableBody').innerHTML = 
+                            '<tr><td colspan="12" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> ' + 
+                            (data.message || 'Failed to load rooms') + '</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading rooms:', error);
+                    document.getElementById('roomsTableBody').innerHTML = 
+                        '<tr><td colspan="12" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading rooms</td></tr>';
+                });
+        }
+
+        function updateRoomStats(stats) {
+            document.getElementById('totalRoomsCount').textContent = stats.total_rooms;
+            document.getElementById('availableRoomsCount').textContent = stats.available;
+            document.getElementById('occupiedRoomsCount').textContent = stats.occupied;
+            document.getElementById('maintenanceRoomsCount').textContent = stats.maintenance;
+        }
+
+        function displayRooms(rooms) {
+            const container = document.getElementById('roomsTreeView');
+            
+            if (rooms.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-info-circle"></i> <p>No rooms found</p></div>';
+                return;
+            }
+            
+            // Group rooms by room type
+            const groupedRooms = {};
+            rooms.forEach(room => {
+                const typeName = room.type_name || 'Unknown';
+                if (!groupedRooms[typeName]) {
+                    groupedRooms[typeName] = {
+                        room_type_id: room.room_type_id,
+                        badge_label: room.badge_label,
+                        base_price: room.base_price,
+                        max_occupancy: room.max_occupancy,
+                        bed_type: room.bed_type,
+                        size_sqm: room.size_sqm,
+                        image_url: room.image_url,
+                        rooms: []
+                    };
+                }
+                groupedRooms[typeName].rooms.push(room);
+            });
+            
+            const statusColors = {
+                'available': '#10b981',
+                'occupied': '#ef4444',
+                'maintenance': '#f59e0b',
+                'cleaning': '#3b82f6'
+            };
+            
+            // Build tree HTML
+            let html = '';
+            Object.keys(groupedRooms).sort().forEach((typeName, index) => {
+                const typeData = groupedRooms[typeName];
+                const roomCount = typeData.rooms.length;
+                const availableCount = typeData.rooms.filter(r => r.status === 'available').length;
+                
+                html += `
+                    <div class="room-type-category">
+                        <div class="category-header" onclick="toggleCategory('category-${index}')">
+                            <div class="category-left">
+                                <i class="fas fa-chevron-down category-icon" id="icon-category-${index}"></i>
+                                ${typeData.image_url ? `<img src="../${typeData.image_url}" alt="${typeName}" class="room-type-image" onerror="this.style.display='none'">` : ''}
+                                <i class="fas fa-hotel" style="color: #dc2626; margin-right: 10px;"></i>
+                                <h3 style="margin: 0; color: #1e293b; font-size: 18px;">${typeName}</h3>
+                                <span class="badge" style="background: #8b5cf6; margin-left: 15px;">${typeData.badge_label || 'Standard'}</span>
+                            </div>
+                            <div class="category-right">
+                                <button class="edit-image-btn" onclick="event.stopPropagation(); showImageModal(${typeData.room_type_id}, '${typeName}', '${typeData.image_url || ''}')" title="Change room type image">
+                                    <i class="fas fa-camera"></i> Change Image
+                                </button>
+                                <span class="room-count-badge">${roomCount} room${roomCount !== 1 ? 's' : ''}</span>
+                                <span class="badge" style="background: #10b981; margin-left: 10px;">${availableCount} available</span>
+                                <span style="color: #10b981; font-weight: bold; margin-left: 15px; font-size: 16px;">$${parseFloat(typeData.base_price || 0).toFixed(2)}/night</span>
+                            </div>
+                        </div>
+                        <div class="category-details">
+                            <div class="type-info">
+                                <span><i class="fas fa-bed"></i> ${typeData.bed_type}</span>
+                                <span><i class="fas fa-users"></i> Max ${typeData.max_occupancy} guests</span>
+                                <span><i class="fas fa-ruler-combined"></i> ${typeData.size_sqm} m²</span>
+                            </div>
+                        </div>
+                        <div class="category-rooms" id="category-${index}" style="display: block;">
+                            ${typeData.rooms.map(room => {
+                                const statusColor = statusColors[room.status] || '#6b7280';
+                                return `
+                                    <div class="room-item">
+                                        <div class="room-main-info">
+                                            <div class="room-number">
+                                                <i class="fas fa-door-closed" style="color: #dc2626;"></i>
+                                                <strong>Room ${room.room_number}</strong>
+                                            </div>
+                                            <div class="room-details">
+                                                <span class="room-detail-item"><i class="fas fa-layer-group"></i> Floor ${room.floor_number || 'N/A'}</span>
+                                                <span class="room-detail-item"><i class="fas fa-eye"></i> ${room.view_type || 'N/A'} View</span>
+                                                ${room.current_bookings > 0 ? 
+                                                    '<span class="badge" style="background: #ef4444;"><i class="fas fa-calendar-check"></i> ' + room.current_bookings + ' active booking' + (room.current_bookings !== 1 ? 's' : '') + '</span>' : 
+                                                    '<span class="badge" style="background: #10b981;"><i class="fas fa-check-circle"></i> No bookings</span>'
+                                                }
+                                                <span class="badge" style="background: ${statusColor};">${formatStatus(room.status)}</span>
+                                            </div>
+                                        </div>
+                                        ${room.notes ? `<div class="room-notes"><i class="fas fa-sticky-note"></i> ${room.notes}</div>` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function toggleCategory(categoryId) {
+            const categoryRooms = document.getElementById(categoryId);
+            const icon = document.getElementById('icon-' + categoryId);
+            
+            if (categoryRooms.style.display === 'none') {
+                categoryRooms.style.display = 'block';
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                categoryRooms.style.display = 'none';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-right');
+            }
+        }
+
+        function filterRooms(status) {
+            currentRoomFilter = status;
+            
+            // Update filter buttons
+            document.querySelectorAll('#rooms-section .filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter rooms
+            const filteredRooms = status === 'all' 
+                ? allRooms 
+                : allRooms.filter(r => r.status === status);
+            
+            displayRooms(filteredRooms);
+        }
+
+        // Room type image management
+        function showImageModal(roomTypeId, typeName, imageUrl) {
+            document.getElementById('image_room_type_id').value = roomTypeId;
+            document.getElementById('imageModalSubtitle').textContent = `Upload a new image for ${typeName}`;
+            
+            // Show current image if exists (imageUrl already includes ../ prefix from database)
+            if (imageUrl) {
+                document.getElementById('currentImage').src = imageUrl;
+                document.getElementById('currentImagePreview').style.display = 'block';
+            } else {
+                document.getElementById('currentImagePreview').style.display = 'none';
+            }
+            
+            document.getElementById('roomImageModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeImageModal() {
+            document.getElementById('roomImageModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('roomImageForm').reset();
+            document.getElementById('newImagePreview').style.display = 'none';
+        }
+        
+        // Preview image before upload
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('room_image');
+            if (imageInput) {
+                imageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('previewImage').src = e.target.result;
+                            document.getElementById('newImagePreview').style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+        
+        function updateRoomImage(event) {
+            event.preventDefault();
+            
+            const roomTypeId = document.getElementById('image_room_type_id').value;
+            const fileInput = document.getElementById('room_image');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = event.target.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Uploading...';
+            submitBtn.disabled = true;
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('room_type_id', roomTypeId);
+            formData.append('room_image', file);
+            
+            // Send update request
+            fetch('../php/update_room_type_image.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Room type image updated successfully!');
+                    closeImageModal();
+                    loadRooms(); // Reload rooms to show new image
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to update image'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the image');
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        }
 
         // Logout confirmation
         function confirmLogout(event) {
