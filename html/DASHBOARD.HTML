@@ -17,11 +17,11 @@
         </div>
         
         <nav class="sidebar-nav">
-            <a href="#dashboard" class="nav-item active">
+            <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard'); return false;">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="#bookings" class="nav-item">
+            <a href="#bookings" class="nav-item" onclick="showSection('bookings'); return false;">
                 <i class="fas fa-calendar-check"></i>
                 <span>Bookings</span>
             </a>
@@ -94,6 +94,8 @@
 
         <!-- Dashboard Content -->
         <div class="dashboard-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="content-section-container">
             <!-- Welcome Section -->
             <section class="welcome-section">
                 <div class="welcome-card">
@@ -342,8 +344,96 @@
                     </div>
                 </div>
             </section>
+            </div>
+            <!-- End Dashboard Section -->
+
+            <!-- Bookings Section -->
+            <div id="bookings-section" class="content-section-container" style="display: none;">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2><i class="fas fa-calendar-check"></i> Bookings Management</h2>
+                            <p>View and manage all hotel bookings</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bookings-table-section">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3>All Bookings</h3>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" onclick="filterBookings('all')">All</button>
+                                <button class="filter-btn" onclick="filterBookings('pending')">Pending</button>
+                                <button class="filter-btn" onclick="filterBookings('confirmed')">Confirmed</button>
+                                <button class="filter-btn" onclick="filterBookings('checked_in')">Checked In</button>
+                                <button class="filter-btn" onclick="filterBookings('checked_out')">Checked Out</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table" id="bookingsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Actions</th>
+                                        <th>Booking Ref</th>
+                                        <th>Guest Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Room Type</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Nights</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookingsTableBody">
+                                    <tr>
+                                        <td colspan="11" style="text-align: center; padding: 40px;">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #dc2626;"></i>
+                                            <p>Loading bookings...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- End Bookings Section -->
         </div>
     </main>
+
+    <!-- Status Change Modal -->
+    <div id="statusChangeModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="closeStatusModal()">&times;</span>
+            <h2 style="color: #dc2626;">Change Booking Status</h2>
+            <p class="modal-subtitle" id="statusModalSubtitle">Update the status for this booking</p>
+            
+            <form id="statusChangeForm" onsubmit="updateBookingStatus(event)">
+                <input type="hidden" id="status_booking_id">
+                
+                <div class="form-group">
+                    <label for="new_status">Select New Status <span class="required">*</span></label>
+                    <select id="new_status" name="new_status" required style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                        <option value="">-- Select Status --</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="checked_in">Checked In</option>
+                        <option value="checked_out">Checked Out</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="no_show">No Show</option>
+                    </select>
+                </div>
+
+                <div class="form-actions" style="margin-top: 30px;">
+                    <button type="button" class="btn-cancel" onclick="closeStatusModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         // Mobile menu toggle
@@ -360,12 +450,187 @@
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function(e) {
                 if (!this.classList.contains('logout')) {
-                    e.preventDefault();
                     document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
                 }
             });
         });
+
+        // Section switching
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section-container').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                
+                // Load bookings data if bookings section
+                if (sectionName === 'bookings') {
+                    loadBookings();
+                }
+            }
+        }
+
+        // Load bookings from database
+        let allBookings = [];
+        let currentFilter = 'all';
+
+        function loadBookings() {
+            fetch('../php/get_bookings.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        allBookings = data.bookings;
+                        displayBookings(allBookings);
+                    } else {
+                        document.getElementById('bookingsTableBody').innerHTML = 
+                            '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> ' + 
+                            (data.message || 'Failed to load bookings') + '</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading bookings:', error);
+                    document.getElementById('bookingsTableBody').innerHTML = 
+                        '<tr><td colspan="11" style="text-align: center; padding: 40px; color: #dc2626;"><i class="fas fa-exclamation-circle"></i> Error loading bookings</td></tr>';
+                });
+        }
+
+        function displayBookings(bookings) {
+            const tbody = document.getElementById('bookingsTableBody');
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 40px;"><i class="fas fa-inbox"></i> No bookings found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = bookings.map(booking => {
+                const statusColors = {
+                    'pending': '#f59e0b',
+                    'confirmed': '#3b82f6',
+                    'checked_in': '#10b981',
+                    'checked_out': '#6b7280',
+                    'cancelled': '#ef4444'
+                };
+                const statusColor = statusColors[booking.status] || '#6b7280';
+                
+                return `
+                    <tr>
+                        <td>
+                            <div class="action-buttons-container">
+                                <button class="action-icon-btn" onclick="viewBookingDetails('${booking.booking_reference}')" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-icon-btn" onclick="showStatusChangeModal('${booking.booking_id}', '${booking.status}', '${booking.booking_reference}')" title="Change Status">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td><strong>${booking.booking_reference}</strong></td>
+                        <td>${booking.guest_name}</td>
+                        <td>${booking.guest_email}</td>
+                        <td>${booking.guest_phone}</td>
+                        <td>${booking.type_name}</td>
+                        <td>${formatDate(booking.check_in_date)}</td>
+                        <td>${formatDate(booking.check_out_date)}</td>
+                        <td>${booking.total_nights}</td>
+                        <td><strong>$${parseFloat(booking.total_amount).toFixed(2)}</strong></td>
+                        <td><span class="status-badge" style="background: ${statusColor};">${formatStatus(booking.status)}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterBookings(status) {
+            currentFilter = status;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter bookings
+            const filteredBookings = status === 'all' 
+                ? allBookings 
+                : allBookings.filter(b => b.status === status);
+            
+            displayBookings(filteredBookings);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function formatStatus(status) {
+            return status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        }
+
+        function viewBookingDetails(bookingRef) {
+            window.location.href = '../html/BOOKING_CONFIRMATION.PHP?ref=' + bookingRef;
+        }
+
+        // Status change modal functions
+        function showStatusChangeModal(bookingId, currentStatus, bookingRef) {
+            document.getElementById('status_booking_id').value = bookingId;
+            document.getElementById('new_status').value = currentStatus;
+            document.getElementById('statusModalSubtitle').textContent = `Booking Reference: ${bookingRef}`;
+            document.getElementById('statusChangeModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStatusModal() {
+            document.getElementById('statusChangeModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('statusChangeForm').reset();
+        }
+
+        function updateBookingStatus(event) {
+            event.preventDefault();
+            
+            const bookingId = document.getElementById('status_booking_id').value;
+            const newStatus = document.getElementById('new_status').value;
+            
+            if (!bookingId || !newStatus) {
+                alert('Please select a status');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = event.target.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Updating...';
+            submitBtn.disabled = true;
+
+            // Send update request
+            fetch('../php/update_booking_status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `booking_id=${bookingId}&status=${newStatus}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Booking status updated successfully!');
+                    closeStatusModal();
+                    loadBookings(); // Reload bookings table
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to update status'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the status');
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        }
 
         // Try to get admin info from session (would need PHP session handling)
         // For now, using placeholder text
