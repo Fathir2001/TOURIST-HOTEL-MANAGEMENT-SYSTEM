@@ -931,10 +931,13 @@ body {
     background: white;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .room-type-category {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 3px solid #e5e7eb;
+    margin-bottom: 2px;
+    position: relative;
 }
 
 .room-type-category:last-child {
@@ -945,28 +948,44 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 25px;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding: 22px 30px;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
     cursor: pointer;
     transition: all 0.3s;
-    border-bottom: 2px solid transparent;
+    border-left: 5px solid var(--primary-red);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .category-header:hover {
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-    border-bottom-color: var(--primary-red);
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    border-left-width: 8px;
+    transform: translateX(3px);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);
 }
 
 .category-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 18px;
+}
+
+.category-left h3 {
+    color: white !important;
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3px;
+}
+
+.category-left .fa-hotel {
+    color: #fbbf24 !important;
+    font-size: 20px !important;
 }
 
 .category-icon {
-    color: var(--primary-red);
-    font-size: 14px;
+    color: #fbbf24;
+    font-size: 16px;
     transition: transform 0.3s;
+    font-weight: bold;
 }
 
 .category-right {
@@ -986,43 +1005,97 @@ body {
 }
 
 .category-details {
-    padding: 15px 25px 15px 70px;
-    background: #fafafa;
-    border-bottom: 1px solid var(--border-color);
+    padding: 18px 30px 18px 85px;
+    background: linear-gradient(to right, #fef3c7 0%, #fef9e5 100%);
+    border-bottom: 2px solid #fde68a;
+    border-left: 5px solid #fbbf24;
 }
 
 .type-info {
     display: flex;
-    gap: 30px;
-    font-size: 14px;
-    color: var(--text-light);
+    gap: 35px;
+    font-size: 15px;
+    color: #78350f;
+    font-weight: 600;
 }
 
 .type-info span {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    background: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .type-info i {
-    color: var(--primary-red);
+    color: #dc2626;
+    font-size: 16px;
 }
 
 .category-rooms {
-    padding: 10px 0;
-    background: white;
+    padding: 0;
+    background: linear-gradient(to right, #f8fafc 0%, white 100%);
+    border-left: 5px solid #cbd5e1;
+    position: relative;
+}
+
+.category-rooms::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #cbd5e1 0%, transparent 100%);
 }
 
 .room-item {
-    padding: 15px 25px 15px 70px;
-    border-left: 3px solid transparent;
+    padding: 18px 30px 18px 85px;
+    border-left: 4px solid transparent;
+    border-bottom: 1px solid #e5e7eb;
     transition: all 0.3s;
-    margin: 5px 0;
+    margin: 0;
+    position: relative;
+    background: white;
+}
+
+.room-item::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    width: 40px;
+    height: 2px;
+    background: #cbd5e1;
+}
+
+.room-item::after {
+    content: '';
+    position: absolute;
+    left: 68px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background: var(--primary-red);
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #cbd5e1;
 }
 
 .room-item:hover {
-    background: #fafafa;
-    border-left-color: var(--primary-red);
+    background: #fef2f2;
+    border-left: 4px solid var(--primary-red);
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+}
+
+.room-item:hover::after {
+    background: #fbbf24;
+    box-shadow: 0 0 0 3px var(--primary-red), 0 0 10px rgba(220, 38, 38, 0.4);
+    transform: translateY(-50%) scale(1.3);
 }
 
 .room-main-info {
@@ -1035,13 +1108,19 @@ body {
 .room-number {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 16px;
+    gap: 12px;
+    font-size: 17px;
     color: var(--text-dark);
+}
+
+.room-number .fa-door-closed {
+    font-size: 18px !important;
 }
 
 .room-number strong {
     color: var(--primary-red);
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .room-details {
@@ -1054,14 +1133,18 @@ body {
 .room-detail-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--text-light);
+    gap: 7px;
+    font-size: 14px;
+    color: #475569;
+    font-weight: 500;
+    background: #f1f5f9;
+    padding: 5px 10px;
+    border-radius: 6px;
 }
 
 .room-detail-item i {
     color: var(--primary-red);
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .room-notes {
@@ -1115,4 +1198,49 @@ body {
 
 .edit-image-btn i {
     font-size: 12px;
+}
+
+/* Delete Room Button */
+.delete-room-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.delete-room-btn:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+}
+
+.delete-room-btn i {
+    font-size: 11px;
+}
+
+/* Adjust room-main-info to accommodate delete button */
+.room-main-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+}
+
+.room-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    flex: 1;
 }
