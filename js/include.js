@@ -73,7 +73,7 @@ const footerHTML = `<!-- Footer Section -->
             </div>
             <div class="contact-item">
                 <i class="fas fa-phone-alt"></i>
-                <span>+94 XX XXX XXXX</span>
+                <span>+94 77 7183231</span>
             </div>
             <div class="contact-item">
                 <i class="fas fa-envelope"></i>

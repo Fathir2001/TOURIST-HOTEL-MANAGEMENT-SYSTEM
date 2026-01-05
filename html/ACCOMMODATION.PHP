@@ -205,7 +205,7 @@ $rooms = getRoomTypes();
                     </div>
                     <div class="form-group">
                         <label for="guest_phone">Phone Number <span class="required">*</span></label>
-                        <input type="tel" id="guest_phone" name="guest_phone" required placeholder="+94 XX XXX XXXX">
+                        <input type="tel" id="guest_phone" name="guest_phone" required placeholder="+94 77 7183231">
                     </div>
                 </div>
 
