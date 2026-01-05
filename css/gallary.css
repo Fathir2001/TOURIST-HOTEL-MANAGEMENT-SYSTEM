@@ -47,8 +47,10 @@ section {
 .hero-section {
     position: relative;
     width: 100vw;
-    height: 600px;
-    overflow: hidden;
+    min-height: 600px;
+    height: 100vh;
+    max-height: 800px;
+    overflow: visible;
     margin: 0;
     padding: 0;
 }
@@ -58,6 +60,10 @@ section {
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
     height: 100%;
     z-index: 1;
 }
@@ -112,7 +118,8 @@ section {
     }
     
     .hero-section {
-        height: 400px;
+        min-height: 500px;
+        max-height: 700px;
     }
 }
 
