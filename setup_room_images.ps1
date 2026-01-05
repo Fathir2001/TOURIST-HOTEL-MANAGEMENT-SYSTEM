@@ -15,7 +15,7 @@ if (-not (Test-Path $imagesPath)) {
 $imageMappings = @{
     "img75.webp" = "presidential-suite.jpg"
     "img74.webp" = "heritage-suite.jpg"
-    "img73.webp" = "deluxe-room.jpg"
+    "img73.webp" = "Deluxe Room.jfif"
     "img76.webp" = "garden-wing.jpg"
     "img35.webp" = "triple-room.jpg"
     "img3.webp" = "double-room.jpg"
