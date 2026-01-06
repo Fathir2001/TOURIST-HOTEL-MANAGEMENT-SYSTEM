@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS admins (
 -- Default admin account
 -- Username: admin
 -- Password: Admin@123
-INSERT INTO admins (username, email, password_hash, full_name, role) 
+INSERT IGNORE INTO admins (username, email, password_hash, full_name, role) 
 VALUES ('admin', 'admin@touristhotel.lk', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'System Administrator', 'admin');
 
 
