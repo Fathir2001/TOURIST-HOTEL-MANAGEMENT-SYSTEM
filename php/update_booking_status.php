@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 try {
     // Get and validate input
     $booking_id = filter_input(INPUT_POST, 'booking_id', FILTER_VALIDATE_INT);
-    $new_status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_STRING);
+    $new_status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $room_id = filter_input(INPUT_POST, 'room_id', FILTER_VALIDATE_INT); // New: room assignment
     
     // Validate required fields

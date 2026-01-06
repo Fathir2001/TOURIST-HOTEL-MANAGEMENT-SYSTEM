@@ -44,18 +44,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 try {
     // Get database connection
-    $conn = getDatabaseConnection();
+    $conn = getDBConnection();
     
     // Retrieve and sanitize form data
     $room_type_id = filter_input(INPUT_POST, 'room_type_id', FILTER_VALIDATE_INT);
-    $check_in_date = filter_input(INPUT_POST, 'check_in_date', FILTER_SANITIZE_STRING);
-    $check_out_date = filter_input(INPUT_POST, 'check_out_date', FILTER_SANITIZE_STRING);
+    $check_in_date = filter_input(INPUT_POST, 'check_in_date', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $check_out_date = filter_input(INPUT_POST, 'check_out_date', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $adults = filter_input(INPUT_POST, 'adults', FILTER_VALIDATE_INT);
     $children = filter_input(INPUT_POST, 'children', FILTER_VALIDATE_INT) ?: 0;
-    $guest_name = trim(filter_input(INPUT_POST, 'guest_name', FILTER_SANITIZE_STRING));
+    $guest_name = trim(filter_input(INPUT_POST, 'guest_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     $guest_email = trim(filter_input(INPUT_POST, 'guest_email', FILTER_SANITIZE_EMAIL));
-    $guest_phone = trim(filter_input(INPUT_POST, 'guest_phone', FILTER_SANITIZE_STRING));
-    $special_requests = trim(filter_input(INPUT_POST, 'special_requests', FILTER_SANITIZE_STRING));
+    $guest_phone = trim(filter_input(INPUT_POST, 'guest_phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $special_requests = trim(filter_input(INPUT_POST, 'special_requests', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     
     // Validate required fields
     if (!$room_type_id || !$check_in_date || !$check_out_date || !$adults || !$guest_name || !$guest_email || !$guest_phone) {
