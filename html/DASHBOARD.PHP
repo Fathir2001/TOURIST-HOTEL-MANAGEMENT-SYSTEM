@@ -1,3 +1,18 @@
+<?php
+// Start session and check authentication
+session_start();
+
+// Check if admin is logged in
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    // Not logged in, redirect to login page
+    header('Location: ADMIN.HTML');
+    exit;
+}
+
+// Get admin info from session
+$adminName = $_SESSION['admin_name'] ?? 'Admin User';
+$adminRole = $_SESSION['admin_role'] ?? 'Administrator';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

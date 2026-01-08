@@ -160,7 +160,7 @@ function handleAdminLogin($conn) {
             </div>
             <script>
                 setTimeout(function() {
-                    window.location.href = '../html/DASHBOARD.HTML';
+                    window.location.href = '../html/DASHBOARD.PHP';
                 }, 1500);
             </script>
         </body>

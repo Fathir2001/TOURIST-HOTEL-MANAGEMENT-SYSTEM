@@ -4,12 +4,16 @@
  * Retrieves current admin user details
  */
 
-// Start session
-session_start();
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Enable error reporting
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
+error_log("get_admin_info.php called - Session ID: " . session_id());
+error_log("Admin ID in session: " . (isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : 'NOT SET'));
 
 // Set header
 header('Content-Type: application/json');
@@ -20,10 +24,12 @@ require_once 'config/database.php';
 try {
     // Check if admin is logged in
     if (!isset($_SESSION['admin_id'])) {
+        error_log("get_admin_info.php: No admin_id in session");
         http_response_code(401);
         echo json_encode([
             'success' => false,
-            'message' => 'Not authenticated'
+            'message' => 'Not authenticated',
+            'session_data' => array_keys($_SESSION)
         ]);
         exit;
     }
