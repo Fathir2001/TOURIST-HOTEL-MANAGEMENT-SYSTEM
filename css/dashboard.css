@@ -1174,8 +1174,8 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.edit-image-btn {
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+.edit-room-type-btn {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     color: white;
     border: none;
     padding: 8px 16px;
@@ -1188,15 +1188,16 @@ body {
     align-items: center;
     gap: 6px;
     margin-right: 15px;
-    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
 }
 
-.edit-image-btn:hover {
+.edit-room-type-btn:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.4);
+    box-shadow: 0 4px 8px rgba(139, 92, 246, 0.4);
 }
 
-.edit-image-btn i {
+.edit-room-type-btn i {
     font-size: 12px;
 }
 
@@ -1269,4 +1270,267 @@ body {
     gap: 10px;
     align-items: center;
     flex: 1;
+}
+/* Responsive Design - Mobile First */
+@media screen and (max-width: 1200px) {
+    :root {
+        --sidebar-width: 230px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .category-right {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    :root {
+        --sidebar-width: 200px;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .menu-toggle {
+        display: flex !important;
+    }
+    
+    .topbar-left h1 {
+        font-size: 1.3rem;
+    }
+    
+    .admin-info {
+        display: none;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .recent-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .category-right {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .room-type-image {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        padding: 20px;
+    }
+    
+    .topbar {
+        padding: 0 15px;
+    }
+    
+    .dashboard-content {
+        padding: 15px;
+    }
+    
+    .welcome-card {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .quick-date {
+        align-self: flex-start;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .header-actions {
+        width: 100%;
+    }
+    
+    .header-actions input {
+        flex: 1;
+    }
+    
+    .room-main-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .room-details {
+        width: 100%;
+    }
+    
+    .room-main-info > div:last-child {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+    }
+    
+    .room-main-info > div:last-child button {
+        flex: 1;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr !important;
+    }
+    
+    table {
+        font-size: 13px;
+    }
+    
+    .category-left h3 {
+        font-size: 16px;
+    }
+    
+    .edit-room-type-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    :root {
+        --topbar-height: 60px;
+    }
+    
+    .topbar-left h1 {
+        font-size: 1.1rem;
+    }
+    
+    .admin-profile img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .welcome-text h2 {
+        font-size: 1.3rem;
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    .category-details {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .type-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .room-number {
+        font-size: 15px;
+    }
+    
+    .room-detail-item {
+        font-size: 12px;
+    }
+    
+    .badge {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+    
+    .btn-primary, .btn-add {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .modal-content {
+        padding: 20px;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .dashboard-content {
+        padding: 10px;
+    }
+    
+    .welcome-card {
+        padding: 15px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .category-header {
+        padding: 15px;
+    }
+    
+    .category-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .room-count-badge, .badge {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
+
+/* Hide menu toggle on desktop */
+.menu-toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    font-size: 1.3rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.menu-toggle:hover {
+    background: var(--border-color);
 }

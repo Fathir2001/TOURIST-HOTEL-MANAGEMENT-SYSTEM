@@ -23,6 +23,7 @@ try {
                 r.notes,
                 rt.room_type_id,
                 rt.type_name,
+                rt.description,
                 rt.base_price,
                 rt.max_occupancy,
                 rt.bed_type,

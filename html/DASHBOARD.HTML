@@ -794,6 +794,145 @@
         </div>
     </div>
 
+    <!-- Edit Room Type Modal -->
+    <div id="editRoomTypeModal" class="booking-modal" style="display: none;">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <span class="close-modal" onclick="closeEditRoomTypeModal()">&times;</span>
+            <h2 style="color: #8b5cf6;"><i class="fas fa-edit"></i> Edit Room Type</h2>
+            <p class="modal-subtitle" id="editRoomTypeSubtitle">Update room type details and settings</p>
+            
+            <form id="editRoomTypeForm" onsubmit="updateRoomType(event)" enctype="multipart/form-data">
+                <input type="hidden" id="edit_room_type_id">
+                
+                <!-- Basic Information -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #8b5cf6; margin-bottom: 15px; font-size: 16px;">
+                        <i class="fas fa-info-circle"></i> Basic Information
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="edit_type_name">Room Type Name <span class="required">*</span></label>
+                        <input type="text" id="edit_type_name" name="type_name" required 
+                               style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                        <small style="color: #666;">E.g., Presidential Suite, Deluxe Room, etc.</small>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="edit_description">Description</label>
+                        <textarea id="edit_description" name="description" rows="4" 
+                                  placeholder="Enter a detailed description of this room type..."
+                                  style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px; font-family: inherit; resize: vertical;"></textarea>
+                        <small style="color: #666;">Describe the room features, ambiance, and unique selling points</small>
+                    </div>
+                </div>
+                
+                <!-- Pricing & Capacity -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #8b5cf6; margin-bottom: 15px; font-size: 16px;">
+                        <i class="fas fa-dollar-sign"></i> Pricing & Capacity
+                    </h3>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="edit_base_price">Base Price (per night) <span class="required">*</span></label>
+                            <input type="number" id="edit_base_price" name="base_price" step="0.01" min="0" required 
+                                   style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <small style="color: #666;">Price in USD</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit_max_occupancy">Max Occupancy <span class="required">*</span></label>
+                            <input type="number" id="edit_max_occupancy" name="max_occupancy" min="1" max="10" required 
+                                   style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <small style="color: #666;">Maximum number of guests</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Room Specifications -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #8b5cf6; margin-bottom: 15px; font-size: 16px;">
+                        <i class="fas fa-bed"></i> Room Specifications
+                    </h3>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="edit_bed_type">Bed Type <span class="required">*</span></label>
+                            <select id="edit_bed_type" name="bed_type" required 
+                                    style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                <option value="">-- Select --</option>
+                                <option value="King Size Bed">King Size Bed</option>
+                                <option value="Queen Size Bed">Queen Size Bed</option>
+                                <option value="King/Queen Bed">King/Queen Bed</option>
+                                <option value="Queen Bed">Queen Bed</option>
+                                <option value="Double Bed">Double Bed</option>
+                                <option value="Single Bed">Single Bed</option>
+                                <option value="Twin Beds">Twin Beds</option>
+                                <option value="Three Single Beds">Three Single Beds</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit_size_sqm">Size (m²) <span class="required">*</span></label>
+                            <input type="number" id="edit_size_sqm" name="size_sqm" step="0.01" min="0" required 
+                                   style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                            <small style="color: #666;">Room area in square meters</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit_badge_label">Badge Label</label>
+                            <select id="edit_badge_label" name="badge_label" 
+                                    style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                                <option value="">-- None --</option>
+                                <option value="Premium">Premium</option>
+                                <option value="Heritage">Heritage</option>
+                                <option value="Deluxe">Deluxe</option>
+                                <option value="Garden Wing">Garden Wing</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Luxury">Luxury</option>
+                                <option value="Economy">Economy</option>
+                            </select>
+                            <small style="color: #666;">Display badge</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Room Image -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #8b5cf6; margin-bottom: 15px; font-size: 16px;">
+                        <i class="fas fa-image"></i> Room Image
+                    </h3>
+                    
+                    <div id="editCurrentImagePreview" style="margin-bottom: 15px; text-align: center; display: none;">
+                        <p style="font-size: 13px; color: #666; margin-bottom: 8px;">Current Image:</p>
+                        <img id="editCurrentImage" src="" alt="Current Image" style="max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit_room_image">Change Image (Optional)</label>
+                        <input type="file" id="edit_room_image" name="room_image" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" 
+                               style="width: 100%; padding: 12px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                        <small style="color: #666; display: block; margin-top: 5px;">Leave empty to keep current image. Allowed: JPG, PNG, GIF, WEBP. Max: 5MB</small>
+                    </div>
+                    
+                    <div id="editNewImagePreview" style="margin-top: 15px; text-align: center; display: none;">
+                        <p style="font-weight: 600; margin-bottom: 10px; font-size: 13px;">New Image Preview:</p>
+                        <img id="editPreviewImage" src="" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+                
+                <div class="form-actions" style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e5e5e5;">
+                    <button type="button" class="btn-cancel" onclick="closeEditRoomTypeModal()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <i class="fas fa-save"></i> Update Room Type
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Room Status Change Modal -->
     <div id="roomStatusModal" class="booking-modal" style="display: none;">
         <div class="modal-content" style="max-width: 500px;">
@@ -1811,6 +1950,7 @@
                     groupedRooms[typeName] = {
                         room_type_id: room.room_type_id,
                         badge_label: room.badge_label,
+                        description: room.description || '',
                         base_price: room.base_price,
                         max_occupancy: room.max_occupancy,
                         bed_type: room.bed_type,
@@ -1840,14 +1980,27 @@
                         <div class="category-header" onclick="toggleCategory('category-${index}')">
                             <div class="category-left">
                                 <i class="fas fa-chevron-down category-icon" id="icon-category-${index}"></i>
-                                ${typeData.image_url ? `<img src="../${typeData.image_url}" alt="${typeName}" class="room-type-image" onerror="this.style.display='none'">` : ''}
+                                ${typeData.image_url ? `<img src="${typeData.image_url}" alt="${typeName}" class="room-type-image" onerror="this.style.display='none'">` : ''}
                                 <i class="fas fa-hotel" style="color: #dc2626; margin-right: 10px;"></i>
                                 <h3 style="margin: 0; color: #1e293b; font-size: 18px;">${typeName}</h3>
                                 <span class="badge" style="background: #8b5cf6; margin-left: 15px;">${typeData.badge_label || 'Standard'}</span>
                             </div>
                             <div class="category-right">
-                                <button class="edit-image-btn" onclick="event.stopPropagation(); showImageModal(${typeData.room_type_id}, '${typeName}', '${typeData.image_url || ''}')" title="Change room type image">
-                                    <i class="fas fa-camera"></i> Change Image
+                                <button class="edit-room-type-btn" 
+                                        data-room-type='${JSON.stringify({
+                                            room_type_id: typeData.room_type_id,
+                                            type_name: typeName,
+                                            description: typeData.description || '',
+                                            base_price: typeData.base_price,
+                                            max_occupancy: typeData.max_occupancy,
+                                            bed_type: typeData.bed_type,
+                                            size_sqm: typeData.size_sqm,
+                                            badge_label: typeData.badge_label || '',
+                                            image_url: typeData.image_url || ''
+                                        })}'
+                                        onclick="event.stopPropagation(); showEditRoomTypeModalFromData(this)" 
+                                        title="Edit room type details">
+                                    <i class="fas fa-edit"></i> Edit
                                 </button>
                                 <span class="room-count-badge">${roomCount} room${roomCount !== 1 ? 's' : ''}</span>
                                 <span class="badge" style="background: #10b981; margin-left: 10px;">${availableCount} available</span>
@@ -1961,6 +2114,100 @@
             document.getElementById('newImagePreview').style.display = 'none';
         }
         
+        // Edit Room Type Management
+        function showEditRoomTypeModalFromData(button) {
+            const data = JSON.parse(button.getAttribute('data-room-type'));
+            showEditRoomTypeModal(
+                data.room_type_id,
+                data.type_name,
+                data.base_price,
+                data.max_occupancy,
+                data.bed_type,
+                data.size_sqm,
+                data.badge_label,
+                data.description,
+                data.image_url
+            );
+        }
+        
+        function showEditRoomTypeModal(roomTypeId, typeName, basePrice, maxOccupancy, bedType, sizeSqm, badgeLabel, description, imageUrl) {
+            console.log('Edit Room Type Modal Data:', {roomTypeId, typeName, basePrice, maxOccupancy, bedType, sizeSqm, badgeLabel, description, imageUrl});
+            
+            document.getElementById('edit_room_type_id').value = roomTypeId;
+            document.getElementById('edit_type_name').value = typeName;
+            document.getElementById('edit_description').value = description || '';
+            document.getElementById('edit_base_price').value = basePrice;
+            document.getElementById('edit_max_occupancy').value = maxOccupancy;
+            document.getElementById('edit_bed_type').value = bedType;
+            document.getElementById('edit_size_sqm').value = sizeSqm;
+            document.getElementById('edit_badge_label').value = badgeLabel || '';
+            
+            document.getElementById('editRoomTypeSubtitle').textContent = `Editing: ${typeName}`;
+            
+            // Show current image if exists
+            if (imageUrl && imageUrl !== 'null' && imageUrl !== 'undefined' && imageUrl !== '') {
+                console.log('Setting image URL:', imageUrl);
+                document.getElementById('editCurrentImage').src = imageUrl;
+                document.getElementById('editCurrentImagePreview').style.display = 'block';
+            } else {
+                console.log('No image URL provided');
+                document.getElementById('editCurrentImagePreview').style.display = 'none';
+            }
+            
+            // Hide new image preview when opening modal
+            document.getElementById('editNewImagePreview').style.display = 'none';
+            
+            document.getElementById('editRoomTypeModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeEditRoomTypeModal() {
+            document.getElementById('editRoomTypeModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            // Don't reset the form here as it clears all data including current image display
+            // Instead, just clear the file input and new image preview
+            const fileInput = document.getElementById('edit_room_image');
+            if (fileInput) fileInput.value = '';
+            document.getElementById('editNewImagePreview').style.display = 'none';
+        }
+        
+        async function updateRoomType(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const roomTypeId = document.getElementById('edit_room_type_id').value;
+            formData.append('room_type_id', roomTypeId);
+            
+            // Show loading state
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('../php/update_room_type.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Room type updated successfully!');
+                    closeEditRoomTypeModal();
+                    loadRooms(); // Reload rooms to show updated data
+                } else {
+                    alert('❌ Error: ' + (result.message || 'Failed to update room type'));
+                }
+            } catch (error) {
+                console.error('Error updating room type:', error);
+                alert('❌ Error: Failed to update room type. Please try again.');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
         // Preview image before upload
         document.addEventListener('DOMContentLoaded', function() {
             // Automatically update booking statuses based on dates
@@ -1977,6 +2224,31 @@
                             document.getElementById('newImagePreview').style.display = 'block';
                         };
                         reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            // Edit room type image preview
+            const editImageInput = document.getElementById('edit_room_image');
+            if (editImageInput) {
+                editImageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        // Validate file size (5MB)
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert('File size must be less than 5MB');
+                            this.value = '';
+                            return;
+                        }
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('editPreviewImage').src = e.target.result;
+                            document.getElementById('editNewImagePreview').style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        document.getElementById('editNewImagePreview').style.display = 'none';
                     }
                 });
             }
