@@ -279,9 +279,20 @@ function handleUpdateBooking($conn) {
                 $roomStmt->execute([$booking['room_id']]);
             }
             
-            // If cancelling, set cancelled_at timestamp
+            // If cancelling, set cancelled_at timestamp and cancellation reason
             if ($data['status'] === 'cancelled') {
                 $sql .= ", cancelled_at = NOW()";
+                
+                if (isset($data['cancellation_reason'])) {
+                    $sql .= ", cancellation_reason = ?";
+                    $params[] = $data['cancellation_reason'];
+                }
+                
+                // Free the room if it was assigned
+                if ($booking['room_id']) {
+                    $roomStmt = $conn->prepare("UPDATE rooms SET status = 'available' WHERE room_id = ?");
+                    $roomStmt->execute([$booking['room_id']]);
+                }
             }
             
             $sql .= " WHERE booking_id = ?";

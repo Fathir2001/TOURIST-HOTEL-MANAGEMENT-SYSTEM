@@ -18,6 +18,9 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Admin Dashboard - TOURIST HOTEL MANAGEMENT SYSTEM</title>
     <link rel="stylesheet" href="../css/STYLE.CSS">
     <link rel="stylesheet" href="../css/dashboard.css">
@@ -694,7 +697,7 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                 
                 <div class="form-group">
                     <label for="new_status">Select New Status <span class="required">*</span></label>
-                    <select id="new_status" name="new_status" required onchange="handleStatusChange()" style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
+                    <select id="new_status" name="new_status" required style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px;">
                         <option value="">-- Select Status --</option>
                         <option value="confirmed">Confirmed</option>
                         <option value="cancelled">Cancelled</option>
@@ -710,6 +713,19 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                         </select>
                         <small style="color: #10b981; display: block; margin-top: 5px;">
                             <i class="fas fa-info-circle"></i> Only available rooms of this type are shown
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Cancellation Reason Section (shows when cancelling) -->
+                <div id="cancellationReasonSection" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="cancellation_reason">Cancellation Reason <span class="required">*</span></label>
+                        <textarea id="cancellation_reason" name="cancellation_reason" rows="4" 
+                                  style="width: 100%; padding: 12px 15px; border: 2px solid #e5e5e5; border-radius: 8px; font-size: 15px; resize: vertical;"
+                                  placeholder="Please provide a reason for cancellation..."></textarea>
+                        <small style="color: #ef4444; display: block; margin-top: 5px;">
+                            <i class="fas fa-exclamation-circle"></i> This information will be stored for record keeping
                         </small>
                     </div>
                 </div>
@@ -762,7 +778,7 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             <h2 style="color: #8b5cf6;"><i class="fas fa-edit"></i> Edit Room Type</h2>
             <p class="modal-subtitle" id="editRoomTypeSubtitle">Update room type details and settings</p>
             
-            <form id="editRoomTypeForm" onsubmit="updateRoomType(event)" enctype="multipart/form-data">
+            <form id="editRoomTypeForm" onsubmit="submitUpdateRoomType(event)" enctype="multipart/form-data">
                 <input type="hidden" id="edit_room_type_id">
                 
                 <!-- Basic Information -->
@@ -1646,8 +1662,16 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             document.getElementById('new_status').value = currentStatus;
             document.getElementById('statusModalSubtitle').textContent = `Booking Reference: ${bookingRef}`;
             
-            // Hide room assignment section initially
+            // Hide sections initially
             document.getElementById('roomAssignmentSection').style.display = 'none';
+            document.getElementById('cancellationReasonSection').style.display = 'none';
+            document.getElementById('assigned_room_id').required = false;
+            document.getElementById('cancellation_reason').required = false;
+            
+            // Ensure event listener is attached (in case modal opens before DOMContentLoaded)
+            const statusSelect = document.getElementById('new_status');
+            statusSelect.removeEventListener('change', handleStatusChange);
+            statusSelect.addEventListener('change', handleStatusChange);
             
             document.getElementById('statusChangeModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -1658,6 +1682,14 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             const roomTypeId = document.getElementById('status_room_type_id').value;
             const roomAssignmentSection = document.getElementById('roomAssignmentSection');
             const assignedRoomSelect = document.getElementById('assigned_room_id');
+            const cancellationReasonSection = document.getElementById('cancellationReasonSection');
+            const cancellationReasonField = document.getElementById('cancellation_reason');
+            
+            // Reset sections
+            roomAssignmentSection.style.display = 'none';
+            assignedRoomSelect.required = false;
+            cancellationReasonSection.style.display = 'none';
+            cancellationReasonField.required = false;
             
             // Show room assignment when confirming or checking in
             if ((newStatus === 'confirmed' || newStatus === 'checked_in') && roomTypeId) {
@@ -1666,9 +1698,12 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                 
                 // Load available rooms for this room type
                 await loadAvailableRooms(roomTypeId);
-            } else {
-                roomAssignmentSection.style.display = 'none';
-                assignedRoomSelect.required = false;
+            }
+            
+            // Show cancellation reason when cancelling
+            if (newStatus === 'cancelled') {
+                cancellationReasonSection.style.display = 'block';
+                cancellationReasonField.required = true;
             }
         }
 
@@ -1711,6 +1746,8 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             document.getElementById('statusChangeForm').reset();
             document.getElementById('roomAssignmentSection').style.display = 'none';
             document.getElementById('assigned_room_id').required = false;
+            document.getElementById('cancellationReasonSection').style.display = 'none';
+            document.getElementById('cancellation_reason').required = false;
         }
 
         async function updateBookingStatus(event) {
@@ -1719,7 +1756,9 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             const bookingId = document.getElementById('status_booking_id').value;
             const newStatus = document.getElementById('new_status').value;
             const assignedRoomId = document.getElementById('assigned_room_id').value;
+            const cancellationReason = document.getElementById('cancellation_reason').value;
             const roomAssignmentVisible = document.getElementById('roomAssignmentSection').style.display !== 'none';
+            const cancellationReasonVisible = document.getElementById('cancellationReasonSection').style.display !== 'none';
             
             if (!bookingId || !newStatus) {
                 alert('Please select a status');
@@ -1731,6 +1770,11 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                 return;
             }
 
+            if (cancellationReasonVisible && !cancellationReason.trim()) {
+                alert('Please provide a cancellation reason');
+                return;
+            }
+
             const submitBtn = event.target.querySelector('.btn-submit');
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Updating...';
@@ -1738,14 +1782,21 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
 
             try {
                 // Use REST API from api-integration.js
+                const requestBody = {
+                    booking_id: parseInt(bookingId),
+                    status: newStatus,
+                    room_id: assignedRoomId ? parseInt(assignedRoomId) : null
+                };
+                
+                // Add cancellation reason if cancelling
+                if (newStatus === 'cancelled' && cancellationReason) {
+                    requestBody.cancellation_reason = cancellationReason.trim();
+                }
+                
                 const response = await fetch('../php/api/bookings.php', {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        booking_id: parseInt(bookingId),
-                        status: newStatus,
-                        room_id: assignedRoomId ? parseInt(assignedRoomId) : null
-                    })
+                    body: JSON.stringify(requestBody)
                 });
                 
                 const result = await response.json();
@@ -2132,7 +2183,7 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             document.getElementById('editNewImagePreview').style.display = 'none';
         }
         
-        async function updateRoomType(event) {
+        async function submitUpdateRoomType(event) {
             event.preventDefault();
             
             const formData = new FormData(event.target);
@@ -2146,7 +2197,31 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             submitBtn.disabled = true;
             
             try {
-                // Use REST API to update room type
+                // Check if image file is selected
+                const imageFile = formData.get('room_image');
+                let imageUrl = null;
+                
+                if (imageFile && imageFile.size > 0) {
+                    // Upload image first
+                    const uploadFormData = new FormData();
+                    uploadFormData.append('image', imageFile);
+                    uploadFormData.append('room_type_id', roomTypeId);
+                    
+                    const uploadResponse = await fetch('../php/upload_room_image.php', {
+                        method: 'POST',
+                        body: uploadFormData
+                    });
+                    
+                    const uploadResult = await uploadResponse.json();
+                    
+                    if (uploadResult.success) {
+                        imageUrl = uploadResult.image_url;
+                    } else {
+                        throw new Error(uploadResult.message || 'Failed to upload image');
+                    }
+                }
+                
+                // Update room type data
                 const updateData = {
                     type_name: formData.get('type_name'),
                     description: formData.get('description'),
@@ -2157,6 +2232,11 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                     badge_label: formData.get('badge_label')
                 };
                 
+                // Add image URL if uploaded
+                if (imageUrl) {
+                    updateData.image_url = imageUrl;
+                }
+                
                 const result = await updateRoomType(roomTypeId, updateData);
                 
                 alert('✅ Room type updated successfully!');
@@ -2164,7 +2244,8 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                 loadRooms(); // Reload rooms to show updated data
             } catch (error) {
                 console.error('Error updating room type:', error);
-                alert('❌ Error: Failed to update room type. Please try again.');
+                console.error('Error details:', error.message, error.stack);
+                alert('❌ Error: ' + (error.message || 'Failed to update room type. Please try again.'));
             } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
@@ -2175,6 +2256,12 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
         document.addEventListener('DOMContentLoaded', function() {
             // Automatically update booking statuses based on dates
             autoUpdateBookingStatuses();
+            
+            // Add event listener for status change select
+            const statusSelect = document.getElementById('new_status');
+            if (statusSelect) {
+                statusSelect.addEventListener('change', handleStatusChange);
+            }
             
             const imageInput = document.getElementById('room_image');
             if (imageInput) {
