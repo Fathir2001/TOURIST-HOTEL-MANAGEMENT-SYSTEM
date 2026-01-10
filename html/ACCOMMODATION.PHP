@@ -549,8 +549,8 @@
                 // Create booking via REST API
                 const result = await createBooking(bookingData);
                 
-                // Success! Redirect directly to confirmation page
-                window.location.href = 'BOOKING_CONFIRMATION.PHP?ref=' + result.booking_reference;
+                // Success! Show confirmation dialogue
+                showBookingConfirmation(result.booking_reference, bookingData);
                 
             } catch (error) {
                 // Error handling
@@ -560,6 +560,176 @@
             }
             
             return false;
+        }
+
+        // Show booking confirmation dialogue
+        function showBookingConfirmation(bookingReference, bookingData) {
+            const roomType = document.getElementById('room_type_display').value;
+            const nights = document.getElementById('nights_display').textContent;
+            const totalAmount = document.getElementById('total_display').textContent;
+            
+            // Close the booking modal
+            closeBookingModal();
+            
+            // Create and show confirmation dialogue
+            const confirmationHTML = `
+                <div id="confirmationModal" onclick="closeConfirmationModal(event)" style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.7);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                    animation: fadeIn 0.3s ease;
+                ">
+                    <div onclick="event.stopPropagation()" style="
+                        background: white;
+                        padding: 40px;
+                        border-radius: 15px;
+                        max-width: 600px;
+                        width: 90%;
+                        max-height: 90vh;
+                        overflow-y: auto;
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                        animation: slideUp 0.4s ease;
+                        position: relative;
+                    ">
+                        <button onclick="closeConfirmationModal()" style="
+                            position: absolute;
+                            top: 15px;
+                            right: 15px;
+                            background: transparent;
+                            border: none;
+                            font-size: 28px;
+                            color: #6b7280;
+                            cursor: pointer;
+                            width: 40px;
+                            height: 40px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 50%;
+                            transition: all 0.2s ease;
+                        " onmouseover="this.style.background='#f3f4f6'; this.style.color='#1f2937'" onmouseout="this.style.background='transparent'; this.style.color='#6b7280'">
+                            &times;
+                        </button>
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <div style="
+                                width: 80px;
+                                height: 80px;
+                                background: linear-gradient(135deg, #dc2626, #b91c1c);
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                margin: 0 auto 20px;
+                                animation: scaleUp 0.5s ease;
+                                box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+                            ">
+                                <i class="fas fa-check" style="font-size: 40px; color: white;"></i>
+                            </div>
+                            <h2 style="color: #1f2937; margin: 0 0 10px 0; font-size: 28px;">Booking Confirmed!</h2>
+                            <p style="color: #6b7280; font-size: 16px; margin: 0;">Your reservation has been successfully created</p>
+                        </div>
+
+                        <div style="background: #fef2f2; padding: 25px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #fecaca;">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <p style="color: #6b7280; font-size: 14px; margin: 0 0 8px 0;">Your Booking Reference</p>
+                                <div style="
+                                    background: white;
+                                    padding: 15px;
+                                    border-radius: 8px;
+                                    border: 2px dashed #dc2626;
+                                    display: inline-block;
+                                ">
+                                    <p style="
+                                        font-size: 24px;
+                                        font-weight: bold;
+                                        color: #dc2626;
+                                        margin: 0;
+                                        letter-spacing: 1px;
+                                        font-family: monospace;
+                                    ">${bookingReference}</p>
+                                </div>
+                            </div>
+
+                            <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                    <span style="color: #6b7280; font-size: 15px;"><i class="fas fa-bed" style="margin-right: 8px;"></i>Room Type:</span>
+                                    <span style="color: #1f2937; font-weight: 600; font-size: 15px;">${roomType}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                    <span style="color: #6b7280; font-size: 15px;"><i class="fas fa-user" style="margin-right: 8px;"></i>Guest Name:</span>
+                                    <span style="color: #1f2937; font-weight: 600; font-size: 15px;">${bookingData.guestName}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                    <span style="color: #6b7280; font-size: 15px;"><i class="fas fa-calendar-check" style="margin-right: 8px;"></i>Check-in:</span>
+                                    <span style="color: #1f2937; font-weight: 600; font-size: 15px;">${new Date(bookingData.checkIn).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                    <span style="color: #6b7280; font-size: 15px;"><i class="fas fa-calendar-times" style="margin-right: 8px;"></i>Check-out:</span>
+                                    <span style="color: #1f2937; font-weight: 600; font-size: 15px;">${new Date(bookingData.checkOut).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                    <span style="color: #6b7280; font-size: 15px;"><i class="fas fa-moon" style="margin-right: 8px;"></i>Duration:</span>
+                                    <span style="color: #1f2937; font-weight: 600; font-size: 15px;">${nights}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid #e5e7eb; margin-top: 12px;">
+                                    <span style="color: #1f2937; font-size: 16px; font-weight: 600;"><i class="fas fa-dollar-sign" style="margin-right: 8px;"></i>Total Amount:</span>
+                                    <span style="color: #dc2626; font-weight: bold; font-size: 20px;">${totalAmount}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 8px;">
+                            <p style="margin: 0; color: #92400e; font-size: 14px; line-height: 1.6;">
+                                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                                <strong>Important:</strong> Please save your booking reference number. You'll need it to track your booking or make any changes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+                    @keyframes slideUp {
+                        from { transform: translateY(50px); opacity: 0; }
+                        to { transform: translateY(0); opacity: 1; }
+                    }
+                    @keyframes scaleUp {
+                        from { transform: scale(0); }
+                        to { transform: scale(1); }
+                    }
+                    @keyframes fadeOut {
+                        from { opacity: 1; }
+                        to { opacity: 0; }
+                    }
+                </style>
+            `;
+            
+            // Add to body
+            document.body.insertAdjacentHTML('beforeend', confirmationHTML);
+        }
+
+        // Close confirmation modal
+        function closeConfirmationModal(event) {
+            // Only close if clicking on the backdrop or close button
+            if (!event || event.target.id === 'confirmationModal' || event.type === 'click') {
+                const modal = document.getElementById('confirmationModal');
+                if (modal) {
+                    modal.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => {
+                        modal.remove();
+                        document.body.style.overflow = 'auto';
+                    }, 300);
+                }
+            }
         }
 
         // Close modal when clicking outside

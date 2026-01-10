@@ -1487,7 +1487,7 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                 const result = await response.json();
                 
                 if (result.success) {
-                    displayBookingDetails(result.data);
+                    displayBookingDetails(result.booking);
                 } else {
                     document.getElementById('bookingDetailsContent').innerHTML = `
                         <div style="text-align: center; padding: 40px; color: #dc2626;">
