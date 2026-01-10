@@ -17,6 +17,7 @@
             <li><a href="GALLARY.html">Gallery</a></li>
             <li><a href="ACCOMMODATION.PHP">Accommodation</a></li>
             <li><a href="FAQ.html">FAQ</a></li>
+            <li><a href="#" onclick="openCheckBookingModal(); return false;" style="color: #fbbf24;"><i class="fas fa-search"></i> Track Booking</a></li>
             <li><a href="ADMIN.html">Admin</a></li>
         </ul>
         <button class="navbar-toggle" id="navbar-toggle">
@@ -24,3 +25,203 @@
         </button>
     </div>
 </nav>
+
+<!-- Check Booking Status Modal -->
+<div id="checkBookingModal" style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6);">
+    <div style="background-color: #fff; margin: 5% auto; padding: 0; border-radius: 12px; width: 90%; max-width: 600px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: slideDown 0.3s ease;">
+        <!-- Modal Header -->
+        <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 25px 30px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0; font-size: 24px; font-weight: 600;"><i class="fas fa-search-location"></i> Track Your Booking</h2>
+            <button onclick="closeCheckBookingModal()" style="background: none; border: none; color: white; font-size: 28px; cursor: pointer; padding: 0; width: 30px; height: 30px; line-height: 1;">&times;</button>
+        </div>
+        
+        <!-- Modal Body -->
+        <div style="padding: 30px;">
+            <p style="color: #6b7280; margin-bottom: 20px; font-size: 15px;">
+                <i class="fas fa-info-circle"></i> Enter your booking reference number to view your reservation details.
+            </p>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; color: #374151; font-weight: 500;">Booking Reference Number:</label>
+                <input type="text" id="bookingRefInput" placeholder="e.g., BK-1234567890" 
+                    style="width: 100%; padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 15px; transition: border-color 0.3s;"
+                    onfocus="this.style.borderColor='#dc2626'" onblur="this.style.borderColor='#e5e7eb'">
+            </div>
+            
+            <button onclick="checkBookingStatus()" 
+                style="width: 100%; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 14px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);"
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(220, 38, 38, 0.4)';"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(220, 38, 38, 0.3)';">
+                <i class="fas fa-search"></i> Check Status
+            </button>
+            
+            <!-- Booking Details Display -->
+            <div id="bookingDetailsDisplay" style="display: none; margin-top: 25px; padding: 20px; background-color: #f9fafb; border-radius: 8px; border-left: 4px solid #dc2626;">
+                <!-- Details will be loaded here -->
+            </div>
+            
+            <!-- Error Message Display -->
+            <div id="bookingErrorDisplay" style="display: none; margin-top: 25px; padding: 15px; background-color: #fee2e2; color: #991b1b; border-radius: 8px; border-left: 4px solid #dc2626;">
+                <!-- Error will be displayed here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+</style>
+
+<script>
+function openCheckBookingModal() {
+    document.getElementById('checkBookingModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.getElementById('bookingRefInput').value = '';
+    document.getElementById('bookingDetailsDisplay').style.display = 'none';
+    document.getElementById('bookingErrorDisplay').style.display = 'none';
+}
+
+function closeCheckBookingModal() {
+    document.getElementById('checkBookingModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+async function checkBookingStatus() {
+    const refInput = document.getElementById('bookingRefInput');
+    const bookingRef = refInput.value.trim();
+    const detailsDiv = document.getElementById('bookingDetailsDisplay');
+    const errorDiv = document.getElementById('bookingErrorDisplay');
+    
+    // Hide previous results
+    detailsDiv.style.display = 'none';
+    errorDiv.style.display = 'none';
+    
+    if (!bookingRef) {
+        errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Please enter your booking reference number.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    try {
+        const response = await fetch(`../php/api/booking_public.php?ref=${encodeURIComponent(bookingRef)}`);
+        const result = await response.json();
+        
+        if (result.success && result.booking) {
+            const booking = result.booking;
+            
+            // Format dates
+            const checkIn = new Date(booking.check_in_date).toLocaleDateString('en-US', { 
+                year: 'numeric', month: 'long', day: 'numeric' 
+            });
+            const checkOut = new Date(booking.check_out_date).toLocaleDateString('en-US', { 
+                year: 'numeric', month: 'long', day: 'numeric' 
+            });
+            
+            // Status badge color
+            let statusColor = '#6b7280';
+            if (booking.status === 'confirmed') statusColor = '#059669';
+            else if (booking.status === 'pending') statusColor = '#d97706';
+            else if (booking.status === 'checked_in') statusColor = '#2563eb';
+            else if (booking.status === 'checked_out') statusColor = '#8b5cf6';
+            else if (booking.status === 'cancelled') statusColor = '#dc2626';
+            
+            detailsDiv.innerHTML = `
+                <h3 style="margin: 0 0 15px 0; color: #111827; font-size: 18px; font-weight: 600;">
+                    <i class="fas fa-check-circle" style="color: #059669;"></i> Booking Found
+                </h3>
+                
+                <div style="display: grid; gap: 12px;">
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                        <span style="color: #6b7280; font-weight: 500;">Reference:</span>
+                        <span style="color: #111827; font-weight: 600;">${booking.booking_reference}</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                        <span style="color: #6b7280; font-weight: 500;">Status:</span>
+                        <span style="background-color: ${statusColor}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; text-transform: uppercase;">
+                            ${booking.status.replace('_', ' ')}
+                        </span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                        <span style="color: #6b7280; font-weight: 500;">Guest Name:</span>
+                        <span style="color: #111827; font-weight: 600;">${booking.guest_name}</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                        <span style="color: #6b7280; font-weight: 500;">Room Type:</span>
+                        <span style="color: #111827; font-weight: 600;">${booking.type_name}</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                        <span style="color: #6b7280; font-weight: 500;">Check-in:</span>
+                        <span style="color: #111827; font-weight: 600;">${checkIn}</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                        <span style="color: #6b7280; font-weight: 500;">Check-out:</span>
+                        <span style="color: #111827; font-weight: 600;">${checkOut}</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                        <span style="color: #6b7280; font-weight: 500;">Total Amount:</span>
+                        <span style="color: #dc2626; font-weight: 700; font-size: 18px;">Rs. ${parseFloat(booking.total_amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
+                    </div>
+                    
+                    ${booking.status === 'confirmed' && booking.room_number ? `
+                    <div style="margin-top: 10px; padding: 12px; background-color: #dcfce7; border-radius: 6px; border-left: 3px solid #059669;">
+                        <i class="fas fa-door-open" style="color: #059669;"></i> 
+                        <strong>Room ${booking.room_number}</strong> has been assigned to you.
+                    </div>
+                    ` : ''}
+                    
+                    ${booking.status === 'cancelled' && booking.cancellation_reason ? `
+                    <div style="margin-top: 10px; padding: 12px; background-color: #fee2e2; border-radius: 6px; border-left: 3px solid #dc2626;">
+                        <strong style="color: #991b1b;"><i class="fas fa-info-circle"></i> Cancellation Reason:</strong><br>
+                        <span style="color: #7f1d1d;">${booking.cancellation_reason}</span>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            detailsDiv.style.display = 'block';
+        } else {
+            errorDiv.innerHTML = `<i class="fas fa-times-circle"></i> ${result.error || 'Booking not found. Please check your reference number and try again.'}`;
+            errorDiv.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error checking booking:', error);
+        errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> An error occurred while checking your booking. Please try again later.';
+        errorDiv.style.display = 'block';
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('checkBookingModal');
+    if (event.target === modal) {
+        closeCheckBookingModal();
+    }
+}
+
+// Allow Enter key to submit
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('bookingRefInput');
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkBookingStatus();
+            }
+        });
+    }
+});
+</script>
