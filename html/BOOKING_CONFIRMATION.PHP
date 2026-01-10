@@ -6,30 +6,6 @@ if (!$booking_reference) {
     header('Location: ACCOMMODATION.PHP');
     exit();
 }
-
-// Include database connection
-require_once '../php/config/database.php';
-
-try {
-    $conn = getDatabaseConnection();
-    
-    // Fetch booking details
-    $sql = "SELECT b.*, rt.type_name, rt.bed_type 
-            FROM bookings b
-            INNER JOIN room_types rt ON b.room_type_id = rt.room_type_id
-            WHERE b.booking_reference = ?";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$booking_reference]);
-    $booking = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if (!$booking) {
-        throw new Exception('Booking not found.');
-    }
-    
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -287,136 +263,201 @@ try {
 </head>
 <body>
 
-<?php if (isset($error)): ?>
-    <div class="confirmation-container">
-        <div class="error-container">
-            <div class="error-icon">
-                <i class="fas fa-exclamation-circle"></i>
+<div id="loadingContainer" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+    <div style="text-align: center;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 50px; color: #dc2626;"></i>
+        <p style="margin-top: 20px; color: #666; font-size: 18px;">Loading booking details...</p>
+    </div>
+</div>
+
+<div id="errorContainer" class="confirmation-container" style="display: none;">
+    <div class="error-container">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <h1 style="color: #dc2626; margin-bottom: 15px;">Booking Not Found</h1>
+        <p id="errorMessage" style="color: #666; margin-bottom: 30px;"></p>
+        <a href="ACCOMMODATION.PHP" class="btn btn-primary">Back to Accommodation</a>
+    </div>
+</div>
+
+<div id="confirmationContainer" class="confirmation-container" style="display: none;">
+    <div class="success-header">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h1>Booking Confirmed!</h1>
+        <p>Thank you for your reservation</p>
+    </div>
+
+    <div class="booking-details">
+        <div class="booking-ref-card">
+            <h3>Your Booking Reference</h3>
+            <div class="booking-ref" id="bookingRef"></div>
+            <p style="margin-top: 10px; color: #666; font-size: 14px;">
+                <i class="fas fa-info-circle"></i> Please save this reference number for future correspondence
+            </p>
+        </div>
+
+        <div class="details-section">
+            <h2><i class="fas fa-user"></i> Guest Information</h2>
+            <div class="detail-row">
+                <span class="detail-label">Name:</span>
+                <span class="detail-value" id="guestName"></span>
             </div>
-            <h1 style="color: #dc2626; margin-bottom: 15px;">Booking Not Found</h1>
-            <p style="color: #666; margin-bottom: 30px;"><?php echo htmlspecialchars($error); ?></p>
-            <a href="ACCOMMODATION.PHP" class="btn btn-primary">Back to Accommodation</a>
+            <div class="detail-row">
+                <span class="detail-label">Email:</span>
+                <span class="detail-value" id="guestEmail"></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Phone:</span>
+                <span class="detail-value" id="guestPhone"></span>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <h2><i class="fas fa-bed"></i> Room Details</h2>
+            <div class="detail-row">
+                <span class="detail-label">Room Type:</span>
+                <span class="detail-value" id="roomType"></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Guests:</span>
+                <span class="detail-value" id="guestCount"></span>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <h2><i class="fas fa-calendar-alt"></i> Stay Details</h2>
+            <div class="detail-row">
+                <span class="detail-label">Check-in:</span>
+                <span class="detail-value" id="checkIn"></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Check-out:</span>
+                <span class="detail-value" id="checkOut"></span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Number of Nights:</span>
+                <span class="detail-value" id="totalNights"></span>
+            </div>
+            <div id="specialRequestsRow" class="detail-row" style="display: none;">
+                <span class="detail-label">Special Requests:</span>
+                <span class="detail-value" id="specialRequests"></span>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <h2><i class="fas fa-dollar-sign"></i> Payment Summary</h2>
+            <div class="price-summary">
+                <div class="price-row">
+                    <span id="roomRateLabel"></span>
+                    <span id="subtotal"></span>
+                </div>
+                <div class="price-row">
+                    <span>Tax (10%):</span>
+                    <span id="tax"></span>
+                </div>
+                <div class="price-row">
+                    <span>Service Charge (5%):</span>
+                    <span id="serviceCharge"></span>
+                </div>
+                <div class="price-row total">
+                    <span>Total Amount:</span>
+                    <span id="totalAmount"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-message">
+            <i class="fas fa-info-circle"></i>
+            <strong>Important:</strong> A confirmation email has been sent to <span id="confirmEmail"></span>. 
+            Please contact us at <strong>057 22 22 501</strong> if you need to make any changes to your booking.
+        </div>
+
+        <div class="actions">
+            <a href="HOME.HTML" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="ACCOMMODATION.PHP" class="btn btn-primary">
+                <i class="fas fa-bed"></i> Book Another Room
+            </a>
         </div>
     </div>
-<?php else: ?>
-    <div class="confirmation-container">
-        <div class="success-header">
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h1>Booking Confirmed!</h1>
-            <p>Thank you for your reservation</p>
-        </div>
+</div>
 
-        <div class="booking-details">
-            <div class="booking-ref-card">
-                <h3>Your Booking Reference</h3>
-                <div class="booking-ref"><?php echo htmlspecialchars($booking['booking_reference']); ?></div>
-                <p style="margin-top: 10px; color: #666; font-size: 14px;">
-                    <i class="fas fa-info-circle"></i> Please save this reference number for future correspondence
-                </p>
-            </div>
-
-            <div class="details-section">
-                <h2><i class="fas fa-user"></i> Guest Information</h2>
-                <div class="detail-row">
-                    <span class="detail-label">Name:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($booking['guest_name']); ?></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Email:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($booking['guest_email']); ?></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Phone:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($booking['guest_phone']); ?></span>
-                </div>
-            </div>
-
-            <div class="details-section">
-                <h2><i class="fas fa-bed"></i> Room Details</h2>
-                <div class="detail-row">
-                    <span class="detail-label">Room Type:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($booking['type_name']); ?></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Bed Type:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($booking['bed_type']); ?></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Guests:</span>
-                    <span class="detail-value">
-                        <?php 
-                        echo $booking['adults'] . ' Adult' . ($booking['adults'] > 1 ? 's' : '');
-                        if ($booking['children'] > 0) {
-                            echo ', ' . $booking['children'] . ' Child' . ($booking['children'] > 1 ? 'ren' : '');
-                        }
-                        ?>
-                    </span>
-                </div>
-            </div>
-
-            <div class="details-section">
-                <h2><i class="fas fa-calendar-alt"></i> Stay Details</h2>
-                <div class="detail-row">
-                    <span class="detail-label">Check-in:</span>
-                    <span class="detail-value"><?php echo date('l, F j, Y', strtotime($booking['check_in_date'])); ?></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Check-out:</span>
-                    <span class="detail-value"><?php echo date('l, F j, Y', strtotime($booking['check_out_date'])); ?></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Number of Nights:</span>
-                    <span class="detail-value"><?php echo $booking['total_nights']; ?> Night<?php echo $booking['total_nights'] > 1 ? 's' : ''; ?></span>
-                </div>
-                <?php if (!empty($booking['special_requests'])): ?>
-                <div class="detail-row">
-                    <span class="detail-label">Special Requests:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($booking['special_requests']); ?></span>
-                </div>
-                <?php endif; ?>
-            </div>
-
-            <div class="details-section">
-                <h2><i class="fas fa-dollar-sign"></i> Payment Summary</h2>
-                <div class="price-summary">
-                    <div class="price-row">
-                        <span>Room Rate (<?php echo $booking['total_nights']; ?> nights × $<?php echo number_format($booking['room_price'], 2); ?>):</span>
-                        <span>$<?php echo number_format($booking['subtotal'], 2); ?></span>
-                    </div>
-                    <div class="price-row">
-                        <span>Tax (10%):</span>
-                        <span>$<?php echo number_format($booking['tax_amount'], 2); ?></span>
-                    </div>
-                    <div class="price-row">
-                        <span>Service Charge (5%):</span>
-                        <span>$<?php echo number_format($booking['service_charge'], 2); ?></span>
-                    </div>
-                    <div class="price-row total">
-                        <span>Total Amount:</span>
-                        <span>$<?php echo number_format($booking['total_amount'], 2); ?></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-message">
-                <i class="fas fa-info-circle"></i>
-                <strong>Important:</strong> A confirmation email has been sent to <?php echo htmlspecialchars($booking['guest_email']); ?>. 
-                Please contact us at <strong>057 22 22 501</strong> if you need to make any changes to your booking.
-            </div>
-
-            <div class="actions">
-                <a href="HOME.HTML" class="btn btn-secondary">
-                    <i class="fas fa-home"></i> Back to Home
-                </a>
-                <a href="ACCOMMODATION.PHP" class="btn btn-primary">
-                    <i class="fas fa-bed"></i> Book Another Room
-                </a>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
+<script>
+    const bookingReference = '<?php echo $booking_reference; ?>';
+    
+    async function loadBookingDetails() {
+        try {
+            // Fetch booking by reference using public endpoint
+            const response = await fetch(`../php/api/booking_public.php?ref=${encodeURIComponent(bookingReference)}`);
+            
+            if (!response.ok) {
+                throw new Error('Failed to load booking details');
+            }
+            
+            const result = await response.json();
+            
+            if (!result.success || !result.data) {
+                throw new Error(result.error || 'Booking not found');
+            }
+            
+            const booking = result.data;
+            
+            // Populate booking details
+            document.getElementById('bookingRef').textContent = booking.booking_reference;
+            document.getElementById('guestName').textContent = booking.guest_name;
+            document.getElementById('guestEmail').textContent = booking.guest_email;
+            document.getElementById('guestPhone').textContent = booking.guest_phone;
+            document.getElementById('roomType').textContent = booking.type_name;
+            
+            const adults = booking.adults;
+            const children = booking.children || 0;
+            let guestText = adults + ' Adult' + (adults > 1 ? 's' : '');
+            if (children > 0) {
+                guestText += ', ' + children + ' Child' + (children > 1 ? 'ren' : '');
+            }
+            document.getElementById('guestCount').textContent = guestText;
+            
+            document.getElementById('checkIn').textContent = formatDate(booking.check_in_date);
+            document.getElementById('checkOut').textContent = formatDate(booking.check_out_date);
+            document.getElementById('totalNights').textContent = booking.total_nights + ' Night' + (booking.total_nights > 1 ? 's' : '');
+            
+            if (booking.special_requests) {
+                document.getElementById('specialRequests').textContent = booking.special_requests;
+                document.getElementById('specialRequestsRow').style.display = 'flex';
+            }
+            
+            document.getElementById('roomRateLabel').textContent = `Room Rate (${booking.total_nights} nights × $${parseFloat(booking.room_price).toFixed(2)}):`;
+            document.getElementById('subtotal').textContent = '$' + parseFloat(booking.subtotal).toFixed(2);
+            document.getElementById('tax').textContent = '$' + parseFloat(booking.tax_amount).toFixed(2);
+            document.getElementById('serviceCharge').textContent = '$' + parseFloat(booking.service_charge).toFixed(2);
+            document.getElementById('totalAmount').textContent = '$' + parseFloat(booking.total_amount).toFixed(2);
+            document.getElementById('confirmEmail').textContent = booking.guest_email;
+            
+            // Hide loading, show confirmation
+            document.getElementById('loadingContainer').style.display = 'none';
+            document.getElementById('confirmationContainer').style.display = 'block';
+            
+        } catch (error) {
+            console.error('Error loading booking:', error);
+            document.getElementById('loadingContainer').style.display = 'none';
+            document.getElementById('errorMessage').textContent = error.message;
+            document.getElementById('errorContainer').style.display = 'block';
+        }
+    }
+    
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+    
+    // Load booking details when page loads
+    loadBookingDetails();
+</script>
 
 </body>
 </html>
