@@ -1,0 +1,326 @@
+================================================================================
+TOURIST HOTEL MANAGEMENT SYSTEM - NON-TECHNICAL EXPLANATION
+Titania Hotel, Bandarawela, Sri Lanka
+================================================================================
+
+This is a complete hotel website and management system for Titania Hotel. 
+It's like having a digital receptionist, booking system, and hotel manager 
+all in one place!
+
+================================================================================
+CUSTOMER-FACING PAGES (What Guests See)
+================================================================================
+
+1. HOME PAGE (Landing Page)
+   What it does:
+   - This is the first page visitors see when they visit the website
+   - Shows beautiful hotel photos that automatically change every 5 seconds
+   - Has a welcome message about the hotel
+   - Links to other pages like rooms, services, and activities
+   - Like a digital front door that welcomes guests to the hotel
+
+2. ACCOMMODATION (Room Booking Page)
+   What it does:
+   - Shows all available room types with photos and prices
+   - Each room card shows:
+     * Room name (like "Deluxe Room" or "Presidential Suite")
+     * Price per night
+     * How many people can stay
+     * Room features (WiFi, TV, balcony, etc.)
+   - Has a "Book Now" button for each room
+   - Opens a booking form where guests can:
+     * Choose check-in and check-out dates
+     * Enter number of adults and children
+     * Fill in their contact details (name, email, phone)
+     * Add special requests (like late check-in)
+   - After booking, shows a confirmation page with booking reference number
+   - Like browsing a catalog and filling out a reservation form
+
+3. TRACK BOOKING (Available on All Pages)
+   What it does:
+   - Yellow/gold link in the top menu on every page
+   - Guests can check their booking status without logging in
+   - Just enter the booking reference number (like BK20260110-7236)
+   - Shows:
+     * Booking status (Pending, Confirmed, Cancelled, Completed)
+     * Room type booked
+     * Check-in and check-out dates
+     * Guest information
+     * Confirmation date if confirmed
+     * Cancellation reason if cancelled
+   - Like a package tracking system but for hotel bookings
+
+4. SERVICES PAGE
+   What it does:
+   - Lists all hotel services with photos and descriptions
+   - Services include:
+     * Restaurant (Sri Lankan and international cuisine)
+     * Room Service (24/7 in-room dining)
+     * Spa & Wellness (massages, treatments)
+     * Swimming Pool
+     * Laundry Service
+     * Airport Shuttle
+     * Tour Desk (book local tours)
+     * Bar (cocktails and beverages)
+     * 24/7 Front Desk
+   - Each service has an icon, image, and detailed description
+   - Like a hotel brochure showing what's available
+
+5. THINGS TO DO PAGE
+   What it does:
+   - Shows activities guests can do during their stay
+   - Split into two sections:
+     
+     EXCURSIONS (Outside Activities):
+     * Trek to Ella Rock - 4-hour mountain hike
+     * Little Adam's Peak - sunrise hike
+     * Lipton's Seat - tea plantation views
+     * Diyaluma Waterfall - waterfall swimming
+     * Nine Arch Bridge - historic railway bridge
+     * Tea Factory Tour - see how Ceylon tea is made
+     * Ravana Falls - scenic waterfall
+     
+     HOTEL EXPERIENCES (On-Site Activities):
+     * Ayurvedic Spa Treatments
+     * Sri Lankan Cooking Classes
+     * Cocktail Making Workshop
+     * Coconut Arrack Tasting
+     * Organic Farm Tour
+     * Yoga & Meditation Sessions
+     * Cultural Dance Performances
+   
+   - Each activity shows duration and difficulty level
+   - Has "Book Activity" buttons
+   - Like a vacation activities menu
+
+6. ABOUT US PAGE
+   What it does:
+   - Tells the hotel's story and history
+   - Shows the hotel's mission and values
+   - Introduces the team and staff
+   - Explains what makes the hotel special
+   - Shows certifications and awards
+   - Like reading the hotel's biography
+
+7. CONTACT US PAGE
+   What it does:
+   - Shows hotel location on a map
+   - Lists contact information:
+     * Phone number
+     * Email address
+     * Physical address
+   - Has a contact form to send messages
+   - Shows social media links
+   - Opening hours information
+   - Like having all ways to reach the hotel in one place
+
+8. GALLERY PAGE
+   What it does:
+   - Photo album of the hotel
+   - Shows pictures of:
+     * Hotel rooms
+     * Facilities (pool, restaurant, spa)
+     * Hotel exterior and gardens
+     * Local attractions
+     * Guest experiences
+   - Click photos to see them larger
+   - Like a digital photo tour of the hotel
+
+9. TESTIMONIALS PAGE
+   What it does:
+   - Shows reviews from previous guests
+   - Each review includes:
+     * Guest name
+     * Star rating
+     * Written review
+     * Date of stay
+     * Guest photo (if provided)
+   - Helps new guests decide if they want to book
+   - Like reading TripAdvisor reviews
+
+10. FAQ (Frequently Asked Questions) PAGE
+    What it does:
+    - Answers common questions guests ask
+    - Topics include:
+      * Check-in/check-out times
+      * Cancellation policies
+      * Payment methods
+      * Pet policies
+      * Parking information
+      * WiFi availability
+      * Breakfast timings
+    - Organized by category for easy finding
+    - Like having a helpful guide that answers questions 24/7
+
+11. BOOKING CONFIRMATION PAGE
+    What it does:
+    - Shows after a guest completes a booking
+    - Displays:
+      * Booking reference number (VERY IMPORTANT - guests need this!)
+      * Room details
+      * Dates
+      * Total cost
+      * Guest information
+      * Payment instructions
+    - Tells guests to save their booking reference
+    - Explains how to track their booking
+    - Like a receipt you get after shopping
+
+================================================================================
+ADMIN-ONLY PAGES (What Hotel Staff See)
+================================================================================
+
+12. ADMIN LOGIN PAGE
+    What it does:
+    - Secure login page for hotel staff
+    - Username and password required
+    - Only authorized staff can access
+    - Like a locked door that only staff have keys for
+
+13. ADMIN DASHBOARD (Control Center)
+    What it does:
+    - Main control panel for managing the hotel
+    - Split into several sections (tabs):
+
+    A. OVERVIEW TAB:
+       - Shows important numbers at a glance:
+         * Total bookings today
+         * Total guests checked in
+         * Available rooms
+         * Revenue this month
+       - Recent bookings list
+       - Recent guests list
+       - Quick access to important features
+
+    B. BOOKINGS TAB:
+       - See all hotel bookings in a table
+       - Search bookings by:
+         * Guest name
+         * Booking reference
+         * Date range
+         * Status (pending, confirmed, cancelled)
+       - Can update booking status
+       - Can confirm bookings and assign rooms
+       - Can cancel bookings with reason
+       - Can see booking details
+       - Like a master reservation book
+
+    C. ROOMS TAB:
+       - Shows all 30 hotel rooms
+       - Organized by room type
+       - Each room shows:
+         * Room number
+         * Floor
+         * View type
+         * Current status (available, occupied, maintenance)
+         * Active bookings
+       - Can add new rooms
+       - Can change room status
+       - Can delete rooms (except occupied ones)
+       - Like a room inventory system
+
+    D. ROOM TYPES TAB:
+       - Manage room categories
+       - 6 room types:
+         * Presidential Suite - $350/night
+         * Heritage Suite - $280/night
+         * Deluxe Double Room - $180/night
+         * Premium Garden Wing - $220/night
+         * Standard Triple Room - $150/night
+         * Standard Double Room - $120/night
+       - Can edit prices
+       - Can upload new room photos
+       - Can change descriptions
+       - Like managing a product catalog
+
+    E. REVENUE TAB:
+       - See how much money the hotel is making
+       - Shows:
+         * Daily revenue
+         * Monthly revenue
+         * Yearly revenue
+       - Charts and graphs
+       - Revenue by room type
+       - Payment status (paid, pending)
+       - Like financial reports
+
+    F. GUESTS TAB:
+       - List of all guests who have stayed
+       - Guest contact information
+       - Booking history for each guest
+       - Like a guest directory
+
+    G. SETTINGS TAB:
+       - Change admin password
+       - Change admin username
+       - Update profile information
+       - System settings
+       - Like account settings
+
+================================================================================
+HOW IT ALL WORKS TOGETHER
+================================================================================
+
+FOR GUESTS:
+1. Guest visits website and browses rooms
+2. Guest clicks "Book Now" on a room they like
+3. Guest fills out booking form with dates and details
+4. System creates booking and gives them a booking reference
+5. Guest receives confirmation with booking number
+6. Guest can check booking status anytime using Track Booking
+7. Hotel staff confirms the booking and assigns a room
+8. Guest checks in on arrival date
+
+FOR HOTEL STAFF:
+1. Staff logs into Admin Dashboard
+2. Staff sees new bookings in the Bookings tab
+3. Staff reviews booking details
+4. Staff confirms booking and assigns a specific room
+5. Room status automatically changes to "occupied"
+6. Staff can track all bookings, rooms, and revenue
+7. When guest checks out, staff changes room status back to "available"
+8. If guest cancels, staff can cancel with reason
+
+SPECIAL FEATURES:
+- Track Booking works without login (guests can check status anytime)
+- Rooms with "occupied" status cannot be deleted (safety feature)
+- Automatic booking reference generation (unique ID for each booking)
+- Real-time room availability tracking
+- Cancellation tracking with reasons and timestamps
+- Image upload for room types
+- Responsive design (works on phones, tablets, computers)
+
+================================================================================
+WHY THIS SYSTEM IS USEFUL
+================================================================================
+
+1. 24/7 Booking: Guests can book rooms anytime, even at midnight
+2. Reduces Phone Calls: Guests can check booking status themselves
+3. Professional Image: Modern website makes hotel look trustworthy
+4. Easy Management: Staff can manage everything from one dashboard
+5. No Double Bookings: System tracks room availability automatically
+6. Better Record Keeping: All bookings and guests are recorded
+7. Revenue Tracking: Owners can see financial performance easily
+8. Guest Convenience: Easy to book, easy to check status
+9. Staff Efficiency: Less manual work, more automation
+10. Scalable: Can handle growth as hotel adds more rooms
+
+================================================================================
+THINK OF IT LIKE THIS...
+================================================================================
+
+If the hotel was a restaurant:
+- The website = Menu that customers browse
+- Booking system = Reservation system for tables
+- Admin dashboard = Kitchen management system for staff
+- Track Booking = Order tracking (like Dominos tracker)
+- Room types = Different meal options
+- Rooms = Individual tables
+- Bookings = Reservations made by customers
+
+Everything is connected and working together to make running a hotel easier
+and give guests a better experience!
+
+================================================================================
+END OF NON-TECHNICAL EXPLANATION
+================================================================================
