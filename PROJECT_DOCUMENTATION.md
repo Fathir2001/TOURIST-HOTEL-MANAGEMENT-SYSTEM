@@ -101,25 +101,33 @@ TOURIST-HOTEL-MANAGEMENT-SYSTEM/
 **Frontend Technologies:**
 - HTML5 (Semantic markup)
 - CSS3 (Grid, Flexbox, Animations)
-- JavaScript ES6+ (Async/Await, Fetch API)
+- JavaScript ES6+ (Async/Await, Fetch API, REST integration)
 - Font Awesome 6.0 (Icons)
 
 **Backend Technologies:**
-- PHP 7.4+ (PDO for database)
+- PHP 7.4+ (PDO for database, RESTful API)
 - MySQL 5.7+ / MariaDB 10.x
 - Apache Web Server
 - Session-based authentication
 
 **Design Pattern:**
-- MVC-inspired architecture
+- MVC-inspired architecture with REST API
 - Separation of concerns (HTML/CSS/JS/PHP)
 - Modular component design
+- Dynamic component loading (navbar/footer)
+
+**New Features (v2.0):**
+- RESTful API endpoints (GET, POST, PATCH, DELETE)
+- Track Booking feature (public booking lookup)
+- Image upload system for room types
+- Cancellation tracking with reasons and timestamps
+- Dynamic HTML component loading
 
 ---
 
 ## 💾 Database Structure
 
-### Database Name: `tourist_hotel_db`
+### Database Name: `hotel_management`
 
 ### Tables Overview
 
@@ -158,7 +166,7 @@ Defines available room types with pricing and amenities.
 - `amenities` (TEXT) - JSON array of amenities
 - `badge_label` (VARCHAR(50)) - Premium, Heritage, Deluxe, etc.
 - `features` (TEXT) - JSON array of features
-- `image_url` (VARCHAR(255))
+- `image_url` (VARCHAR(255)) - Stored in images/room-types/
 - `status` (TINYINT(1)) - Active/Inactive
 - `created_at` (TIMESTAMP)
 - `updated_at` (TIMESTAMP)
@@ -197,7 +205,7 @@ All customer bookings and reservations.
 
 **Columns:**
 - `booking_id` (INT, PRIMARY KEY, AUTO_INCREMENT)
-- `booking_reference` (VARCHAR(20), UNIQUE) - Format: BK20260108-1234
+- `booking_reference` (VARCHAR(20), UNIQUE) - Format: BK20260110-XXXX
 - `guest_name` (VARCHAR(100), NOT NULL)
 - `guest_email` (VARCHAR(100), NOT NULL)
 - `guest_phone` (VARCHAR(20), NOT NULL)
@@ -217,17 +225,25 @@ All customer bookings and reservations.
 - `total_amount` (DECIMAL(10,2))
 - `payment_status` (ENUM: 'pending', 'paid', 'cancelled')
 - `payment_method` (VARCHAR(50))
-- `booking_status` (ENUM: 'pending', 'confirmed', 'checked_in', 'checked_out', 'cancelled')
+- `status` (ENUM: 'pending', 'confirmed', 'cancelled', 'completed')
+- `confirmed_at` (DATETIME) - Auto-set when status → confirmed
+- `cancelled_at` (DATETIME) - Auto-set when status → cancelled
+- `cancellation_reason` (TEXT) - Admin-entered cancellation reason
 - `special_requests` (TEXT)
 - `created_at` (TIMESTAMP)
 - `updated_at` (TIMESTAMP)
 
 **Booking Workflow:**
-1. pending → Initial booking created
-2. confirmed → Admin assigns room
-3. checked_in → Guest arrives (auto-updates on check-in date)
-4. checked_out → Guest departs (auto-updates on check-out date)
-5. cancelled → Booking cancelled
+1. pending → Initial booking created (via Track Booking, guests can check status)
+2. confirmed → Admin assigns room (timestamp recorded in confirmed_at)
+3. cancelled → Booking cancelled (timestamp + reason recorded)
+4. completed → Booking completed after checkout
+
+**Track Booking Feature:**
+- Guests can check booking status using booking_reference
+- Access via "Track Booking" link in navbar (yellow/gold color)
+- Shows status, room type, dates, confirmation/cancellation details
+- No authentication required (public API endpoint)
 
 ---
 
@@ -240,6 +256,7 @@ All customer bookings and reservations.
 - Full-screen hero section with animated background slideshow
 - 3 rotating hero images (5-second intervals)
 - Scroll indicator animation
+- Dynamic navbar with Track Booking feature
 - Welcome section with hotel description
 - Gallery preview (8 images)
 - Luxurious rooms section with quick links
@@ -1309,11 +1326,50 @@ $stmt->execute([$booking_id]);
 
 ---
 
-## 📡 API Endpoints (AJAX)
+## 📡 API Endpoints
 
-All PHP scripts in `/php/` directory can be called via AJAX:
+The system now uses RESTful API endpoints with proper HTTP methods. See `API_QUICK_REFERENCE.md` for detailed API documentation.
 
-### GET Endpoints
+### REST API Endpoints (NEW - v2.0)
+
+**Base URL:** `php/api/`
+
+| Endpoint | Methods | Purpose | Auth Required |
+|----------|---------|---------|---------------|
+| `bookings.php` | GET, POST, PATCH | CRUD for bookings | Admin |
+| `booking_public.php` | GET | Get booking by reference | Public |
+| `rooms.php` | GET, POST, PATCH, DELETE | CRUD for rooms | Admin |
+| `room_types.php` | GET, POST, PATCH, DELETE | CRUD for room types | GET=Public, Others=Admin |
+| `upload_room_image.php` | POST | Upload room type images | Admin |
+
+**Key Features:**
+- Proper HTTP methods (GET, POST, PATCH, DELETE)
+- JSON request/response format
+- Session-based authentication for admin endpoints
+- Public endpoint for Track Booking feature
+- CORS headers support
+- Standardized error responses
+
+**API Helper Functions:** `php/config/api_helpers.php`
+- `setCorsHeaders()` - Set CORS headers
+- `getRequestMethod()` - Get HTTP method with override support
+- `getRequestData()` - Parse request body (all methods)
+- `requireAuth()` - Check admin authentication
+- `validateRequiredFields()` - Validate input data
+- `sendJsonResponse()` - Generic JSON response
+- `sendSuccessResponse()` - Success response
+- `sendErrorResponse()` - Error response with HTTP status code
+
+**Frontend Integration:** `js/api-integration.js`
+- 20+ async wrapper functions for all API operations
+- Automatic error handling
+- Consistent response format
+
+### Legacy AJAX Endpoints (Backward Compatible)
+
+All PHP scripts in `/php/` directory can still be called via AJAX:
+
+#### GET Endpoints
 
 | Endpoint | Purpose | Parameters |
 |----------|---------|------------|
@@ -1327,7 +1383,7 @@ All PHP scripts in `/php/` directory can be called via AJAX:
 | `get_recent_data.php` | Recent activity | None |
 | `get_booking_details.php` | Single booking | booking_id |
 
-### POST Endpoints
+#### POST Endpoints
 
 | Endpoint | Purpose | Parameters |
 |----------|---------|------------|
@@ -1343,9 +1399,9 @@ All PHP scripts in `/php/` directory can be called via AJAX:
 
 ### Response Format
 
-All endpoints return JSON:
+REST API endpoints return JSON:
 
-**Success:**
+**Success Response (Standard):**
 ```json
 {
   "success": true,
@@ -1354,12 +1410,25 @@ All endpoints return JSON:
 }
 ```
 
-**Error:**
+**Success Response (Booking Public API):**
+```json
+{
+  "success": true,
+  "booking": {
+    "booking_reference": "BK20260110-7236",
+    "status": "confirmed",
+    "room_type_name": "Deluxe Room",
+    "confirmed_at": "2026-01-10 14:30:00",
+    "cancellation_reason": null
+  }
+}
+```
+
+**Error Response:**
 ```json
 {
   "success": false,
-  "message": "Error description",
-  "error": "Detailed error"
+  "error": "Error description"
 }
 ```
 

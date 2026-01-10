@@ -1,11 +1,14 @@
 # REST API Migration Test Script
 ## Tourist Hotel Management System
 
+**Last Updated:** January 10, 2026  
+**Version:** 2.0 (With Track Booking & Enhancements)
+
 ---
 
 ## 🧪 Comprehensive Testing Guide
 
-This guide provides step-by-step testing procedures to verify the RESTful API migration.
+This guide provides step-by-step testing procedures to verify the RESTful API migration and all new features.
 
 ---
 
@@ -13,15 +16,47 @@ This guide provides step-by-step testing procedures to verify the RESTful API mi
 
 Before starting tests, ensure:
 - [ ] WAMP/XAMPP server is running
-- [ ] MySQL database is running
+- [ ] MySQL database is running (`hotel_management`)
 - [ ] Browser Developer Tools are open (F12)
 - [ ] Admin account is available (username: admin, password: Admin@123)
+- [ ] Database has booking data (run test_bookings.php if needed)
+- [ ] All new database columns exist (confirmed_at, cancelled_at, cancellation_reason)
 
 ---
 
 ## 📋 Test Cases
 
-### **Test 1: Accommodation Page - Load Room Types**
+### **Test 1: Track Booking Feature (Public API)**
+
+**Objective:** Verify Track Booking modal works on all pages
+
+**Steps:**
+1. Open any page (e.g., `http://localhost/TOURIST-HOTEL-MANAGEMENT-SYSTEM/html/HOME.HTML`)
+2. Wait for navbar to load dynamically
+3. Look for "Track Booking" link in navbar (yellow/gold color)
+4. Click "Track Booking"
+5. Enter a valid booking reference (e.g., `BK20260110-7236`)
+6. Click "Check Status"
+7. Check Network tab for: `php/api/booking_public.php?ref=BK20260110-7236`
+
+**Expected Results:**
+- ✅ Modal opens with slideDown animation
+- ✅ Request method: GET
+- ✅ Status code: 200
+- ✅ Response format: `{success: true, booking: {...}}`
+- ✅ Modal displays: booking reference, status badge, room type, dates, guest info
+- ✅ If confirmed: Shows confirmation timestamp
+- ✅ If cancelled: Shows cancellation reason and timestamp
+- ✅ Close button works
+- ✅ Click outside modal closes it
+
+**Pass/Fail:** ________
+
+**Notes:** _______________________________________________________________________
+
+---
+
+### **Test 2: Accommodation Page - Load Room Types**
 
 **Objective:** Verify room types load via REST API
 
@@ -36,7 +71,7 @@ Before starting tests, ensure:
 - ✅ Status code: 200
 - ✅ Response contains `{success: true, data: [...]}`
 - ✅ Room cards display on page
-- ✅ Each card shows: image, name, price, occupancy, description
+- ✅ Each card shows: image (from images/room-types/), name, price, occupancy, description
 
 **Pass/Fail:** ________
 
@@ -44,7 +79,7 @@ Before starting tests, ensure:
 
 ---
 
-### **Test 2: Accommodation Page - Create Booking**
+### **Test 3: Accommodation Page - Create Booking**
 
 **Objective:** Verify booking creation via REST API
 
@@ -54,6 +89,8 @@ Before starting tests, ensure:
    - Check-in: (select tomorrow)
    - Check-out: (select day after tomorrow)
    - Adults: 2
+   - Children: 1
+   - Number of Rooms: 1
    - Guest Name: Test User
    - Email: test@example.com
    - Phone: +94771234567
@@ -63,7 +100,8 @@ Before starting tests, ensure:
 **Expected Results:**
 - ✅ Request method: POST
 - ✅ Status code: 201
-- ✅ Response contains `{success: true, data: {booking_reference, ...}}`
+- ✅ Request body includes: room_type_id, check_in_date, check_out_date, adults, children, number_of_rooms, guest_name, guest_email, guest_phone
+- ✅ Response contains `{success: true, booking_reference: "BK...", booking_id: ...}`
 - ✅ Alert shows success message with booking reference
 - ✅ Redirect to confirmation page
 
@@ -73,7 +111,7 @@ Before starting tests, ensure:
 
 ---
 
-### **Test 3: Dashboard - Login**
+### **Test 4: Dashboard - Login**
 
 **Objective:** Verify admin authentication
 
@@ -88,6 +126,7 @@ Before starting tests, ensure:
 - ✅ Redirect to DASHBOARD.PHP
 - ✅ Dashboard loads successfully
 - ✅ Welcome message shows admin name
+- ✅ Track Booking link visible in navbar
 
 **Pass/Fail:** ________
 
@@ -95,7 +134,7 @@ Before starting tests, ensure:
 
 ---
 
-### **Test 4: Dashboard - Load Bookings**
+### **Test 5: Dashboard - Load Bookings**
 
 **Objective:** Verify bookings load via REST API
 
@@ -242,23 +281,27 @@ Before starting tests, ensure:
 
 ---
 
-### **Test 10: Dashboard - Cancel Booking**
+### **Test 10: Dashboard - Cancel Booking with Reason**
 
-**Objective:** Verify booking cancellation via REST API
+**Objective:** Verify booking cancellation with reason tracking
 
 **Steps:**
-1. On Bookings page, create a test booking first (or use existing)
-2. Click edit icon for the booking
-3. Change status to "cancelled"
-4. Click "Update Status"
-5. Check Network tab for: `php/api/bookings.php` (DELETE or PATCH request)
+1. On Bookings page, click edit icon for a confirmed booking
+2. Change status to "cancelled"
+3. Modal should prompt for cancellation reason
+4. Enter reason: "Guest requested refund due to emergency"
+5. Click "Update Status"
+6. Check Network tab for: `php/api/bookings.php` (PATCH request)
+7. Verify request body includes `cancellation_reason`
 
 **Expected Results:**
-- ✅ Request method: PATCH or DELETE
+- ✅ Request method: PATCH
 - ✅ Status code: 200
-- ✅ Response: `{success: true}`
+- ✅ Request body: `{booking_id, status: "cancelled", cancellation_reason: "..."}`
+- ✅ Response: `{success: true, message: "Booking cancelled successfully"}`
 - ✅ Alert shows success message
 - ✅ Booking status updated to "CANCELLED"
+- ✅ Cancellation timestamp recorded in database (cancelled_at column)
 - ✅ If room was assigned, room status returns to "available"
 
 **Pass/Fail:** ________
@@ -267,7 +310,60 @@ Before starting tests, ensure:
 
 ---
 
-### **Test 11: Authentication Check**
+### **Test 11: Track Booking - Cancelled Status**
+
+**Objective:** Verify cancelled bookings show cancellation details
+
+**Steps:**
+1. After cancelling a booking in Test 10, note the booking reference
+2. Click "Track Booking" in navbar
+3. Enter the cancelled booking reference
+4. Click "Check Status"
+
+**Expected Results:**
+- ✅ Modal displays booking details
+- ✅ Status badge shows "CANCELLED" in red
+- ✅ Shows cancellation timestamp
+- ✅ Shows cancellation reason entered in Test 10
+- ✅ No confirmation timestamp displayed
+
+**Pass/Fail:** ________
+
+**Notes:** _______________________________________________________________________
+
+---
+
+### **Test 12: Room Type Image Upload**
+
+**Objective:** Verify room type image upload functionality
+
+**Steps:**
+1. On dashboard, click "Room Types" in sidebar
+2. Click edit icon (pencil) for any room type
+3. In the update form, click "Choose File" for image
+4. Select an image file (JPG, PNG, GIF, or WEBP, under 5MB)
+5. Update base_price or another field (to trigger update)
+6. Click "Update Room Type"
+7. Check Network tab for two requests:
+   - `upload_room_image.php` (POST)
+   - `php/api/room_types.php` (PATCH)
+
+**Expected Results:**
+- ✅ First request: POST to upload_room_image.php
+- ✅ Response: `{success: true, image_url: "../images/room-types/room_type_X_TIMESTAMP.ext"}`
+- ✅ Second request: PATCH to php/api/room_types.php
+- ✅ Request body includes new image_url from upload response
+- ✅ Room type updated successfully
+- ✅ New image displays in ACCOMMODATION.PHP when refreshed
+- ✅ Image file exists in images/room-types/ directory
+
+**Pass/Fail:** ________
+
+**Notes:** _______________________________________________________________________
+
+---
+
+### **Test 13: Authentication Check**
 
 **Objective:** Verify API endpoints require authentication
 
@@ -287,7 +383,28 @@ Before starting tests, ensure:
 
 ---
 
-### **Test 12: Error Handling - Invalid Data**
+### **Test 14: Public Endpoint - No Auth Required**
+
+**Objective:** Verify booking_public.php is accessible without login
+
+**Steps:**
+1. Without logging in (or in incognito mode)
+2. Access: `http://localhost/TOURIST-HOTEL-MANAGEMENT-SYSTEM/php/api/booking_public.php?ref=BK20260110-7236`
+3. Or open any page and use Track Booking modal
+
+**Expected Results:**
+- ✅ Status code: 200 (not 401)
+- ✅ Response: `{success: true, booking: {...}}`
+- ✅ Booking data returned without authentication
+- ✅ Track Booking modal works on public pages
+
+**Pass/Fail:** ________
+
+**Notes:** _______________________________________________________________________
+
+---
+
+### **Test 15: Error Handling - Invalid Data**
 
 **Objective:** Verify API validation works
 

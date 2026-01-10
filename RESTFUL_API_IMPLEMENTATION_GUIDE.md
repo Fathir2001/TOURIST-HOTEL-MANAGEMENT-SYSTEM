@@ -1,63 +1,97 @@
 # RESTful API Implementation Guide
 ## Tourist Hotel Management System
 
+**Last Updated:** January 10, 2026  
+**Status:** ✅ Complete and Production Ready
+
 ---
 
 ## 🎯 Overview
 
-This guide shows how to implement proper RESTful HTTP methods (GET, POST, PUT, DELETE) in your hotel management system while maintaining **100% backward compatibility** with existing code.
+This guide documents the complete RESTful API implementation for the hotel management system. The implementation maintains **100% backward compatibility** while providing modern REST endpoints with proper HTTP methods (GET, POST, PATCH, DELETE).
+
+**Key Features:**
+- Full CRUD operations for bookings, rooms, and room types
+- Public booking API for guest access
+- Track Booking feature with modal interface
+- Image upload system for room types
+- Cancellation tracking with reasons and timestamps
+- Dynamic component loading architecture
 
 ---
 
-## 📋 Implementation Strategy
+## 📋 Implementation Summary
 
-### Current State (POST for Everything):
+### RESTful Endpoint Structure:
 ```
-GET  → php/get_*.php         // Read
-POST → php/process_*.php     // Create
-POST → php/update_*.php      // Update
-POST → php/delete_*.php      // Delete
+GET    → php/api/*.php       // Read operations
+POST   → php/api/*.php       // Create operations
+PATCH  → php/api/*.php       // Update operations (partial)
+DELETE → php/api/*.php       // Delete operations
 ```
 
-### New RESTful State (Backward Compatible):
+### Completed API Endpoints:
 ```
-GET    → php/api/*.php       // Read
-POST   → php/api/*.php       // Create
-PUT    → php/api/*.php       // Update (full)
-PATCH  → php/api/*.php       // Update (partial)
-DELETE → php/api/*.php       // Delete
+php/api/
+├── bookings.php          ✅ GET, POST, PATCH (Admin)
+├── booking_public.php    ✅ GET (Public - no auth)
+├── rooms.php            ✅ GET, POST, PATCH, DELETE (Admin)
+├── room_types.php       ✅ GET (Public), POST, PATCH, DELETE (Admin)
+php/
+├── upload_room_image.php ✅ POST (Admin - image upload)
+js/
+├── api-integration.js    ✅ Frontend wrapper functions
+├── include.js           ✅ Dynamic HTML loading + Track Booking
 ```
 
 ---
 
-## 🔧 Step 1: Create API Directory Structure
+## 🔧 Step 1: API Directory Structure (COMPLETED)
 
 ```
 php/
-├── api/                      # New RESTful endpoints
-│   ├── bookings.php         # Handles GET, POST, PUT, DELETE for bookings
-│   ├── rooms.php            # Handles GET, POST, PUT, DELETE for rooms
-│   ├── room_types.php       # Handles GET, POST, PUT, DELETE for room types
-│   ├── dashboard.php        # Handles GET for dashboard stats
-│   └── auth.php             # Handles POST for login
+├── api/                      # RESTful endpoints
+│   ├── bookings.php         # Admin booking CRUD
+│   ├── booking_public.php   # Public booking retrieval
+│   ├── rooms.php            # Room CRUD
+│   ├── room_types.php       # Room type CRUD
 ├── config/
-│   ├── api_helpers.php      # New: REST helper functions
-│   └── cors.php             # New: CORS configuration
-└── [existing files remain unchanged]
+│   ├── api_helpers.php      # REST utility functions (8 helpers)
+│   ├── database.php         # PDO database connection
+│   └── config.php           # Database credentials
+├── upload_room_image.php    # Image upload handler
+└── [existing files remain for backward compatibility]
 ```
 
 ---
 
-## 🛠️ Step 2: Create Helper Functions
+## 🛠️ Step 2: Helper Functions (COMPLETED)
 
 ### File: `php/config/api_helpers.php`
+
+**8 Core Helper Functions:**
 
 ```php
 <?php
 /**
  * RESTful API Helper Functions
- * Provides utilities for handling REST requests
+ * Status: Complete and tested
  */
+
+/**
+ * Set CORS headers for API access
+ */
+function setCorsHeaders() {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
+    header("Content-Type: application/json");
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(200);
+        exit();
+    }
+}
 
 /**
  * Get the HTTP method (handles method override)
@@ -65,7 +99,7 @@ php/
 function getRequestMethod() {
     $method = $_SERVER['REQUEST_METHOD'];
     
-    // Support method override for browsers that don't support PUT/DELETE
+    // Support method override for browsers
     if ($method === 'POST' && isset($_POST['_method'])) {
         $method = strtoupper($_POST['_method']);
     }
@@ -92,7 +126,7 @@ function getRequestData() {
         return $_POST;
     }
     
-    // For PUT, DELETE, PATCH - read from php://input
+    // For PATCH, DELETE - read from php://input
     $input = file_get_contents('php://input');
     
     // Try to parse as JSON
@@ -942,17 +976,148 @@ curl -X DELETE "http://localhost/TOURIST-HOTEL-MANAGEMENT-SYSTEM/php/api/booking
 
 ## 🚀 Complete Implementation Checklist
 
-- [ ] Create `php/config/api_helpers.php`
-- [ ] Create `php/api/` directory
-- [ ] Create `php/api/bookings.php`
-- [ ] Create `php/api/rooms.php`
-- [ ] Create `php/api/room_types.php`
-- [ ] Create `php/api/dashboard.php`
-- [ ] Update frontend JavaScript to use new endpoints
-- [ ] Test all CRUD operations
-- [ ] Add authentication middleware
-- [ ] Add rate limiting (optional)
-- [ ] Update documentation
+- [x] Create `php/config/api_helpers.php` ✅
+- [x] Create `php/api/` directory ✅
+- [x] Create `php/api/bookings.php` ✅
+- [x] Create `php/api/booking_public.php` ✅ (Public endpoint)
+- [x] Create `php/api/rooms.php` ✅
+- [x] Create `php/api/room_types.php` ✅
+- [x] Create `php/upload_room_image.php` ✅ (Image upload)
+- [x] Update frontend JavaScript (`js/api-integration.js`) ✅
+- [x] Test all CRUD operations ✅
+- [x] Add authentication middleware ✅
+- [x] Add Track Booking feature ✅
+- [x] Add cancellation tracking with reasons ✅
+- [x] Implement dynamic HTML loading ✅
+- [x] Update documentation ✅
+
+---
+
+## 🎯 New Features Implemented
+
+### 1. Track Booking Feature 🔍
+
+**Location:** All pages (via navbar)  
+**Access:** Public (no authentication required)  
+**Endpoint:** `php/api/booking_public.php`
+
+**Usage:**
+1. Click "Track Booking" in yellow/gold link in navbar
+2. Enter booking reference (e.g., `BK20260110-7236`)
+3. Click "Check Status"
+4. View booking details including:
+   - Booking status (pending/confirmed/cancelled/completed)
+   - Room type information
+   - Guest details
+   - Check-in/out dates
+   - Confirmation timestamp (if confirmed)
+   - Cancellation reason (if cancelled)
+
+**Implementation Files:**
+- `includes/navbar.html` - Modal HTML
+- `js/include.js` - Modal functionality + fetch logic
+- `php/api/booking_public.php` - Public API endpoint
+
+**API Response Format:**
+```json
+{
+  "success": true,
+  "booking": {
+    "booking_reference": "BK20260110-7236",
+    "status": "confirmed",
+    "room_type_name": "Deluxe Room",
+    "confirmed_at": "2026-01-10 14:30:00",
+    "cancelled_at": null,
+    "cancellation_reason": null
+  }
+}
+```
+
+### 2. Cancellation Tracking System 📝
+
+**Database Columns Added:**
+- `confirmed_at` DATETIME - Auto-set when status → confirmed
+- `cancelled_at` DATETIME - Auto-set when status → cancelled
+- `cancellation_reason` TEXT - Admin enters reason
+
+**Admin Workflow:**
+1. Click "Cancel" on booking in dashboard
+2. Modal prompts for cancellation reason
+3. Reason saved with timestamp
+4. Guest can view reason via Track Booking
+
+### 3. Dynamic Component Loading 🔄
+
+**Before:** HTML hardcoded in JavaScript strings  
+**After:** HTML loaded from files dynamically
+
+**Architecture Change:**
+```javascript
+// OLD (Problematic)
+const navbarHTML = `<nav>...</nav>`; // 200+ lines of hardcoded HTML
+
+// NEW (Better)
+fetch('../includes/navbar.html')
+  .then(response => response.text())
+  .then(html => document.getElementById('navbar').innerHTML = html);
+```
+
+**Benefits:**
+- UI changes only require editing HTML files
+- No JavaScript modification needed
+- Cleaner code separation
+- Easier maintenance
+
+### 4. Room Type Image Upload 📷
+
+**Endpoint:** `php/upload_room_image.php`  
+**Method:** POST (multipart/form-data)  
+**Authentication:** Admin session required
+
+**Features:**
+- File type validation (JPG, PNG, GIF, WEBP)
+- 5MB size limit
+- Unique filename generation
+- Auto-create upload directory
+- Returns image URL for database storage
+
+**Usage Example:**
+```javascript
+const formData = new FormData();
+formData.append('room_type_id', 3);
+formData.append('image', fileInput.files[0]);
+
+const response = await fetch('../php/upload_room_image.php', {
+  method: 'POST',
+  body: formData
+});
+
+const result = await response.json();
+console.log(result.image_url); // ../images/room-types/room_type_3_1767854863.jfif
+```
+
+---
+
+## 🐛 Known Issues & Solutions
+
+### Issue: Booking Not Found (Valid Reference)
+**Symptom:** Track Booking shows error for valid booking references  
+**Cause:** API response format mismatch (`data` key vs `booking` key)  
+**Solution:** Use direct JSON output in `booking_public.php`:
+```php
+echo json_encode(['success' => true, 'booking' => $booking]);
+// NOT: sendSuccessResponse($booking);
+```
+
+### Issue: Function Name Conflicts
+**Symptom:** `TypeError: event.preventDefault is not a function`  
+**Cause:** Form handler function name conflicts with imported API function  
+**Solution:** Rename form handlers with unique prefix (e.g., `submitUpdateRoomType`)
+
+### Issue: Await Outside Async Function
+**Symptom:** SyntaxError at line 1708  
+**Cause:** Orphaned code outside function scope  
+**Solution:** Remove duplicate/orphaned `await` statements
 
 ---
 

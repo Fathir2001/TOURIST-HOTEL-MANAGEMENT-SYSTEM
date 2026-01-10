@@ -1,6 +1,9 @@
 # TECHNICAL ARCHITECTURE GUIDE
 ## Tourist Hotel Management System
 
+**Last Updated:** January 10, 2026  
+**Version:** 2.0 (REST API Enabled)
+
 ---
 
 ## 🏛️ System Architecture Overview
@@ -9,9 +12,12 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                        CLIENT BROWSER                            │
 │  (Chrome, Firefox, Safari, Edge - Desktop & Mobile)             │
+│  • Static HTML Pages (public views)                             │
+│  • Dynamic Components (navbar/footer loaded via fetch)          │
+│  • Track Booking Modal (no page reload)                         │
 └─────────────────────────────────────────────────────────────────┘
                               │
-                              │ HTTP/HTTPS
+                              │ HTTP/HTTPS + REST API Calls
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                      APACHE WEB SERVER                           │
@@ -24,58 +30,75 @@
         ┌──────────────────┐  ┌──────────────────┐
         │  STATIC CONTENT  │  │   PHP PROCESSOR  │
         │  (HTML/CSS/JS)   │  │    (PHP 7.4+)    │
-        │  • Home Page     │  │  • Business Logic│
-        │  • About Page    │  │  • API Endpoints │
+        │  • Home Page     │  │  • REST API      │
+        │  • About Page    │  │  • Business Logic│
         │  • Gallery       │  │  • Session Mgmt  │
         │  • Services      │  │  • Authentication│
+        │  • Components    │  │  • Image Upload  │
         └──────────────────┘  └──────────────────┘
                                         │
-                                        │ PDO
+                                        │ PDO (Prepared Statements)
                                         ▼
                               ┌──────────────────┐
                               │  MySQL DATABASE  │
                               │  (MariaDB 10.x)  │
-                              │  tourist_hotel_db│
+                              │ hotel_management │
                               │  • 6 Tables      │
                               │  • Relationships │
                               │  • Indexes       │
+                              │  • Timestamps    │
                               └──────────────────┘
 ```
 
 ---
 
-## 🗂️ MVC-Inspired Architecture
+## 🗂️ Enhanced MVC Architecture
 
-While not a strict MVC framework, the system follows separation of concerns:
+The system follows separation of concerns with REST API integration:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                            VIEW LAYER                            │
-│  HTML Files (html/*.HTML, html/*.PHP templates)                 │
-│  CSS Stylesheets (css/*.css)                                    │
-│  JavaScript (js/*.js)                                           │
-│  Components (includes/navbar.html, includes/footer.html)       │
+│  HTML Files:                                                     │
+│  • html/*.HTML - Static pages                                   │
+│  • html/*.PHP - Dynamic pages with PHP includes                 │
+│  • includes/navbar.html - Dynamic navbar component              │
+│  • includes/footer.html - Dynamic footer component              │
+│  CSS Stylesheets: css/*.css                                     │
+│  JavaScript:                                                     │
+│  • js/include.js - Dynamic component loading + Track Booking   │
+│  • js/api-integration.js - REST API wrappers                   │
+│  • js/hero-slideshow.js - Homepage effects                     │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CONTROLLER LAYER                          │
-│  PHP Scripts (php/*.php)                                        │
-│  • process_booking.php      → Handle booking creation          │
-│  • update_booking_status.php → Modify booking states           │
-│  • Connect.php              → Route form submissions           │
-│  • update_room_status.php   → Manage room availability         │
+│                   CONTROLLER LAYER (REST API)                    │
+│  PHP API Endpoints (php/api/*.php):                             │
+│  • bookings.php         → CRUD for bookings (admin)            │
+│  • booking_public.php   → GET booking by reference (public)    │
+│  • rooms.php            → CRUD for rooms (admin)               │
+│  • room_types.php       → CRUD for room types                  │
+│  PHP Utilities:                                                 │
+│  • upload_room_image.php → Image upload handler                │
+│  • config/api_helpers.php → 8 REST utility functions           │
+│  Legacy Scripts (backward compatible):                          │
+│  • process_booking.php, update_booking_status.php, etc.        │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                         MODEL LAYER                              │
-│  Database Access (php/config/database.php)                      │
+│  Database Access (php/config/database.php) - PDO Connection     │
 │  Data Structures:                                               │
-│  • Admins → Admin authentication                                │
-│  • Room Types → Room categories & pricing                       │
-│  • Rooms → Physical inventory                                   │
-│  • Bookings → Reservations (stores guest info directly)        │
+│  • admins → Admin authentication & profiles                    │
+│  • room_types → Room categories, pricing, images               │
+│  • rooms → Physical inventory with status tracking             │
+│  • bookings → Reservations with cancellation tracking          │
+│    - booking_reference (unique ID)                             │
+│    - status (pending/confirmed/cancelled/completed)            │
+│    - confirmed_at, cancelled_at timestamps                     │
+│    - cancellation_reason                                       │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -83,7 +106,7 @@ While not a strict MVC framework, the system follows separation of concerns:
 
 ## 🔄 Request Flow Diagrams
 
-### 1. Customer Booking Flow
+### 1. Customer Booking Flow (REST API)
 
 ```
    [Customer]
@@ -94,42 +117,50 @@ While not a strict MVC framework, the system follows separation of concerns:
        │
        │ 2. Click "Accommodation"
        ▼
-[ACCOMMODATION.PHP] ←──── [get_rooms.php] ←──── [Database]
-       │                  (Fetch room types)
-       │ 3. View rooms
+[ACCOMMODATION.PHP]
+       │
+       │ 3. Page loads → js/api-integration.js
+       │    → GET /php/api/room_types.php (public)
+       │
+       ▼
+   [Database]
+       │ ← Fetch all room types
+       │
+       ▼
+   [Display Rooms]
        │
        │ 4. Click "Book Now"
        ▼
    [Booking Modal]
        │
        │ 5. Fill form (dates, guests, contact)
-       │    • Check-in date
-       │    • Check-out date
-       │    • Number of adults/children
+       │    • Check-in date, Check-out date
+       │    • Adults, Children, Number of rooms
        │    • Guest name, email, phone
        │    • Special requests
        │
-       │ 6. Submit
+       │ 6. Submit → POST /php/api/bookings.php
        ▼
-[process_booking.php]
+   [REST API]
        │
-       ├─ Validate inputs
-       ├─ Check availability
-       ├─ Calculate pricing
-       ├─ Generate booking reference
+       ├─ Validate inputs (validateRequiredFields)
+       ├─ Check availability (room_type_id exists)
+       ├─ Calculate pricing (nights × base_price)
+       ├─ Generate booking reference (BK20260110-XXXX)
        │
        ▼
    [Database]
        │
        │ INSERT INTO bookings
+       │ → booking_id, booking_reference
        │
        ▼
 [BOOKING_CONFIRMATION.PHP]
        │
        │ Display:
-       │ • Booking reference
+       │ • Booking reference (BK20260110-7236)
        │ • Confirmation details
-       │ • Payment info
+       │ • Track Booking instructions
        │
        ▼
    [Customer receives confirmation]
@@ -137,7 +168,61 @@ While not a strict MVC framework, the system follows separation of concerns:
 
 ---
 
-### 2. Admin Dashboard Flow
+### 2. Track Booking Flow (Public API)
+
+```
+   [Customer/Guest]
+       │
+       │ 1. On any page with navbar
+       │    (HOME.HTML, SERVICES.HTML, etc.)
+       ▼
+   [Click "Track Booking"]
+       │
+       │ 2. Modal opens (includes/navbar.html)
+       │    → Loaded by js/include.js
+       ▼
+   [Track Booking Modal]
+       │
+       │ 3. Enter booking reference
+       │    (e.g., BK20260110-7236)
+       │
+       │ 4. Click "Check Status"
+       │    → js/include.js → checkBookingStatus()
+       │    → GET /php/api/booking_public.php?ref=BK20260110-7236
+       ▼
+   [REST API - Public]
+       │
+       ├─ No authentication required
+       ├─ Query database by booking_reference
+       ├─ JOIN with room_types table
+       │
+       ▼
+   [Database]
+       │ ← SELECT booking with room type info
+       │
+       ▼
+   [JSON Response]
+       │
+       │ { "success": true, "booking": {...} }
+       │
+       ▼
+   [Modal Updates]
+       │
+       │ Display booking details:
+       │ • Status badge (pending/confirmed/cancelled)
+       │ • Room type name
+       │ • Check-in/out dates
+       │ • Guest information
+       │ • Confirmed timestamp (if confirmed)
+       │ • Cancellation reason (if cancelled)
+       │
+       ▼
+   [Guest views booking status]
+```
+
+---
+
+### 3. Admin Dashboard Flow (REST API)
 
 ```
    [Admin User]
@@ -182,30 +267,66 @@ While not a strict MVC framework, the system follows separation of concerns:
        │                      ├─ Recent bookings (5)
        │                      └─ Recent guests (5)
        │
-       │ 6. Interact with sections
+       │ 6. Interact with sections (REST API)
        │
        ├─ [Bookings Section]
        │    │
-       │    ├─ AJAX → [get_bookings.php]
-       │    │           │
-       │    │           └─ Filter by status, search, dates
+       │    ├─ Load Bookings
+       │    │    → GET /php/api/bookings.php
+       │    │    → GET /php/api/bookings.php?status=pending
+       │    │    → getAllBookings({ status: 'pending' })
        │    │
-       │    └─ Update Status → [update_booking_status.php]
-       │                           │
-       │                           ├─ Change status
-       │                           └─ Assign room (if confirming)
+       │    ├─ Update Booking Status
+       │    │    → PATCH /php/api/bookings.php
+       │    │    → Body: { booking_id, status, room_id }
+       │    │    → Auto-timestamps: confirmed_at, cancelled_at
+       │    │
+       │    └─ Cancel Booking
+       │         → PATCH /php/api/bookings.php
+       │         → Body: { booking_id, status: 'cancelled', cancellation_reason }
+       │         → Modal prompts for reason
        │
        ├─ [Rooms Section]
        │    │
-       │    ├─ AJAX → [get_all_rooms.php]
-       │    │           │
-       │    │           └─ Fetch all 30 rooms
+       │    ├─ Load All Rooms
+       │    │    → GET /php/api/rooms.php
+       │    │    → GET /php/api/rooms.php?status=available
+       │    │    → getAllRooms({ status: 'available' })
        │    │
-       │    ├─ Add Room → [add_room.php]
-       │    ├─ Delete Room → [delete_room.php]
-       │    └─ Update Status → [update_room_status.php]
+       │    ├─ Add Room
+       │    │    → POST /php/api/rooms.php
+       │    │    → Body: { room_number, room_type_id, floor_number, view_type }
+       │    │
+       │    ├─ Update Room Status
+       │    │    → PATCH /php/api/rooms.php
+       │    │    → Body: { room_id, status }
+       │    │
+       │    └─ Delete Room
+       │         → DELETE /php/api/rooms.php?id={room_id}
        │
-       ├─ [Revenue Section]
+       ├─ [Room Types Section]
+       │    │
+       │    ├─ Load Room Types
+       │    │    → GET /php/api/room_types.php
+       │    │    → getAllRoomTypes()
+       │    │
+       │    ├─ Add Room Type
+       │    │    → POST /php/api/room_types.php
+       │    │    → Body: { type_name, description, base_price, max_occupancy, ... }
+       │    │
+       │    ├─ Update Room Type
+       │    │    → Upload Image First
+       │    │         POST /php/upload_room_image.php
+       │    │         FormData: { room_type_id, image }
+       │    │         ← Returns: { image_url }
+       │    │    → Then Update Room Type
+       │    │         PATCH /php/api/room_types.php
+       │    │         Body: { room_type_id, base_price, image_url, ... }
+       │    │
+       │    └─ Delete Room Type
+       │         → DELETE /php/api/room_types.php?id={room_type_id}
+       │
+       ├─ [Revenue Section] (Legacy)
        │    │
        │    └─ AJAX → [get_revenue.php]
        │                  │

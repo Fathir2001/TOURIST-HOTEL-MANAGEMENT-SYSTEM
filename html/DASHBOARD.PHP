@@ -1290,22 +1290,21 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
 
         async function loadRoomTypesForDropdown() {
             try {
-                const response = await fetch('../php/get_room_types_list.php');
-                const data = await response.json();
+                // Use REST API endpoint
+                const roomTypes = await getAllRoomTypes();
                 
-                if (data.success && data.room_types) {
-                    const dropdown = document.getElementById('new_room_type_id');
-                    dropdown.innerHTML = '<option value="">-- Select Room Type First --</option>';
-                    
-                    data.room_types.forEach(type => {
-                        const option = document.createElement('option');
-                        option.value = type.room_type_id;
-                        option.textContent = `${type.type_name} - $${parseFloat(type.base_price).toFixed(2)}/night`;
-                        dropdown.appendChild(option);
-                    });
-                }
+                const dropdown = document.getElementById('new_room_type_id');
+                dropdown.innerHTML = '<option value="">-- Select Room Type First --</option>';
+                
+                roomTypes.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type.room_type_id;
+                    option.textContent = `${type.type_name} - $${parseFloat(type.base_price).toFixed(2)}/night`;
+                    dropdown.appendChild(option);
+                });
             } catch (error) {
                 console.error('Error loading room types:', error);
+                alert('Failed to load room types. Please refresh the page.');
             }
         }
 
@@ -1352,12 +1351,14 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
             submitBtn.disabled = true;
             
             try {
-                // Use REST API
+                // Use REST API - use correct form field IDs with 'new_' prefix
                 const roomData = {
-                    roomNumber: document.getElementById('room_number').value,
-                    roomTypeId: parseInt(document.getElementById('room_type_id').value),
-                    floor: parseInt(document.getElementById('floor_number').value),
-                    view: document.getElementById('view_type').value
+                    roomNumber: document.getElementById('new_room_number').value,
+                    roomTypeId: parseInt(document.getElementById('new_room_type_id').value),
+                    floor: parseInt(document.getElementById('new_floor_number').value),
+                    view: document.getElementById('new_view_type').value,
+                    status: document.getElementById('new_room_initial_status').value,
+                    notes: document.getElementById('new_room_notes')?.value || ''
                 };
                 
                 const result = await createRoom(roomData);
@@ -1430,26 +1431,40 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
 
         // Delete Room functionality
         async function deleteRoom(roomId, roomNumber) {
+            // Get room details first to check status
+            try {
+                const room = await getRoom(roomId);
+                
+                if (room.status === 'occupied') {
+                    alert('❌ Cannot delete occupied room!\n\nRoom ' + roomNumber + ' is currently occupied. Please change the room status first.');
+                    return;
+                }
+            } catch (error) {
+                console.error('Error checking room status:', error);
+                alert('Failed to verify room status. Please try again.');
+                return;
+            }
+            
             if (!confirm(`Are you sure you want to delete Room ${roomNumber}?\\n\\nThis action cannot be undone. The room will be permanently removed from the system.`)) {
                 return;
             }
             
             try {
-                const formData = new FormData();
-                formData.append('room_id', roomId);
-                
-                const response = await fetch('../php/delete_room.php', {
-                    method: 'POST',
-                    body: formData
+                // Use REST API
+                const response = await fetch(`../php/api/rooms.php?id=${roomId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
                 
                 const data = await response.json();
                 
                 if (data.success) {
-                    alert('✓ ' + data.message);
+                    alert('✓ Room ' + roomNumber + ' deleted successfully!');
                     loadRooms(); // Reload rooms list
                 } else {
-                    alert('Error: ' + data.message);
+                    alert('Error: ' + (data.error || data.message));
                 }
             } catch (error) {
                 console.error('Error deleting room:', error);
@@ -2040,15 +2055,9 @@ $adminRole = $_SESSION['admin_role'] ?? 'Administrator';
                                                 <span style="display: inline-flex; align-items: center; padding: 6px 14px; background: ${statusColor}; color: white; border-radius: 6px; font-weight: 600; font-size: 13px; border: 2px solid ${statusColor === '#f59e0b' ? '#d97706' : statusColor === '#10b981' ? '#059669' : '#dc2626'};">${formatStatus(room.status)}</span>
                                             </div>
                                             <div style="display: flex; gap: 8px; margin-left: auto;">
-                                                ${room.status !== 'occupied' ? `
-                                                    <button class="change-status-btn" onclick="showRoomStatusModal(${room.room_id}, '${room.room_number}', '${room.status}')" title="Change room status">
-                                                        <i class="fas fa-sync-alt"></i> Status
-                                                    </button>
-                                                ` : `
-                                                    <button class="change-status-btn" disabled style="opacity: 0.5; cursor: not-allowed;" title="Cannot change status of occupied room">
-                                                        <i class="fas fa-lock"></i> Occupied
-                                                    </button>
-                                                `}
+                                                <button class="change-status-btn" onclick="showRoomStatusModal(${room.room_id}, '${room.room_number}', '${room.status}')" title="Change room status">
+                                                    <i class="fas fa-sync-alt"></i> Status
+                                                </button>
                                                 ${room.status !== 'occupied' ? `
                                                     <button class="delete-room-btn" onclick="deleteRoom(${room.room_id}, '${room.room_number}')" title="Delete room">
                                                         <i class="fas fa-trash-alt"></i> Delete

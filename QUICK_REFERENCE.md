@@ -1,6 +1,9 @@
 # QUICK REFERENCE GUIDE
 ## Tourist Hotel Management System
 
+**Last Updated:** January 10, 2026  
+**Version:** 2.0 (REST API Enabled)
+
 ---
 
 ## 🚀 Quick Start (5 Minutes)
@@ -11,48 +14,91 @@
 2. Copy project to C:\wamp64\www\TOURIST-HOTEL-MANAGEMENT-SYSTEM\
 3. Start WAMP (All services green)
 4. Open phpMyAdmin: http://localhost/phpmyadmin
-5. Create database: tourist_hotel_db
+5. Create database: hotel_management
 6. Import: php/schema.sql
 7. Done!
 ```
 
 ### 2. Access URLs
-- **Website:** http://localhost/TOURIST-HOTEL-MANAGEMENT-SYSTEM/
+- **Website:** http://localhost/TOURIST-HOTEL-MANAGEMENT-SYSTEM/html/HOME.html
 - **Admin Login:** http://localhost/TOURIST-HOTEL-MANAGEMENT-SYSTEM/html/ADMIN.HTML
 - **Username:** admin
 - **Password:** Admin@123
+- **Track Booking:** Available in navbar on all pages
 
 ---
 
 ## 📄 Page Reference
 
-| Page | File | Purpose |
-|------|------|---------|
-| Home | html/HOME.HTML | Landing page with slideshow |
-| Accommodation | html/ACCOMMODATION.PHP | Room booking page |
-| Admin Dashboard | html/DASHBOARD.PHP | Management control panel |
-| Admin Login | html/ADMIN.HTML | Admin authentication |
-| About Us | html/ABOUTUS.HTML | Hotel information |
-| Services | html/SERVICES.HTML | Hotel services list |
-| Things To Do | html/THINGS TO DO.HTML | Activities & excursions |
-| Gallery | html/GALLARY.HTML | Photo gallery |
-| Testimonials | html/TESTIMONIALS.HTML | Customer reviews |
-| FAQ | html/FAQ.HTML | Frequently asked questions |
-| Contact | html/CONTACTUS.HTML | Contact information |
-| Booking Confirm | html/BOOKING_CONFIRMATION.PHP | Success page after booking |
+| Page | File | Purpose | REST API |
+|------|------|---------|----------|
+| Home | html/HOME.HTML | Landing page with slideshow | - |
+| Accommodation | html/ACCOMMODATION.PHP | Room booking page | ✅ Uses booking API |
+| Admin Dashboard | html/DASHBOARD.PHP | Management control panel | ✅ Full REST integration |
+| Admin Login | html/ADMIN.HTML | Admin authentication | Session-based |
+| About Us | html/ABOUTUS.HTML | Hotel information | - |
+| Services | html/SERVICES.HTML | Hotel services list | - |
+| Things To Do | html/THINGS TO DO.HTML | Activities & excursions | - |
+| Gallery | html/GALLARY.HTML | Photo gallery | - |
+| Testimonials | html/TESTIMONIALS.HTML | Customer reviews | - |
+| FAQ | html/FAQ.HTML | Frequently asked questions | - |
+| Contact | html/CONTACTUS.HTML | Contact information | - |
+| Booking Confirm | html/BOOKING_CONFIRMATION.PHP | Success page after booking | ✅ Uses public API |
+| Track Booking | Navbar Modal | Check booking status | ✅ Public API |
+
+---
+
+## 🆕 NEW FEATURES (January 2026)
+
+### 🔍 Track Booking Feature
+**Location:** All pages (navbar)  
+**Access:** Click "Track Booking" link (yellow/gold color)
+
+**How to Use:**
+1. Click "Track Booking" in navigation bar
+2. Enter booking reference (e.g., BK20260110-7236)
+3. Click "Check Status" or press Enter
+4. View complete booking details with color-coded status
+
+**Displays:**
+- ✅ Booking reference & status
+- ✅ Guest name
+- ✅ Room type & number (if assigned)
+- ✅ Check-in/out dates
+- ✅ Total amount
+- ✅ Cancellation reason (if cancelled)
+
+### 🔄 REST API Architecture
+All backend operations now use RESTful HTTP methods:
+- **GET** - Retrieve data
+- **POST** - Create new records
+- **PATCH** - Update existing records
+- **DELETE** - Remove records
+
+**API Endpoints:**
+- `php/api/bookings.php` - Booking management
+- `php/api/rooms.php` - Room management
+- `php/api/room_types.php` - Room type management
+- `php/api/booking_public.php` - Public booking lookup
+
+### 📝 Cancellation Tracking
+**New Fields:**
+- Cancellation reason (required when cancelling)
+- Cancelled date/time
+- Confirmed date/time
 
 ---
 
 ## 🗄️ Database Tables Quick Reference
 
-| Table | Records | Purpose |
-|-------|---------|---------|
-| admins | 1 | Admin accounts |
-| room_types | 6 | Room categories |
-| rooms | 30 | Physical room inventory |
-| bookings | Variable | Reservation records |
+| Table | Records | Purpose | New Columns |
+|-------|---------|---------|-------------|
+| admins | 1 | Admin accounts | - |
+| room_types | 6 | Room categories | - |
+| rooms | 30 | Physical room inventory | - |
+| bookings | Variable | Reservation records | ✅ confirmed_at, cancelled_at, cancellation_reason |
 
-**Note:** Total 4 tables. No contact_messages or users tables exist.
+**Note:** Total 4 tables. Database name: `hotel_management`
 
 ---
 
@@ -60,42 +106,55 @@
 
 ### Customer Books a Room
 1. Customer visits `ACCOMMODATION.PHP`
-2. Views available rooms (from `get_rooms.php`)
+2. Views available rooms (**REST API:** `GET /api/room_types.php`)
 3. Clicks "Book Now" → Modal opens
 4. Fills form (dates, guests, contact info)
-5. Submits → `process_booking.php` processes
+5. Submits (**REST API:** `POST /api/bookings.php`)
 6. Redirects to `BOOKING_CONFIRMATION.PHP`
-7. Booking stored with status = "pending"
+7. Confirmation page loads details (**REST API:** `GET /api/booking_public.php?ref=BK...`)
+8. Booking stored with status = "pending"
+
+### Customer Tracks Booking
+1. Click "Track Booking" in navbar (any page)
+2. Enter booking reference number
+3. **REST API:** `GET /api/booking_public.php?ref=BK...`
+4. View complete booking details
+5. See current status with color indicator
+6. View room assignment (if confirmed)
 
 ### Admin Manages Booking
 1. Login to `DASHBOARD.PHP`
-2. Click "Bookings" in sidebar
+2. Click "Bookings" in sidebar (**REST API:** `GET /api/bookings.php`)
 3. View all bookings table
 4. Click booking row → details modal
 5. Actions available:
-   - **Confirm:** Assign room, status → "confirmed"
+   - **Confirm:** Assign room, status → "confirmed" + timestamp (**REST API:** `PATCH /api/bookings.php`)
    - **Check-In:** Status → "checked_in", room → "occupied"
    - **Check-Out:** Status → "checked_out", room → "available"
-   - **Cancel:** Status → "cancelled"
+   - **Cancel:** Add reason, status → "cancelled" + timestamp, room released
+6. Room auto-assignment on confirmation
+7. Room auto-release on cancellation
 
 ### Admin Adds New Room
-1. Dashboard → Rooms section
+1. Dashboard → Rooms section (**REST API:** `GET /api/rooms.php`)
 2. Click "Add New Room"
 3. Fill form:
-   - Room number (unique)
+   - Room number (auto-suggested)
    - Room type (dropdown)
    - Floor number
    - View type
-4. Submit → `add_room.php`
-5. New room appears in inventory
+4. Submit (**REST API:** `POST /api/rooms.php`)
+5. New room appears in inventory instantly
 
-### Admin Changes Room Price
+### Admin Updates Room Type
 1. Dashboard → Rooms section
 2. Click "Manage Room Types"
 3. Click edit icon on room type
-4. Update price field
-5. Save → `update_room_type.php`
-6. Price updated, reflected immediately
+4. Update fields (name, price, description, etc.)
+5. Optionally upload new image
+6. Save (**REST API:** `PATCH /api/room_types.php`)
+7. Image upload (**PHP:** `upload_room_image.php`)
+8. Changes reflected immediately
 
 ---
 

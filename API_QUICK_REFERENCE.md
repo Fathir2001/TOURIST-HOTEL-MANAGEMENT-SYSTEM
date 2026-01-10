@@ -1,6 +1,9 @@
 # 🚀 REST API Quick Reference Card
 ## Tourist Hotel Management System
 
+**Last Updated:** January 10, 2026  
+**Version:** 2.0
+
 ---
 
 ## 📍 Base URL
@@ -11,26 +14,39 @@ http://localhost/TOURIST-HOTEL-MANAGEMENT-SYSTEM/php/api/
 ---
 
 ## 🔐 Authentication
-All endpoints require admin session (except GET room_types)
-**Login first at:** `html/ADMIN.HTML`
+- **Admin endpoints** require active session (`$_SESSION['admin_id']`)
+- **Public endpoints** can be accessed without authentication
+- **Login first at:** `html/ADMIN.HTML` (username: admin, password: Admin@123)
 
 ---
 
-## 📦 BOOKINGS API
+## 📦 BOOKINGS API (`bookings.php`)
 
-### Get All Bookings
+### Get All Bookings 🔒
 ```http
 GET /bookings.php
 GET /bookings.php?status=pending
 GET /bookings.php?search=john&limit=10
 ```
+**Requires:** Admin session  
+**Returns:** Array of all bookings with room type details
 
-### Get Booking by ID
+### Get Booking by ID 🔒
 ```http
 GET /bookings.php?id=123
 ```
+**Requires:** Admin session  
+**Returns:** Single booking object
 
-### Create Booking
+### Get Booking by Reference 🌐
+```http
+GET /booking_public.php?ref=BK20260110-7236
+```
+**Requires:** None (public)  
+**Returns:** Single booking with room type info  
+**Used by:** Track Booking feature, Confirmation page
+
+### Create Booking 🌐
 ```http
 POST /bookings.php
 Content-Type: application/json
@@ -41,29 +57,51 @@ Content-Type: application/json
   "check_out_date": "2026-01-18",
   "adults": 2,
   "children": 1,
+  "number_of_rooms": 1,
   "guest_name": "John Doe",
   "guest_email": "john@example.com",
   "guest_phone": "+94771234567",
   "special_requests": "Late check-in"
 }
 ```
+**Requires:** None (public endpoint)  
+**Returns:** 
+```json
+{
+  "success": true,
+  "booking_reference": "BK20260110-7236",
+  "booking_id": 123
+}
+```
 
-### Update Booking
+### Update Booking 🔒
 ```http
 PATCH /bookings.php
 Content-Type: application/json
 
 {
   "booking_id": 123,
-  "booking_status": "confirmed",
+  "status": "confirmed",
   "room_id": 5
 }
 ```
+**Requires:** Admin session  
+**Available Status Values:** `pending`, `confirmed`, `cancelled`, `completed`  
+**Timestamps:** Automatically sets `confirmed_at` when status → confirmed, `cancelled_at` when status → cancelled
 
-### Cancel Booking
+### Cancel Booking 🔒
 ```http
-DELETE /bookings.php?id=123
+PATCH /bookings.php
+Content-Type: application/json
+
+{
+  "booking_id": 123,
+  "status": "cancelled",
+  "cancellation_reason": "Guest requested change of dates"
+}
 ```
+**Requires:** Admin session  
+**Returns:** Success message with cancellation timestamp
 
 ---
 
@@ -112,19 +150,21 @@ DELETE /rooms.php?id=5
 
 ---
 
-## 🏨 ROOM TYPES API
+## 🏨 ROOM TYPES API (`room_types.php`)
 
-### Get All Room Types
+### Get All Room Types 🌐
 ```http
 GET /room_types.php
 ```
+**Requires:** None (public)
 
-### Get Room Type by ID
+### Get Room Type by ID 🌐
 ```http
 GET /room_types.php?id=3
 ```
+**Requires:** None (public)
 
-### Create Room Type
+### Create Room Type 🔒
 ```http
 POST /room_types.php
 Content-Type: application/json
@@ -136,25 +176,53 @@ Content-Type: application/json
   "max_occupancy": 4,
   "size_sqm": 65,
   "amenities": "WiFi, TV, Mini Bar",
-  "image_url": "../images/suite.jpg"
+  "image_url": "../images/room-types/suite.jpg"
 }
 ```
+**Requires:** Admin session
 
-### Update Room Type
+### Update Room Type 🔒
 ```http
 PATCH /room_types.php
 Content-Type: application/json
 
 {
   "room_type_id": 3,
-  "base_price": 275.00
+  "base_price": 275.00,
+  "image_url": "../images/room-types/room_type_3_1767854863.jfif"
 }
 ```
+**Requires:** Admin session  
+**Note:** Update image using upload_room_image.php first
 
-### Delete Room Type
+### Delete Room Type 🔒
 ```http
 DELETE /room_types.php?id=3
 ```
+**Requires:** Admin session
+
+---
+
+## 📤 IMAGE UPLOAD API (`upload_room_image.php`)
+
+### Upload Room Type Image 🔒
+```http
+POST /upload_room_image.php
+Content-Type: multipart/form-data
+
+room_type_id: 3
+image: <file>
+```
+**Requires:** Admin session  
+**Accepts:** JPG, PNG, GIF, WEBP (max 5MB)  
+**Returns:**
+```json
+{
+  "success": true,
+  "image_url": "../images/room-types/room_type_3_1767854863.jfif"
+}
+```
+**Note:** Images stored in `images/room-types/` with unique filenames
 
 ---
 
@@ -170,22 +238,31 @@ const bookings = await getAllBookings();
 // Get bookings with filters
 const pending = await getAllBookings({ status: 'pending' });
 
-// Create booking
+// Get booking by reference (public)
+const booking = await getBookingByReference('BK20260110-7236');
+
+// Create booking (public)
 const result = await createBooking({
   roomTypeId: 3,
   checkIn: '2026-01-15',
   checkOut: '2026-01-18',
   adults: 2,
+  children: 1,
+  numberOfRooms: 1,
   guestName: 'John Doe',
   guestEmail: 'john@example.com',
   guestPhone: '+94771234567'
 });
+console.log(result.booking_reference); // BK20260110-7236
 
-// Update booking status
+// Update booking status (admin only)
 await updateBookingStatus(123, 'confirmed', 5);
 
-// Cancel booking
-await cancelBooking(123);
+// Cancel booking with reason (admin only)
+await updateBooking(123, { 
+  status: 'cancelled',
+  cancellation_reason: 'Guest requested refund' 
+});
 
 // Get all rooms
 const rooms = await getAllRooms();
@@ -193,7 +270,7 @@ const rooms = await getAllRooms();
 // Get available rooms
 const available = await getAllRooms({ status: 'available' });
 
-// Create room
+// Create room (admin only)
 await createRoom({
   roomNumber: '301',
   roomTypeId: 3,
@@ -201,23 +278,50 @@ await createRoom({
   view: 'Mountain'
 });
 
-// Update room status
+// Update room status (admin only)
 await updateRoomStatus(5, 'maintenance');
 
-// Delete room
+// Delete room (admin only)
 await deleteRoom(5);
+
+// Upload room type image (admin only)
+const formData = new FormData();
+formData.append('room_type_id', 3);
+formData.append('image', fileInput.files[0]);
+const imageResult = await fetch('../php/upload_room_image.php', {
+  method: 'POST',
+  body: formData
+});
+const imageData = await imageResult.json();
+console.log(imageData.image_url); // Use for room type update
 ```
 
 ---
 
 ## 🎯 Response Format
 
-### Success Response
+### Success Response (Standard)
 ```json
 {
   "success": true,
   "message": "Operation successful",
   "data": { ... }
+}
+```
+
+### Success Response (Booking Public API)
+```json
+{
+  "success": true,
+  "booking": {
+    "booking_id": 123,
+    "booking_reference": "BK20260110-7236",
+    "status": "confirmed",
+    "room_type_name": "Deluxe Room",
+    "confirmed_at": "2026-01-10 14:30:00",
+    "cancelled_at": null,
+    "cancellation_reason": null
+  }
 }
 ```
 

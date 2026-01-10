@@ -246,18 +246,24 @@ function handleDeleteRoom($conn) {
         sendErrorResponse('Room ID is required', 400);
     }
     
-    // Check if room exists
+    // Check if room exists and get status
     $stmt = $conn->prepare("SELECT * FROM rooms WHERE room_id = ?");
     $stmt->execute([$roomId]);
+    $room = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$stmt->fetch()) {
+    if (!$room) {
         sendErrorResponse('Room not found', 404);
+    }
+    
+    // Prevent deletion of occupied rooms
+    if ($room['status'] === 'occupied') {
+        sendErrorResponse('Cannot delete occupied room. Please change the room status first.', 400);
     }
     
     // Check for active bookings
     $stmt = $conn->prepare("
         SELECT COUNT(*) FROM bookings 
-        WHERE room_id = ? AND booking_status IN ('confirmed', 'checked_in')
+        WHERE room_id = ? AND status IN ('confirmed', 'pending')
     ");
     $stmt->execute([$roomId]);
     
