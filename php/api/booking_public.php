@@ -49,7 +49,12 @@ try {
         sendErrorResponse('Booking not found', 404);
     }
     
-    sendSuccessResponse($booking);
+    // Send response with 'booking' key for frontend compatibility
+    echo json_encode([
+        'success' => true,
+        'booking' => $booking
+    ]);
+    exit;
     
 } catch (Exception $e) {
     sendErrorResponse('Server error: ' . $e->getMessage(), 500);
