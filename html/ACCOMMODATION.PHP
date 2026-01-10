@@ -1,7 +1,3 @@
-<?php
-require_once '../php/get_rooms.php';
-$rooms = getRoomTypes();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,53 +48,12 @@ $rooms = getRoomTypes();
         <div class="container">
             <h2 class="category-title">Our Room Categories</h2>
             
-            <div class="rooms-grid">
-                <?php if (!empty($rooms)): ?>
-                    <?php foreach ($rooms as $room): ?>
-                        <div class="room-card <?php echo ($room['badge_label'] === 'Premium' || $room['badge_label'] === 'Heritage') ? 'featured' : ''; ?>">
-                            <div class="room-image">
-                                <img src="<?php echo htmlspecialchars($room['image_url']); ?>" 
-                                     alt="<?php echo htmlspecialchars($room['type_name']); ?>" 
-                                     onerror="this.src='../images/img75.webp'">
-                                <?php if (!empty($room['badge_label'])): ?>
-                                    <div class="room-badge"><?php echo htmlspecialchars($room['badge_label']); ?></div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="room-details">
-                                <h3><?php echo htmlspecialchars($room['type_name']); ?></h3>
-                                <div class="price-tag">
-                                    <span class="price-label">From</span>
-                                    <span class="price-amount">$<?php echo number_format($room['base_price'], 0); ?></span>
-                                    <span class="price-period">/night</span>
-                                </div>
-                                <div class="room-info">
-                                    <span><i class="fas fa-expand-arrows-alt"></i> <?php echo $room['size_sqft']; ?> sq ft</span>
-                                    <span><i class="fas fa-user-friends"></i> 
-                                        <?php 
-                                        echo $room['max_occupancy'];
-                                        echo $room['max_occupancy'] > 1 ? ' Guests' : ' Guest';
-                                        ?>
-                                    </span>
-                                </div>
-                                <p><?php echo htmlspecialchars($room['description']); ?></p>
-                                
-                                <?php if (!empty($room['features'])): ?>
-                                    <div class="room-features">
-                                        <?php foreach ($room['features'] as $feature): ?>
-                                            <span><i class="fas fa-check-circle"></i> <?php echo htmlspecialchars($feature); ?></span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-                                
-                                <button class="book-room-btn" onclick="bookRoom(<?php echo $room['room_type_id']; ?>)">Book Now</button>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="no-rooms-message">
-                        <p>No rooms available at the moment. Please check back later.</p>
-                    </div>
-                <?php endif; ?>
+            <div class="rooms-grid" id="roomsGrid">
+                <!-- Rooms will be loaded via JavaScript/REST API -->
+                <div style="text-align: center; padding: 40px; width: 100%;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; color: #dc2626;"></i>
+                    <p>Loading rooms...</p>
+                </div>
             </div>
         </div>
     </section>
@@ -151,7 +106,7 @@ $rooms = getRoomTypes();
             <h2>Book Your Stay</h2>
             <p class="modal-subtitle">Please fill in your details to proceed</p>
             
-            <form id="bookingForm" action="../php/process_booking.php" method="POST" onsubmit="return validateBookingForm()">
+            <form id="bookingForm" onsubmit="return handleBookingSubmit(event)">
                 <input type="hidden" id="room_type_id" name="room_type_id">
                 
                 <div class="form-row">
@@ -243,8 +198,97 @@ $rooms = getRoomTypes();
     </footer>
 
     <script src="../js/include.js"></script>
+    <script src="../js/api-integration.js"></script>
     <script>
-        const roomsData = <?php echo json_encode($rooms); ?>;
+        let roomsData = [];
+
+        // Load room types on page load using REST API
+        async function loadRoomTypes() {
+            try {
+                const roomTypes = await getAllRoomTypes();
+                roomsData = roomTypes;
+                displayRoomTypes(roomTypes);
+            } catch (error) {
+                console.error('Error loading room types:', error);
+                document.getElementById('roomsGrid').innerHTML = `
+                    <div style="text-align: center; padding: 40px; width: 100%; color: #dc2626;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 32px;"></i>
+                        <p>Failed to load rooms. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayRoomTypes(roomTypes) {
+            const grid = document.getElementById('roomsGrid');
+            
+            if (!roomTypes || roomTypes.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-rooms-message" style="width: 100%;">
+                        <p>No rooms available at the moment. Please check back later.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = roomTypes.map(room => {
+                // Parse features/amenities
+                let features = [];
+                if (room.amenities) {
+                    try {
+                        features = typeof room.amenities === 'string' ? JSON.parse(room.amenities) : room.amenities;
+                    } catch(e) {
+                        features = room.amenities.split(',');
+                    }
+                }
+                
+                // Determine badge
+                let badgeLabel = '';
+                if (room.type_name.toLowerCase().includes('premium') || room.type_name.toLowerCase().includes('suite')) {
+                    badgeLabel = 'Premium';
+                } else if (room.type_name.toLowerCase().includes('heritage')) {
+                    badgeLabel = 'Heritage';
+                }
+                
+                const featuredClass = (badgeLabel === 'Premium' || badgeLabel === 'Heritage') ? 'featured' : '';
+                const sizeSqft = room.size_sqm ? (room.size_sqm * 10.764).toFixed(0) : 350; // Convert sqm to sqft
+                
+                return `
+                    <div class="room-card ${featuredClass}">
+                        <div class="room-image">
+                            <img src="${room.image_url || '../images/img75.webp'}" 
+                                 alt="${room.type_name}" 
+                                 onerror="this.src='../images/img75.webp'">
+                            ${badgeLabel ? `<div class="room-badge">${badgeLabel}</div>` : ''}
+                        </div>
+                        <div class="room-details">
+                            <h3>${room.type_name}</h3>
+                            <div class="price-tag">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">$${Math.round(room.base_price)}</span>
+                                <span class="price-period">/night</span>
+                            </div>
+                            <div class="room-info">
+                                <span><i class="fas fa-expand-arrows-alt"></i> ${sizeSqft} sq ft</span>
+                                <span><i class="fas fa-user-friends"></i> ${room.max_occupancy} ${room.max_occupancy > 1 ? 'Guests' : 'Guest'}</span>
+                            </div>
+                            <p>${room.description || ''}</p>
+                            ${features.length > 0 ? `
+                                <div class="room-features">
+                                    ${features.slice(0, 4).map(feature => `
+                                        <span><i class="fas fa-check-circle"></i> ${feature}</span>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                            <button class="book-room-btn" onclick="bookRoom(${room.room_type_id})">Book Now</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Load rooms on page load
+        document.addEventListener('DOMContentLoaded', loadRoomTypes);
 
         function bookRoom(roomTypeId) {
             const room = roomsData.find(r => r.room_type_id == roomTypeId);
@@ -471,6 +515,51 @@ $rooms = getRoomTypes();
             }
             
             return true;
+        }
+
+        // NEW: Handle form submission with REST API
+        async function handleBookingSubmit(event) {
+            event.preventDefault();
+            
+            // Validate form first
+            if (!validateBookingForm()) {
+                return false;
+            }
+            
+            // Get form data
+            const bookingData = {
+                roomTypeId: document.getElementById('room_type_id').value,
+                checkIn: document.getElementById('check_in_date').value,
+                checkOut: document.getElementById('check_out_date').value,
+                adults: document.getElementById('adults').value,
+                children: document.getElementById('children').value || 0,
+                guestName: document.getElementById('guest_name').value.trim(),
+                guestEmail: document.getElementById('guest_email').value.trim(),
+                guestPhone: document.getElementById('guest_phone').value.trim(),
+                specialRequests: document.getElementById('special_requests').value.trim()
+            };
+            
+            // Disable submit button and show loading state
+            const submitBtn = event.target.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Create booking via REST API
+                const result = await createBooking(bookingData);
+                
+                // Success! Redirect directly to confirmation page
+                window.location.href = 'BOOKING_CONFIRMATION.PHP?ref=' + result.booking_reference;
+                
+            } catch (error) {
+                // Error handling
+                alert('Error: ' + error.message + '\\n\\nPlease try again or contact us for assistance.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+            
+            return false;
         }
 
         // Close modal when clicking outside
