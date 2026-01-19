@@ -1,0 +1,249 @@
+/* FACILITIES.HTML Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: #f5f5f5;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Facilities Section */
+.facilities-section {
+    padding: 80px 20px;
+    background: #fff;
+}
+
+.facility-item {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin-bottom: 100px;
+    padding: 40px 0;
+}
+
+.facility-item:last-child {
+    margin-bottom: 40px;
+}
+
+/* Left Text Layout (Text on left, Images on right) */
+.facility-item.left-text {
+    flex-direction: row;
+}
+
+/* Right Text Layout (Images on left, Text on right) */
+.facility-item.right-text {
+    flex-direction: row-reverse;
+}
+
+.facility-content {
+    flex: 1;
+    max-width: 500px;
+}
+
+.facility-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.facility-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.find-out-more-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: transparent;
+    color: #1a1a1a;
+    text-decoration: none;
+    border: 2px solid #1a1a1a;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    font-family: Arial, sans-serif;
+}
+
+.find-out-more-btn:hover {
+    background: #1a1a1a;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Facility Images */
+.facility-images {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 700px;
+}
+
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.image-wrapper:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.image-wrapper:hover img {
+    transform: scale(1.05);
+}
+
+/* First image in grid - taller */
+.image-wrapper:first-child {
+    grid-row: span 1;
+}
+
+/* Second image in grid */
+.image-wrapper:last-child {
+    grid-row: span 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .facility-item {
+        gap: 40px;
+        margin-bottom: 80px;
+    }
+
+    .facility-title {
+        font-size: 28px;
+    }
+
+    .facility-description {
+        font-size: 15px;
+    }
+
+    .facility-images {
+        max-width: 600px;
+    }
+
+    .image-wrapper img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .facility-item,
+    .facility-item.left-text,
+    .facility-item.right-text {
+        flex-direction: column;
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    .facility-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .facility-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .facility-description {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .facility-images {
+        max-width: 100%;
+    }
+
+    .image-wrapper img {
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .facilities-section {
+        padding: 40px 15px;
+    }
+
+    .facility-item {
+        margin-bottom: 40px;
+        padding: 20px 0;
+    }
+
+    .facility-title {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    .facility-description {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .find-out-more-btn {
+        padding: 12px 30px;
+        font-size: 12px;
+        letter-spacing: 1.5px;
+    }
+
+    .facility-images {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .image-wrapper img {
+        height: 220px;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.facility-item {
+    animation: fadeInUp 0.8s ease-out;
+}
